@@ -1,0 +1,71 @@
+:root {
+  /* Brand */
+  --color-primary: #06345F;        /* Primary, navigation, headings */
+  --color-primary-hover: #0B4B78;  /* Hover / secondary primary */
+  --color-accent: #59C3E2;         /* Buttons, links, active states */
+
+  /* Surfaces */
+  --color-background: #F3FAFC;     /* Primary page background */
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #E2F3F6;    /* Cards / secondary surfaces */
+    
+  /* Text */
+  --color-text: #021E38;           /* Very dark text / dark UI */
+  --color-text-secondary: #496879; /* Secondary text */
+
+  /* Semantic */
+  --color-success: #25864D;        /* Success, positive states, accents */
+  --color-success-light: #42A45D;  /* Hover/highlight for green */
+
+  /* Decorative */
+  --color-ocean: #59C3E2;
+  --color-ocean-light: #A9E3F2;    /* Highlights, badges, graphics */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--color-background);
+}
+
+h1 {
+    color: var(--color-primary);
+}
+
+h2 {
+    color: var(--color-primary);
+}
+
+h3 {
+    color: var(--color-primary);
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    height: 75px;
+    background: var(--color-surface-alt);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header > a {
+    padding-left: 10px;
+}
+
+header > a > img {
+    height: 60px;
+}
+
+header > nav {
+    margin-right: 30px;
+    display: flex;
+}
+
+header > nav > a {
+    color: var(--color-text);
+}
