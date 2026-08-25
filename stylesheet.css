@@ -1,25 +1,35 @@
 :root {
-  /* Brand */
-  --color-primary: #06345F;        /* Primary, navigation, headings */
-  --color-primary-hover: #0B4B78;  /* Hover / secondary primary */
-  --color-accent: #59C3E2;         /* Buttons, links, active states */
+    /* Brand */
+    --color-primary: #06345F;
+    /* Primary, navigation, headings */
+    --color-primary-hover: #0B4B78;
+    /* Hover / secondary primary */
+    --color-accent: #59C3E2;
+    /* Buttons, links, active states */
 
-  /* Surfaces */
-  --color-background: #F3FAFC;     /* Primary page background */
-  --color-surface: #FFFFFF;
-  --color-surface-alt: #E2F3F6;    /* Cards / secondary surfaces */
-    
-  /* Text */
-  --color-text: #021E38;           /* Very dark text / dark UI */
-  --color-text-secondary: #496879; /* Secondary text */
+    /* Surfaces */
+    --color-background: #F3FAFC;
+    /* Primary page background */
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #E2F3F6;
+    /* Cards / secondary surfaces */
 
-  /* Semantic */
-  --color-success: #25864D;        /* Success, positive states, accents */
-  --color-success-light: #42A45D;  /* Hover/highlight for green */
+    /* Text */
+    --color-text: #021E38;
+    /* Very dark text / dark UI */
+    --color-text-secondary: #496879;
+    /* Secondary text */
 
-  /* Decorative */
-  --color-ocean: #59C3E2;
-  --color-ocean-light: #A9E3F2;    /* Highlights, badges, graphics */
+    /* Semantic */
+    --color-success: #25864D;
+    /* Success, positive states, accents */
+    --color-success-light: #42A45D;
+    /* Hover/highlight for green */
+
+    /* Decorative */
+    --color-ocean: #59C3E2;
+    --color-ocean-light: #A9E3F2;
+    /* Highlights, badges, graphics */
 }
 
 body {
@@ -57,24 +67,24 @@ header {
     gap: 10px;
 }
 
-header > a {
+header>a {
     padding-left: 10px;
 }
 
-header > a > img {
+header>a>img {
     height: 60px;
 }
 
-header > nav {
+header>nav {
     display: flex;
     gap: 10px;
 }
 
-header > nav > a {
+header>nav>a {
     color: var(--color-primary);
 }
 
-header > nav > a:hover {
+header>nav>a:hover {
     color: var(--color-primary-hover);
     cursor: pointer;
 }
@@ -86,9 +96,9 @@ footer {
     display: flex;
     background-color: var(--color-ocean-light);
     padding: 15px 0px;
-} 
+}
 
-footer > div {
+footer>div {
     padding: 0px 40px;
     width: 50%;
     display: flex;
@@ -97,7 +107,7 @@ footer > div {
     color: var(--color-text);
 }
 
-footer > div:last-child {
+footer>div:last-child {
     text-align: right;
 }
 
@@ -117,11 +127,39 @@ footer > div:last-child {
 
 }
 
-.categories > section {
-    display : flex;
+.categories>section {
+    display: flex;
     flex-direction: column;
     gap: 20px;
 
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 40px;
+
+}
+
+.details>section {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.details>section>div>button {
+    border-radius: 7px;
+    background-color: var(--color-ocean-light);
+    padding: 15px 20px;
+    font-size: 15px;
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
+}
+
+.details>section>img {
+    object-fit: cover;
+    width: 30%;
+    padding: 5px 40px 5px 20px;
 }
 
 .package {
@@ -130,15 +168,15 @@ footer > div:last-child {
 
 }
 
-.package > img {
+.package>img {
     width: 150px;
     height: 100px;
     object-fit: cover;
     border-radius: 10px;
-    
+
 }
 
-.package > div {
+.package>div {
     display: flex;
     flex-direction: column;
     gap: 2px;
