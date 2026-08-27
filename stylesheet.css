@@ -51,6 +51,11 @@ h3 {
     color: var(--color-primary);
 }
 
+h4 {
+    color: var(--color-primary);
+    margin: 0px 0px;
+}
+
 body {
     box-sizing: border-box;
     margin: 0;
@@ -95,7 +100,7 @@ footer {
     margin-top: auto;
     display: flex;
     background-color: var(--color-ocean-light);
-    padding: 15px 0px;
+    padding: 25px 0px 10px 0px;
 }
 
 footer>div {
