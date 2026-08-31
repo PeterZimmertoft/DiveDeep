@@ -4,6 +4,6 @@
     {
         public double Price { get; set; }
         public string Description { get; set; } = string.Empty;
-        public List<Attribute> Attributes { get; set; }
+        public List<ProductAttribute> Attributes { get; set; }
     }
 }

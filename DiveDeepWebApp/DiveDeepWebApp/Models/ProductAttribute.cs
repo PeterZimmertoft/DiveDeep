@@ -1,9 +1,10 @@
 ﻿namespace DiveDeepWebApp.Models
 {
-    public class Attribute
+    public class ProductAttribute
     {
+        public int ID { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Unit {  get; set; } = string.Empty;
+        public string? Unit {  get; set; }
         public List<Value> Values { get; set; }
     }
 }
