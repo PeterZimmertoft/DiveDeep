@@ -1,67 +1,81 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DiveDeepWebApp</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DiveDeepWebApp.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/transparent_logo.png" width="auto" height="36" alt="FirmaLogo"/>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Produkter</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">Om os</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - DiveDeepWebApp</title>
+        <script type="importmap"></script>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/DiveDeepWebApp.styles.css" asp-append-version="true" />
+    </head>
 
-    <footer class="border-top footer text-muted d-flex">
-        <div class="d-flex flex-column gap-0">
-            <h5>Åbningstider</h5>
-            <span>Mandag-fredag: 10:00 - 17:30</span>
-            <span>Lørdag: 10:00 - 14:00</span>
-            <span>Søndag: Lukket</span>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/transparent_logo.png" width="auto" height="36" alt="FirmaLogo"/>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Produkter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">Om os</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-        <div class="d-flex flex-column">
-            <span>Adresse: Dykkervej 10, 5000 Odense C</span>
-            <span>CVR-nummer: 81828384</span>
-            <span>Telefonnummer: +45 6070 8090</span>
-            <span>E-mail: info@divedeep.dk</span>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+
+        <footer class="border-top footer text-muted d-flex justify-content-between px-4 py-3">
+            <div class="d-flex flex-column">
+                <h5>Åbeningstider</h5>
+                <span>Mandag-fredag: 10:00 - 17:30</span>
+                <span>Lørdag: 10:00 - 14:00</span>
+                <span>Søndag: Lukket</span>
+            </div>
+
+            <div class="d-flex gap-2 align-self-end">
+                <span>+45 6070 8090</span>
+                <span>|</span>
+                <span>info@divedeep.dk</span>
+            </div>
+
+            <div class="d-flex flex-column text-end">
+                <h5>Adresse</h5>
+                <span>Dykkervej 10,</span>
+                <span>5000 Odense C</span>
+                <span>CVR-nummer: 81828384</span>
+                    @* <span>Telefonnummer: +45 6070 8090</span>
+                    <span>E-mail: info@divedeep.dk</span> *@
+            </div>
+        </footer> 
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>
