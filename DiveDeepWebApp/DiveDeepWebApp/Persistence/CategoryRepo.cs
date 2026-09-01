@@ -21,7 +21,7 @@ namespace DiveDeepWebApp.Persistence
 
             categories.Add(new Category { Name = "Regulatorsæt", Description = "Beskrivelse her", Route = "regulator" });
 
-            categories.Add(new Category { Name = "Maske/Snorkel", Description = "Beskrivelse her", Route = "Mask"});
+            categories.Add(new Category { Name = "Maske/Snorkel", Description = "Beskrivelse her", Route = "mask"});
 
             categories.Add(new Category { Name = "Finner", Description = "Beskrivelse her", Route = "fin" });
 
