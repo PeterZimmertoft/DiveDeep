@@ -19,9 +19,7 @@ namespace DiveDeepWebApp.Persistence
         public List<Product> GetAllByClass<Type>()
         {
             return GetAll().FindAll(x => x.GetType() == typeof(Type));
-        }
-
-        public 
+        } 
         
         private void InitPoductList()
         {

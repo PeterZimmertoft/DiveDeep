@@ -8,8 +8,8 @@ namespace DiveDeepWebApp.Controllers
     {
         public IActionResult Index()
         {
-            List<Product> products = ProductRepo.
-            return View();
+            List<Category> categories = CategoryRepo.GetAll();
+            return View(categories);
         }
     }
 }
