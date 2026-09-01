@@ -25,10 +25,18 @@ namespace DiveDeepWebApp
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapControllerRoute(
+                name: "products-category",
+                pattern: "products/{category}",
+                defaults: new { controller = "Products", action = "Products" });
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
+            
 
             app.Run();
         }

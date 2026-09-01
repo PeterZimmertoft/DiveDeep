@@ -21,9 +21,11 @@ namespace DiveDeepWebApp.Controllers
                 { "tank", typeof(Tank) },
                 { "regulator", typeof(Regulator) },
                 { "mask", typeof(Mask) },
-                { "fin", typeof(Fin) },
-
+                { "fin", typeof(Fin) }
             };
+
+            
+
             return View();
         }
     }
