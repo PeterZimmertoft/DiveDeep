@@ -25,7 +25,9 @@ namespace DiveDeepWebApp.Persistence
 
             categories.Add(new Category { Name = "Finner", Description = "Beskrivelse her", Route = "fin" });
 
+            categories.Add(new Category { Name = "Dykkersæt", Description = "Beskrivelse her", Route = "completeSet" });
 
+            categories.Add(new Category { Name = "Snorkelsæt", Description = "Beskrivelse her", Route = "snorkelSet" });
         }
 
         public static List<Category> GetAll()

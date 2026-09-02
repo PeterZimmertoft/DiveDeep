@@ -94,7 +94,7 @@ namespace DiveDeepWebApp.Persistence
                 Description = "Beskrivelse her",
                 Price = 145,
                 Model = "BCD Modular",
-                Size = "S"
+                Size = "S, M, L"
             });
 
             /*

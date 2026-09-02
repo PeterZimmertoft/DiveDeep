@@ -21,7 +21,9 @@ namespace DiveDeepWebApp.Controllers
                 { "tank", typeof(Tank) },
                 { "regulator", typeof(Regulator) },
                 { "mask", typeof(Mask) },
-                { "fin", typeof(Fin) }
+                { "fin", typeof(Fin) },
+                { "completeSet", null },
+                { "snorkelSet", null }
             };
             
             var type = map[category];

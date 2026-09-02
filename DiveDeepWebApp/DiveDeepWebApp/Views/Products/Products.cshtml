@@ -7,7 +7,6 @@
     
     @foreach (var product in Model)
     {
-        
         <a class="col btn text-start">
             
             @{
@@ -26,48 +25,7 @@
                     path = "/fin.png";
             }
 
-            @* <div class="card" style="height: 225px;">
-                <div class="column">
-                    <div class="card-body d-flex flex-column">
-
-                    
-                        @* <img src="@path" /> 
-                        <h5 class="card-title">@product.Brand</h5>
-                        <p class="card-text">@product.Description</p>
-                        @{
-                            if (path != "/tank.png" && path != "/Regulator.png")
-                            {
-                                <p class="card-text">@product.Model</p>
-                            }
-                            else if (path == "/tank.png")
-                            {
-                                <p class="card-text">@product.Volume L</p>
-                            }
-                            else if (path == "/regulator.png")
-                            {
-                                <p class="card-text">@product.FirstStage</p>
-                                <p class="card-text">@product.SecondStage</p>
-                                <p class="card-text">@product.Octopus</p>
-                            }
-
-                        
-                        }
-
-                
-                        <h6 class="card-text">Pris: @product.Price,- dkk</h6>
-                    
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card-body d-flex flex-column" style="height: 225px; background-image: url(@path); background-repeat:no-repeat; background-size:contain; background-position:right;">
-                    </div>
-                </div>
-                
-                
-                    
-            </div> *@
-
-            <div class="card mb-3" style="height: 225px;">
+            <div class="card mb-3" style="height: auto;">
                 <div class="row g-0">
     
                     <!-- Tekst kolonne -->
@@ -76,23 +34,41 @@
                             <h5 class="card-title">@product.Brand</h5>
                             <p class="card-text">@product.Description</p>
                             @{
-                                if (path != "/tank.png" && path != "/regulator.png")
+                                if (product is Tank)
                                 {
-                                    <p class="card-text">Model: @product.Model</p>
+                                    <p class="card-text">Volumen: @product.Volume L</p>
                                 }
-                                else if (path == "/tank.png")
+                                else if (product is Suit)
                                 {
-                                    <p class="card-text">Volume: @product.Volume L</p>
+                                    <p class="card-text">Model: @product.Model </p>
+                                    <p class="card-text">Type: @product.Type </p>
+                                    <p class="card-text">Køn: @product.Gender </p>
+                                    <p class="card-text">Størrelse: @product.Size </p>
+                                    <p class="card-text">Tykkelse: @product.Thickness </p>
+
                                 }
-                                else if (path == "/regulator.png")
+                                else if (product is Regulator)
                                 {
                                     <p class="card-text">Trin 1: @product.FirstStage</p>
                                     <p class="card-text">Trin 2: @product.SecondStage</p>
                                     <p class="card-text">Octopus: @product.Octopus</p>
                                 }
-
-                        
+                                else if (product is Mask)
+                                {
+                                    <p class="card-text">Model: @product.Model</p>
+                                }
+                                else if (product is Fin)
+                                {
+                                    <p class="card-text">Model: @product.Model</p>
+                                    <p class="card-text">Størrelse: @product.Size</p>
+                                }
+                                else if (product is BCD)
+                                {
+                                    <p class="card-text">Model: @product.Model</p>
+                                    <p class="card-text">Størrelse: @product.Size</p>
+                                }
                             }
+                            <h6 class="card-text">Pris: @product.Price,- dkk</h6>
                         </div>
                     </div>
 
