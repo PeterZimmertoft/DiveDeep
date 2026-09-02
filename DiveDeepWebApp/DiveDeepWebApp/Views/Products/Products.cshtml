@@ -3,4 +3,112 @@
 *@
 @{
 }
-<h1>YUHUU Big summer blowout</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3 pb-5">
+    
+    @foreach (var product in Model)
+    {
+        
+        <a class="col btn text-start">
+            
+            @{
+                string path = "";
+                if (product is BCD)
+                    path = "/bcd.png";
+                else if (product is Suit)
+                    path = "/suit.png";
+                else if (product is Tank)
+                    path = "/tank.png";
+                else if (product is Regulator)
+                    path = "/regulator.png";
+                else if (product is Mask)
+                    path = "/mask.png";
+                else if (product is Fin)
+                    path = "/fin.png";
+            }
+
+            @* <div class="card" style="height: 225px;">
+                <div class="column">
+                    <div class="card-body d-flex flex-column">
+
+                    
+                        @* <img src="@path" /> 
+                        <h5 class="card-title">@product.Brand</h5>
+                        <p class="card-text">@product.Description</p>
+                        @{
+                            if (path != "/tank.png" && path != "/Regulator.png")
+                            {
+                                <p class="card-text">@product.Model</p>
+                            }
+                            else if (path == "/tank.png")
+                            {
+                                <p class="card-text">@product.Volume L</p>
+                            }
+                            else if (path == "/regulator.png")
+                            {
+                                <p class="card-text">@product.FirstStage</p>
+                                <p class="card-text">@product.SecondStage</p>
+                                <p class="card-text">@product.Octopus</p>
+                            }
+
+                        
+                        }
+
+                
+                        <h6 class="card-text">Pris: @product.Price,- dkk</h6>
+                    
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card-body d-flex flex-column" style="height: 225px; background-image: url(@path); background-repeat:no-repeat; background-size:contain; background-position:right;">
+                    </div>
+                </div>
+                
+                
+                    
+            </div> *@
+
+            <div class="card mb-3" style="height: 225px;">
+                <div class="row g-0">
+    
+                    <!-- Tekst kolonne -->
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Brand</h5>
+                            <p class="card-text">@product.Description</p>
+                            @{
+                                if (path != "/tank.png" && path != "/regulator.png")
+                                {
+                                    <p class="card-text">Model: @product.Model</p>
+                                }
+                                else if (path == "/tank.png")
+                                {
+                                    <p class="card-text">Volume: @product.Volume L</p>
+                                }
+                                else if (path == "/regulator.png")
+                                {
+                                    <p class="card-text">Trin 1: @product.FirstStage</p>
+                                    <p class="card-text">Trin 2: @product.SecondStage</p>
+                                    <p class="card-text">Octopus: @product.Octopus</p>
+                                }
+
+                        
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Billede kolonne -->
+                    <div class="col-md-6">
+                        <img src=@path class="img-fluid rounded-end" alt="Billede">
+                    </div>
+
+                </div>
+            </div>
+
+        </a>
+        
+    }
+</div>
+
+
+            
+

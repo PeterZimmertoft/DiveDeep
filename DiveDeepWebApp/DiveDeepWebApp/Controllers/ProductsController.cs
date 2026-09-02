@@ -23,10 +23,11 @@ namespace DiveDeepWebApp.Controllers
                 { "mask", typeof(Mask) },
                 { "fin", typeof(Fin) }
             };
-
             
+            var type = map[category];
+            List<Product> products = ProductRepo.GetAllByClass(type);
 
-            return View();
+            return View(products);
         }
     }
 }
