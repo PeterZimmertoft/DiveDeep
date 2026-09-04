@@ -17,6 +17,30 @@ html {
   min-height: 100%;
 }
 
+body {
+  background-color: #f5fbff;
+  background-image:
+    radial-gradient(circle at 3% 52%, transparent 0 4px, rgba(13, 160, 210, 0.28) 5px 6px, transparent 7px),
+    radial-gradient(circle at 7% 18%, transparent 0 7px, rgba(27, 110, 194, 0.30) 8px 10px, transparent 11px),
+    radial-gradient(circle at 12% 24%, transparent 0 15px, rgba(27, 110, 194, 0.22) 16px 18px, transparent 19px),
+    radial-gradient(circle at 19% 42%, transparent 0 9px, rgba(13, 160, 210, 0.24) 10px 12px, transparent 13px),
+    radial-gradient(circle at 28% 10%, transparent 0 5px, rgba(27, 110, 194, 0.26) 6px 7px, transparent 8px),
+    radial-gradient(circle at 37% 68%, transparent 0 13px, rgba(13, 160, 210, 0.20) 14px 16px, transparent 17px),
+    radial-gradient(circle at 46% 29%, transparent 0 6px, rgba(27, 110, 194, 0.24) 7px 9px, transparent 10px),
+    radial-gradient(circle at 55% 83%, transparent 0 17px, rgba(13, 160, 210, 0.22) 18px 21px, transparent 22px),
+    radial-gradient(circle at 63% 14%, transparent 0 10px, rgba(27, 110, 194, 0.23) 11px 13px, transparent 14px),
+    radial-gradient(circle at 73% 62%, transparent 0 7px, rgba(13, 160, 210, 0.24) 8px 10px, transparent 11px),
+    radial-gradient(circle at 80% 21%, transparent 0 4px, rgba(27, 110, 194, 0.28) 5px 6px, transparent 7px),
+    radial-gradient(circle at 91% 35%, transparent 0 10px, rgba(13, 160, 210, 0.28) 11px 13px, transparent 14px),
+    radial-gradient(circle at 86% 43%, transparent 0 22px, rgba(13, 160, 210, 0.20) 23px 26px, transparent 27px),
+    radial-gradient(circle at 18% 78%, transparent 0 11px, rgba(27, 110, 194, 0.23) 12px 14px, transparent 15px),
+    radial-gradient(circle at 68% 93%, transparent 0 8px, rgba(27, 110, 194, 0.22) 9px 11px, transparent 12px),
+    radial-gradient(circle at 96% 76%, transparent 0 14px, rgba(13, 160, 210, 0.22) 15px 18px, transparent 19px),
+    linear-gradient(180deg, #fbfdff 0%, #edf8fd 52%, #f8fcfe 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;

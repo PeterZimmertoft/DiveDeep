@@ -23,6 +23,7 @@ namespace DiveDeepWebApp.Persistence
             {
                 Id = 1,
                 Name = "Komplet dykkersæt",
+                Route = "divingSet",
                 Products = new List<Product>()
                 {
                     ProductRepo.GetById(1)!,  // BCD
@@ -38,6 +39,7 @@ namespace DiveDeepWebApp.Persistence
             {
                 Id = 2,
                 Name = "Komplet snorkelsæt",
+                Route = "snorkelSet",
                 Products = new List<Product>()
                 {
                     ProductRepo.GetById(21)!, // Maske/snorkel
