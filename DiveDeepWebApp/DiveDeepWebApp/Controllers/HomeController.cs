@@ -1,4 +1,5 @@
 using DiveDeepWebApp.Models;
+using DiveDeepWebApp.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,7 +9,8 @@ namespace DiveDeepWebApp.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            List<Package> packages = PackageRepo.GetAll();
+            return View(packages);
         }
 
         public IActionResult Privacy()

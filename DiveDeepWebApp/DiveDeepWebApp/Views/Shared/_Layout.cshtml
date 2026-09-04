@@ -10,32 +10,35 @@
         <link rel="stylesheet" href="~/DiveDeepWebApp.styles.css" asp-append-version="true" />
     </head>
 
-    <body>
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/transparent_logo.png" width="auto" height="36" alt="FirmaLogo"/>
+    <body class="d-flex flex-column min-vh-100">
+        <header class="sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 mb-3">
+                <div class="container">
+                    <a class="navbar-brand py-0" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/transparent_logo.png" width="auto" height="48" alt="DiveDeep logo" />
                     </a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
+                    <div id="mainNavigation" class="navbar-collapse collapse justify-content-end">
+                        <ul class="navbar-nav align-items-lg-center gap-lg-2 py-3 py-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
+                                <a class="nav-link text-dark px-3" asp-area="" asp-controller="Home" asp-action="Index">Forside</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Produkter</a>
+                                <a class="nav-link text-dark px-3" asp-area="" asp-controller="Products" asp-action="Index">Produkter</a>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">Om os</a>
+                                <a class="nav-link text-dark px-3" asp-area="" asp-controller="AboutUs" asp-action="Index">Om os</a>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt</a>
+                                <a class="nav-link text-dark px-3" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt os</a>
                             </li>
                         </ul>
                     </div>
@@ -43,35 +46,45 @@
             </nav>
         </header>
 
-        <div class="container">
+        <div class="container flex-grow-1">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
 
-        <footer class="border-top footer text-muted d-flex justify-content-between px-4 py-3">
-            <div class="d-flex flex-column">
-                <h5>Åbeningstider</h5>
-                <span>Mandag-fredag: 10:00 - 17:30</span>
-                <span>Lørdag: 10:00 - 14:00</span>
-                <span>Søndag: Lukket</span>
-            </div>
+        <footer class="footer bg-light text-dark border-top mt-5">
+            <div class="container py-5">
+                <div class="row g-4 justify-content-between align-items-start">
+                    <div class="col-12 col-md-auto">
+                        <p class="text-uppercase small fw-semibold text-primary mb-1">Åbningstider</p>
+                        <div class="d-flex flex-column gap-1 small text-muted">
+                            <span>Man–fre <strong class="text-dark fw-normal">10:00–17:30</strong></span>
+                            <span>Lørdag <strong class="text-dark fw-normal">10:00–14:00</strong></span>
+                            <span>Søndag <strong class="text-dark fw-normal">Lukket</strong></span>
+                        </div>
+                    </div>
 
-            <div class="d-flex gap-2 align-self-end">
-                <span>+45 6070 8090</span>
-                <span>|</span>
-                <span>info@divedeep.dk</span>
-            </div>
+                    <div class="col-12 col-md-auto text-md-end">
+                        <p class="text-uppercase small fw-semibold text-primary mb-1">Find os</p>
+                        
+                        <address class="small text-muted mb-2">
+                            Dykkervej 10<br />
+                            5000 Odense C
+                        </address>
 
-            <div class="d-flex flex-column text-end">
-                <h5>Adresse</h5>
-                <span>Dykkervej 10,</span>
-                <span>5000 Odense C</span>
-                <span>CVR-nummer: 81828384</span>
-                    @* <span>Telefonnummer: +45 6070 8090</span>
-                    <span>E-mail: info@divedeep.dk</span> *@
+                        <div class="d-flex flex-column align-items-md-end gap-0 small">
+                            <a class="text-dark text-decoration-none" href="tel:+4560708090">+45 60 70 80 90</a>
+                            <a class="text-dark text-decoration-none" href="mailto:info@divedeep.dk">info@divedeep.dk</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-top mt-4 pt-3 d-flex flex-column flex-sm-row justify-content-between gap-2 small text-muted">
+                    <span>&copy; 2026 DiveDeep</span>
+                    <span>CVR 81828384</span>
+                </div>
             </div>
-        </footer> 
+        </footer>
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

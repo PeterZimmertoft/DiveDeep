@@ -1,28 +1,29 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<Category>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3 pb-5">
-    @foreach (Category category in Model)
-    {
-        
-        <a class="col btn text-start" asp-area="" asp-action="Products" asp-route-category="@category.Route">
-            
-            @{
-                string path = $"/{category.Route}.png";
-            }
-            <div class="card" style="height: 225px; background-image: url(@path); background-repeat:no-repeat; background-size:contain; background-position:right;">
-                <div class="card-body d-flex flex-column">
-                    
-                    @* <img src="@path" /> *@
-                    <h5 class="card-title">@category.Name</h5>
-                    <p class="card-text">@category.Description</p>
-                    <img src="" alt=""/>
-                </div>
-            </div>
-        </a>
-        
-    }
-</div>
+<section class="py-4">
+    <h1 class="mb-4 display-6 fw-bold mb-1">Dyk ned i vores sortiment</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
+        @foreach (Category category in Model)
+        {
+            string path = $"/{category.Route}.png";
+
+            <a class="col text-decoration-none text-dark" asp-action="Products" asp-route-category="@category.Route">
+                <article class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-light" style="min-height: 220px;">
+                    <div class="card-body p-4 d-flex flex-column position-relative">
+                        <div class="position-relative" style="z-index: 1; max-width: 58%;">
+                            <h2 class="h4 fw-bold mb-2">@category.Name</h2>
+                            <p class="small text-muted mb-0">@category.Description</p>
+                        </div>
+
+                        <span class="mt-auto fw-semibold small position-relative" style="z-index: 1;">
+                            Se produkter <span aria-hidden="true">→</span>
+                        </span>
+
+                        <img src="@path" class="position-absolute end-0 bottom-0 p-3" style="width: 48%; max-height: 200px; object-fit: contain;" alt="@category.Name">
+                    </div>
+                </article>
+            </a>
+        }
+    </div>
+</section>

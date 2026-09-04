@@ -2,86 +2,105 @@
     ViewData["Title"] = "Produkter";
 }
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3 pb-5">
-    
-    @foreach (var product in Model)
-    {
-        <a class="col btn text-start">
-            @{
-                string path = "";
-                if (product is BCD)
-                    path = "/bcd.png";
-                else if (product is Suit)
-                    path = "/suit.png";
-                else if (product is Tank)
-                    path = "/tank.png";
-                else if (product is Regulator)
-                    path = "/regulator.png";
-                else if (product is Mask)
-                    path = "/mask.png";
-                else if (product is Fin)
-                    path = "/fin.png";
+<section class="py-4">
+    <h1 class="h2 mb-1 mb-4">Vælg dit produkt</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
+        @foreach (var product in Model)
+        {
+            string path = "";
+            string productType = "Udstyr";
+
+            if (product is BCD)
+            {
+                path = "/bcd.png";
+                productType = "BCD";
+            }
+            else if (product is Suit)
+            {
+                path = "/suit.png";
+                productType = "Dykkerdragt";
+            }
+            else if (product is Tank)
+            {
+                path = "/tank.png";
+                productType = "Tank";
+            }
+            else if (product is Regulator)
+            {
+                path = "/regulator.png";
+                productType = "Regulatorsæt";
+            }
+            else if (product is Mask)
+            {
+                path = "/mask.png";
+                productType = "Maske";
+            }
+            else if (product is Fin)
+            {
+                path = "/fin.png";
+                productType = "Finner";
             }
 
-            <div class="card mb-3" style="height: auto;">
-                <div class="row g-0">
-    
-                    <!-- Tekst kolonne -->
-                    <div class="col-md-6 d-flex align-items-center">
-                        <div class="card-body">
-                            <h5 class="card-title">@product.Brand</h5>
-                            <p class="card-text">@product.Description</p>
-                            @{
-                                if (product is Tank)
-                                {
-                                    <p class="card-text">Volumen: @product.Volume L</p>
-                                }
-                                else if (product is Suit)
-                                {
-                                    <p class="card-text">Model: @product.Model </p>
-                                    <p class="card-text">Type: @product.Type </p>
-                                    <p class="card-text">Køn: @product.Gender </p>
-                                    <p class="card-text">Størrelse: @product.Size </p>
-                                    <p class="card-text">Tykkelse: @product.Thickness </p>
+            <article class="col">
+                <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
+                    <div class="bg-light position-relative d-flex align-items-center justify-content-center p-4" style="height: 210px;">
+                        <span class="badge rounded-pill bg-primary text-white position-absolute top-0 end-0 m-3">@product.Price,- DKK</span>
+                        <img src="@path" class="img-fluid h-100" style="object-fit: contain;" alt="@product.Brand @productType">
+                    </div>
 
-                                }
-                                else if (product is Regulator)
-                                {
-                                    <p class="card-text">Trin 1: @product.FirstStage</p>
-                                    <p class="card-text">Trin 2: @product.SecondStage</p>
-                                    <p class="card-text">Octopus: @product.Octopus</p>
-                                }
-                                else if (product is Mask)
-                                {
-                                    <p class="card-text">Model: @product.Model</p>
-                                }
-                                else if (product is Fin)
-                                {
-                                    <p class="card-text">Model: @product.Model</p>
-                                    <p class="card-text">Størrelse: @product.Size</p>
-                                }
-                                else if (product is BCD)
-                                {
-                                    <p class="card-text">Model: @product.Model</p>
-                                    <p class="card-text">Størrelse: @product.Size</p>
-                                }
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="mb-3">
+                            <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
+
+                            <div class="mb-1">
+                                <h2 class="h5 mb-0">
+                                    @if (product is Tank)
+                                    {
+                                        <span>@product.Volume liters tank</span>
+                                    }
+                                    else if (product is Regulator)
+                                    {
+                                        <span>@product.FirstStage / @product.SecondStage</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@product.Model</span>
+                                    }
+                                </h2>
+                            </div>
+
+                            <p class="text-muted small mb-0">@product.Description</p>
+                        </div>
+
+                        <div class="small">
+                            @if (product is Suit)
+                            {
+                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Type</span><span>@product.Type</span></div>
+                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Tykkelse</span><span>@product.Thickness</span></div>
+                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Størrelser</span><span class="text-end ms-3">@product.Size</span></div>
                             }
-                            <h6 class="card-text">Pris: @product.Price,- dkk</h6>
+                            else if (product is Regulator)
+                            {
+                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Første trin</span><span>@product.FirstStage</span></div>
+                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Andet trin</span><span>@product.SecondStage</span></div>
+                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Octopus</span><span>@product.Octopus</span></div>
+                            }
+                            else if (product is BCD || product is Fin)
+                            {
+                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Størrelser</span><span class="text-end ms-3">@product.Size</span></div>
+                            }
+                            else if (product is Tank)
+                            {
+                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Volumen</span><span>@product.Volume L</span></div>
+                            }
                         </div>
                     </div>
-
-                    <!-- Billede kolonne -->
-                    <div class="col-md-6">
-                        <img src=@path class="img-fluid rounded-end" alt="Billede">
-                    </div>
-
                 </div>
-            </div>
-
-        </a>
-        
-    }
-</div>
+            </article>
+        }
+    </div>
+</section>
 
 
             
