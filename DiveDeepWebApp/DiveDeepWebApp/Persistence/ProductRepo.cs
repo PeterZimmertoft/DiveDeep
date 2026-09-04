@@ -6,6 +6,7 @@ namespace DiveDeepWebApp.Persistence
     public static class ProductRepo
     {
         private static List<Product> products;
+     
         static ProductRepo()
         {
             products = new List<Product>();
@@ -19,8 +20,13 @@ namespace DiveDeepWebApp.Persistence
         public static List<Product> GetAllByClass(Type type)
         {
             return GetAll().FindAll(x => x.GetType() == type);
-        } 
+        }
         
+        public static Product? GetById(int id)
+        {
+            return products.Find(x => x.Id == id);
+        }
+
         private static void InitPoductList()
         {
             InitBCDs();
@@ -29,12 +35,11 @@ namespace DiveDeepWebApp.Persistence
             InitRegulators();
             InitMasks();
             InitFins();
-
         }
         private static void InitBCDs()
         {
             // Scubapro – BCD Glide
-            products.Add(new BCD { Brand = "Scubapro", Description = "Beskrivelse her", Price = 140, Model = "BCD Glide", Size = "S, M, L" });
+            products.Add(new BCD { Id = 1, Brand = "Scubapro", Description = "Beskrivelse her", Price = 140, Model = "BCD Glide", Size = "S, M, L" });
 
             /*
             products.Add(new BCD{ Brand = "Scubapro", Description = "Beskrivelse her", Price = 140, Model = "BCD Glide", Size = "S" });
@@ -53,6 +58,7 @@ namespace DiveDeepWebApp.Persistence
             // Scubapro – BCD Hydros Pro
             products.Add(new BCD
             {
+                Id = 2,
                 Brand = "Scubapro",
                 Description = "Beskrivelse her",
                 Price = 200,
@@ -90,6 +96,7 @@ namespace DiveDeepWebApp.Persistence
             // Seac – BCD Modular
             products.Add(new BCD
             {
+                Id = 3,
                 Brand = "Seac",
                 Description = "Beskrivelse her",
                 Price = 145,
@@ -127,6 +134,7 @@ namespace DiveDeepWebApp.Persistence
             //Scubapro - Navigator Lite BCD
             products.Add(new BCD
             {
+                Id = 4,
                 Brand = "Scubapro",
                 Description = "Beskrivelse her",
                 Price = 125,
@@ -162,56 +170,56 @@ namespace DiveDeepWebApp.Persistence
         private static void InitSuits()
         {
             // Scubapro – Definition – 3 mm
-            products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });
+            products.Add(new Suit { Id = 5, Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });
             /*products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "S", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "M", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "L", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3 mm" });*/
 
             // Scubapro – Definition – 5 mm
-            products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
+            products.Add(new Suit { Id = 6, Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             //products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "S", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             //products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "M", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             //products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "L", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             //products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
 
             // Scubapro – Definition – 7 mm
-            products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });
+            products.Add(new Suit { Id = 7, Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });
             /*products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "S", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "M", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "L", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 100, Model = "Definition", Size = "XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "7 mm" });*/
 
             // Waterproof – W5 – 3.5 mm
-            products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });
+            products.Add(new Suit { Id = 8, Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });
             /*products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "S", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "M", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "L", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 100, Model = "W5", Size = "XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "3.5 mm" });*/
 
             // Fourth Element – Proteus – 5 mm
-            products.Add(new Suit { Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
+            products.Add(new Suit { Id = 9, Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "XS, S, M, L, XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             /*products.Add(new Suit { Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "S", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             products.Add(new Suit { Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "M", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             products.Add(new Suit { Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "L", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });
             products.Add(new Suit { Brand = "Fourth Element", Description = "Beskrivelse her", Price = 120, Model = "Proteus", Size = "XL", Type = "Våddragt", Gender = "Herre/Dame", Thickness = "5 mm" });*/
 
             // Scubapro – Exodry 4.0 – Tørdragt
-            products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
+            products.Add(new Suit { Id = 10, Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             /*products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "S", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "M", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "L", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Scubapro", Description = "Beskrivelse her", Price = 300, Model = "Exodry 4.0", Size = "XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });*/
 
             // Waterproof – D7 Evo – Tørdragt
-            products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
+            products.Add(new Suit { Id = 11, Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             /*products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "S", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "M", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "L", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Waterproof", Description = "Beskrivelse her", Price = 320, Model = "D7 Evo", Size = "XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });*/
 
             // Santi – E.Lite Plus – Tørdragt
-            products.Add(new Suit { Brand = "Santi", Description = "Beskrivelse her", Price = 350, Model = "E.Lite Plus", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
+            products.Add(new Suit { Id = 12, Brand = "Santi", Description = "Beskrivelse her", Price = 350, Model = "E.Lite Plus", Size = "XS, S, M, L, XL", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             /*products.Add(new Suit { Brand = "Santi", Description = "Beskrivelse her", Price = 350, Model = "E.Lite Plus", Size = "S", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Santi", Description = "Beskrivelse her", Price = 350, Model = "E.Lite Plus", Size = "M", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
             products.Add(new Suit { Brand = "Santi", Description = "Beskrivelse her", Price = 350, Model = "E.Lite Plus", Size = "L", Type = "Tørdragt", Gender = "Herre/Dame", Thickness = "N/A" });
@@ -221,6 +229,7 @@ namespace DiveDeepWebApp.Persistence
         {
             products.Add(new Tank
             {
+                Id = 13,
                 Brand = "Scubapro",
                 Price = 150,
                 Volume = 5
@@ -228,6 +237,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Tank
             {
+                Id = 14,
                 Brand = "Scubapro",
                 Price = 160,
                 Volume = 10
@@ -235,6 +245,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Tank
             {
+                Id = 15,
                 Brand = "Scubapro",
                 Price = 170,
                 Volume = 12
@@ -242,6 +253,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Tank
             {
+                Id = 16,
                 Brand = "Scubapro",
                 Price = 180,
                 Volume = 15
@@ -252,6 +264,7 @@ namespace DiveDeepWebApp.Persistence
             // Scubapro – MK25EVO / S600 / R105
             products.Add(new Regulator
             {
+                Id = 17,
                 Brand = "Scubapro",
                 FirstStage = "MK25EVO",
                 SecondStage = "S600",
@@ -262,6 +275,7 @@ namespace DiveDeepWebApp.Persistence
             // Scubapro – MK17EVO / C370 / R095
             products.Add(new Regulator
             {
+                Id = 18,
                 Brand = "Scubapro",
                 FirstStage = "MK17EVO",
                 SecondStage = "C370",
@@ -272,6 +286,7 @@ namespace DiveDeepWebApp.Persistence
             // Scubapro – MK25EVO BT / A700 Carbon BT / S270
             products.Add(new Regulator
             {
+                Id = 19,
                 Brand = "Scubapro",
                 FirstStage = "MK25EVO BT",
                 SecondStage = "A700 Carbon BT",
@@ -283,6 +298,7 @@ namespace DiveDeepWebApp.Persistence
         { 
             products.Add(new Mask
             {
+                Id = 20,
                 Brand = "Scubapro",
                 Model = "Ghost",
                 Price = 50
@@ -290,6 +306,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 21,
                 Brand = "Scubapro",
                 Model = "D-Mask",
                 Price = 60
@@ -297,6 +314,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 22,
                 Brand = "Scubapro",
                 Model = "Spectra Mini",
                 Price = 50
@@ -304,6 +322,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 23,
                 Brand = "Scubapro",
                 Model = "Crystal VU",
                 Price = 75
@@ -311,6 +330,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 24,
                 Brand = "Fourth Element",
                 Model = "Scout Kontrast",
                 Price = 75
@@ -318,6 +338,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 25,
                 Brand = "Fourth Element",
                 Model = "Scout Enhance",
                 Price = 75
@@ -325,6 +346,7 @@ namespace DiveDeepWebApp.Persistence
 
             products.Add(new Mask
             {
+                Id = 26,
                 Brand = "Tusa",
                 Model = "Element",
                 Price = 75
@@ -332,13 +354,13 @@ namespace DiveDeepWebApp.Persistence
         }
         private static void InitFins()
         {
-            products.Add(new Fin { Brand = "Scubapro", Description = "Beskrivelse her", Price = 50, Model = "Jet Fin", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Scubapro", Description = "Beskrivelse her", Price = 50, Model = "GO Travel", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Scubapro", Description = "Beskrivelse her", Price = 60, Model = "Seawing Supernova", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Seac", Description = "Beskrivelse her", Price = 50, Model = "Propulsion", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Seac", Description = "Beskrivelse her", Price = 50, Model = "ALA", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Forth Element", Description = "Beskrivelse her", Price = 75, Model = "Tech", Size = "XS, S, M, L, XL" });
-            products.Add(new Fin { Brand = "Forth Element", Description = "Beskrivelse her", Price = 80, Model = "Rec Fin", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 27, Brand = "Scubapro", Description = "Beskrivelse her", Price = 50, Model = "Jet Fin", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 28, Brand = "Scubapro", Description = "Beskrivelse her", Price = 50, Model = "GO Travel", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 29, Brand = "Scubapro", Description = "Beskrivelse her", Price = 60, Model = "Seawing Supernova", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 30, Brand = "Seac", Description = "Beskrivelse her", Price = 50, Model = "Propulsion", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 31, Brand = "Seac", Description = "Beskrivelse her", Price = 50, Model = "ALA", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 32, Brand = "Forth Element", Description = "Beskrivelse her", Price = 75, Model = "Tech", Size = "XS, S, M, L, XL" });
+            products.Add(new Fin { Id = 33, Brand = "Forth Element", Description = "Beskrivelse her", Price = 80, Model = "Rec Fin", Size = "XS, S, M, L, XL" });
         }
     }
 }
