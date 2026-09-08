@@ -18,5 +18,7 @@ namespace DiveDeepWebApp.Models
 
         [Required] 
         public ICollection<Product> Products { get; set; } 
+
+        public IList<PackageProduct> PackageProducts { get; set; }
     }
 }

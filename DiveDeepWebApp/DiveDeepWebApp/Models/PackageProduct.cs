@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiveDeepWebApp.Models
 {
-    public class Tank : Product
+    public class PackageProduct
     {
-        [Key]
+
         public int ProductId { get; set; }
 
         public Product Product { get; set; }
-
-        [Required]
-        public int Volume { get; set; }
+        
+        public int PackageId { get; set; }
+        
+        public Package Package { get; set; }
     }
 }

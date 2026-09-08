@@ -7,6 +7,10 @@ namespace DiveDeepWebApp.Models
 {
     public class Mask : Product
     {
+        [Key]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
         [Required]
         public string Model { get; set; } = string.Empty;
     }

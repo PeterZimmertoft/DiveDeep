@@ -17,5 +17,7 @@ namespace DiveDeepWebApp.Models
 
         [Required]
         public byte[] Image { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }

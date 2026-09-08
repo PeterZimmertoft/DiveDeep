@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiveDeepWebApp.Models
 {
-    public abstract class Product
+    public class Product
     {
         [Key]
         public int Id { get; set; }
@@ -25,7 +25,30 @@ namespace DiveDeepWebApp.Models
         [Required]
         public int CategoryId { get; set; }
 
+        [ValidateNever]
+        [BindNever]
+        public Category Category { get; set; }
+
         public int PackageId { get; set; }
+
+        [ValidateNever]
+        [BindNever]
+        public Package Package { get; set; }
+
+        public BCD? BCD { get; set; }
+
+        public Fin? Fin {  get; set; }
+
+        public Mask? Mask { get; set; }
+
+        public Regulator? Regulator { get; set; }
+
+        public Suit? Suit { get; set; }
+
+        public Tank? Tank { get; set; }
+
+        public IList<PackageProduct> PackageProducts { get; set; }
+
     }
 
 }

@@ -7,6 +7,10 @@ namespace DiveDeepWebApp.Models
 {
     public class Regulator : Product
     {
+        [Key]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
         [Required]
         public string FirstStage { get; set; } = string.Empty;
         
