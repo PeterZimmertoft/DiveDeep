@@ -23,28 +23,28 @@ namespace DiveDeepWebApp.Persistence
             {
                 Id = 1,
                 Name = "Komplet dykkersæt",
-                Route = "divingSet",
-                Products = new List<Product>()
-                {
-                    ProductRepo.GetById(1)!,  // BCD
-                    ProductRepo.GetById(5)!,  // Dykkerdragt
-                    ProductRepo.GetById(17)!, // Regulatorsæt
-                    ProductRepo.GetById(13)!, // Tank
-                    ProductRepo.GetById(27)!, // Finner
-                    ProductRepo.GetById(20)!  // Maske/snorkel
-                }
+                //Route = "divingSet",
+                //Products = new List<Product>()
+                //{
+                //    ProductRepo.GetById(1)!,  // BCD
+                //    ProductRepo.GetById(5)!,  // Dykkerdragt
+                //    ProductRepo.GetById(17)!, // Regulatorsæt
+                //    ProductRepo.GetById(13)!, // Tank
+                //    ProductRepo.GetById(27)!, // Finner
+                //    ProductRepo.GetById(20)!  // Maske/snorkel
+                //}
             });
 
             packages.Add(new Package
             {
                 Id = 2,
                 Name = "Komplet snorkelsæt",
-                Route = "snorkelSet",
-                Products = new List<Product>()
-                {
-                    ProductRepo.GetById(21)!, // Maske/snorkel
-                    ProductRepo.GetById(28)!  // Finner
-                }
+                //Route = "snorkelSet",
+                //Products = new List<Product>()
+                //{
+                //    ProductRepo.GetById(21)!, // Maske/snorkel
+                //    ProductRepo.GetById(28)!  // Finner
+                //}
             });
         }
     }

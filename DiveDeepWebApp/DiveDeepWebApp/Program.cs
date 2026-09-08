@@ -1,3 +1,6 @@
+using DiveDeepWebApp.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace DiveDeepWebApp
 {
     public class Program
@@ -5,6 +8,10 @@ namespace DiveDeepWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<DiveDeepContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

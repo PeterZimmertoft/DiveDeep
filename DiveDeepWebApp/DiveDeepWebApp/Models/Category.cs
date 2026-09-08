@@ -15,9 +15,6 @@ namespace DiveDeepWebApp.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public string Route {  get; set; } = string.Empty;
-
-        [Required]
         public byte[] Image { get; set; }
 
         public List<Product> Products { get; set; }

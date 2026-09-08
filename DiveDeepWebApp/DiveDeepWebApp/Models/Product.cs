@@ -29,26 +29,6 @@ namespace DiveDeepWebApp.Models
         [BindNever]
         public Category Category { get; set; }
 
-        public int PackageId { get; set; }
-
-        [ValidateNever]
-        [BindNever]
-        public Package Package { get; set; }
-
-        public BCD? BCD { get; set; }
-
-        public Fin? Fin {  get; set; }
-
-        public Mask? Mask { get; set; }
-
-        public Regulator? Regulator { get; set; }
-
-        public Suit? Suit { get; set; }
-
-        public Tank? Tank { get; set; }
-
-        public IList<PackageProduct> PackageProducts { get; set; }
-
+        //public List<PackageProduct> PackageProducts { get; set; }
     }
-
 }

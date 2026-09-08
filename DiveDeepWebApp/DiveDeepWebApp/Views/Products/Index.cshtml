@@ -6,9 +6,9 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
         @foreach (Category category in Model)
         {
-            string path = $"/{category.Route}.png";
+            @* string path = $"/{category.Route}.png"; *@
 
-            <a class="col text-decoration-none text-dark" asp-action="Products" asp-route-category="@category.Route">
+            <a class="col text-decoration-none text-dark" asp-action="Products" asp-route-category="@category.Id">
                 <article class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-light" style="min-height: 220px;">
                     <div class="card-body p-4 d-flex flex-column position-relative">
                         <div class="position-relative" style="z-index: 1; max-width: 58%;">
@@ -20,7 +20,7 @@
                             Se produkter <span aria-hidden="true">→</span>
                         </span>
 
-                        <img src="@path" class="position-absolute end-0 bottom-0 p-3" style="width: 48%; max-height: 200px; object-fit: contain;" alt="@category.Name">
+                        @* <img src="@path" class="position-absolute end-0 bottom-0 p-3" style="width: 48%; max-height: 200px; object-fit: contain;" alt="@category.Name"> *@
                     </div>
                 </article>
             </a>

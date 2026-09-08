@@ -7,11 +7,6 @@ namespace DiveDeepWebApp.Models
 {
     public class Tank : Product
     {
-        [Key]
-        public int ProductId { get; set; }
-
-        public Product Product { get; set; }
-
         [Required]
         public int Volume { get; set; }
     }

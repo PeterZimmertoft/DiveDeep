@@ -14,11 +14,8 @@ namespace DiveDeepWebApp.Models
         public string Name { get; set; }
 
         [Required]
-        public string Route { get; set; }
+        public byte[] Image { get; set; } 
 
-        [Required] 
-        public ICollection<Product> Products { get; set; } 
-
-        public IList<PackageProduct> PackageProducts { get; set; }
+        public List<PackageProduct> PackageProducts { get; set; }
     }
 }
