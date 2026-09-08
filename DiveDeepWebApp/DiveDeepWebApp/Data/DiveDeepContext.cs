@@ -34,38 +34,48 @@ namespace DiveDeepWebApp.Data
                 .WithMany(category => category.Products)
                 .HasForeignKey(product => product.CategoryId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<BCD>(product => product.BCD)
-                .WithOne(bcd => bcd.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<BCD>()
+                .HasOne<Product>(bcd => bcd.Product)
+                .WithOne(product => product.BCD)
+                .HasForeignKey<BCD>(bcd => bcd.ProductId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<Fin>(product => product.Fin)
-                .WithOne(fin => fin.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<Fin>()
+                .HasOne<Product>(fin => fin.Product)
+                .WithOne(product => product.Fin)
+                .HasForeignKey<Fin>(fin => fin.ProductId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<Mask>(product => product.Mask)
-                .WithOne(mask => mask.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<Mask>()
+                .HasOne<Product>(mask => mask.Product)
+                .WithOne(product => product.Mask)
+                .HasForeignKey<Mask>(mask => mask.ProductId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<Regulator>(product => product.Regulator)
-                .WithOne(regulator => regulator.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<Regulator>()
+                .HasOne<Product>(regulator => regulator.Product)
+                .WithOne(product => product.Regulator)
+                .HasForeignKey<Regulator>(regulator => regulator.ProductId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<Suit>(product => product.Suit)
-                .WithOne(suit => suit.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<Suit>()
+                .HasOne<Product>(suit => suit.Product)
+                .WithOne(product => product.Suit)
+                .HasForeignKey<Suit>(suit => suit.ProductId);
 
-            modelBuilder.Entity<Product>()
-                .HasOne<Tank>(product => product.Tank)
-                .WithOne(tank => tank.Product)
-                .HasForeignKey<Product>(product => product.Id);
+            modelBuilder.Entity<Tank>()
+                .HasOne<Product>(tank => tank.Product)
+                .WithOne(product => product.Tank)
+                .HasForeignKey<Tank>(tank => tank.ProductId);
 
             modelBuilder.Entity<PackageProduct>()
                 .HasKey(packageProduct => new { packageProduct.PackageId, packageProduct.ProductId });
+
+            modelBuilder.Entity<PackageProduct>()
+                .HasOne<Package>(pp => pp.Package)
+                .WithMany(p => p.PackageProducts)
+                .HasForeignKey(pp => pp.PackageId);
+
+            modelBuilder.Entity<PackageProduct>()
+                .HasOne<Product>(pp => pp.Product)
+                .WithMany(p => p.PackageProducts)
+                .HasForeignKey(pp => pp.ProductId);
 
         }
     }
