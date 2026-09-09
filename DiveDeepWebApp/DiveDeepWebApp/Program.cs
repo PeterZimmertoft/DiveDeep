@@ -39,7 +39,12 @@ namespace DiveDeepWebApp
             app.MapStaticAssets();
 
             app.MapControllerRoute(
-                name: "products-category",
+                name: "product",
+                pattern: "products/{categoryId}/{productId}",
+                defaults: new { controller = "Products", action = "Product" });
+
+            app.MapControllerRoute(
+                name: "category",
                 pattern: "products/{categoryId}",
                 defaults: new { controller = "Products", action = "Products" });
 

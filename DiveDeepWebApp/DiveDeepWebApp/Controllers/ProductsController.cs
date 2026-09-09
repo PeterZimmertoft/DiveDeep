@@ -28,5 +28,10 @@ namespace DiveDeepWebApp.Controllers
             ProductsViewModel productsViewModel = productService.GetByCategoryId(categoryId);
             return View(productsViewModel);
         }
+
+        public IActionResult Product(int categoryId, int productId)
+        {
+            return View();
+        }
     }
 }
