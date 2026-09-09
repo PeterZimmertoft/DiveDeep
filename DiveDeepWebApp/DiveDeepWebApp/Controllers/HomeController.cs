@@ -10,11 +10,20 @@ namespace DiveDeepWebApp.Controllers
     {
         public IActionResult Index()
         {
-            List<Package> packages = PackageRepo.GetAll();
-            return View(packages);
+            return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }

@@ -1,4 +1,6 @@
 using DiveDeepWebApp.Data;
+using DiveDeepWebApp.Persistence;
+using DiveDeepWebApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepWebApp
@@ -16,6 +18,10 @@ namespace DiveDeepWebApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,20 +36,17 @@ namespace DiveDeepWebApp
             app.UseRouting();
 
             app.UseAuthorization();
-
             app.MapStaticAssets();
 
             app.MapControllerRoute(
                 name: "products-category",
-                pattern: "products/{category}",
+                pattern: "products/{categoryId}",
                 defaults: new { controller = "Products", action = "Products" });
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
-
-            
 
             app.Run();
         }

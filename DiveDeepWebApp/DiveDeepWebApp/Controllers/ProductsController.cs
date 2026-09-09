@@ -1,35 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DiveDeepWebApp.Models;
 using DiveDeepWebApp.Persistence;
+using DiveDeepWebApp.Services;
+using DiveDeepWebApp.ViewModels;
 
 namespace DiveDeepWebApp.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IProductService productService;
+
+        public ProductsController(ICategoryRepository categoryRepository, IProductService productService) 
+        {
+            this.categoryRepository = categoryRepository;
+            this.productService = productService;
+        }
+
         public IActionResult Index()
         {
-            List<Category> categories = CategoryRepo.GetAll();
+            List<Category> categories = categoryRepository.GetAll();
             return View(categories);
         }
 
-        public IActionResult Products(string category)
+        public IActionResult Products(int categoryId)
         {
-            Dictionary<string, Type> map = new Dictionary<string, Type>
-            {
-                { "bcd", typeof(BCD) },
-                { "suit", typeof(Suit) },
-                { "tank", typeof(Tank) },
-                { "regulator", typeof(Regulator) },
-                { "mask", typeof(Mask) },
-                { "fin", typeof(Fin) },
-                { "completeSet", null },
-                { "snorkelSet", null }
-            };
-            
-            var type = map[category];
-            List<Product> products = ProductRepo.GetAllByClass(type);
-
-            return View(products);
+            ProductsViewModel productsViewModel = productService.GetByCategoryId(categoryId);
+            return View(productsViewModel);
         }
     }
 }

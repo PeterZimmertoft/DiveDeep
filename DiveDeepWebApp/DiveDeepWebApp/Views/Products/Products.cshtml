@@ -1,11 +1,121 @@
-﻿@{
-    ViewData["Title"] = "Produkter";
+﻿@model ProductsViewModel
+@{
+    ViewData["Title"] = $"{Model.CategoryName} - Dive Deep";
 }
 
 <section class="py-4">
     <h1 class="h2 mb-1 mb-4">Vælg dit produkt</h1>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
+        @foreach (string productName in Model.ProductsByName.Keys)
+        {
+            List<Product> products = Model.ProductsByName.GetValueOrDefault(productName, new List<Product>());
+            Product product = products.First();
+
+            byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
+
+            <article class="col">
+                <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
+                    <div class="bg-light position-relative d-flex align-items-center justify-content-center p-4" style="height: 210px;">
+                        <span class="badge rounded-pill bg-primary text-white position-absolute top-0 end-0 m-3">@product.Price,- DKK</span>
+                        <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid h-100 w-100" style="object-fit: contain;" alt="@product.Brand">
+                    </div>
+
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="mb-3">
+                            <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
+
+                            <div class="mb-1">
+                                <h2 class="h5 mb-0">
+                                    <span>@productName</span>
+                                </h2>
+                            </div>
+
+                            <p class="text-muted small mb-0">@product.Description</p>
+                        </div>
+
+                        <div class="small">
+                            @if (product is BCD bcd)
+                            {
+                                List<BCD> bcds = products.OfType<BCD>().ToList();
+                                List<string> sizes = bcds.Select(s => s.Size).Distinct().ToList();
+
+                                <div class="d-flex justify-content-between py-2">
+                                    <span class="text-muted">Størrelser</span>
+                                    <span>@string.Join(", ", sizes)</span>
+                                </div>
+                            }
+                            else if (product is Suit suit)
+                            {
+                                List<Suit> suits = products.OfType<Suit>().ToList();
+
+                                List<string> genders = suits.Select(s => s.Gender).Distinct().ToList();
+                                List<string?> thickness = suits.Select(s => s.Thickness).Distinct().ToList();
+                                List<string> sizes = suits.Select(s => s.Size).Distinct().ToList();
+
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">Type</span>
+                                    <span>@suit.Type</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">Køn</span>
+                                    <span>@string.Join(", ", genders)</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">Tykkelse</span>
+                                    <span>@string.Join(", ", thickness)</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between py-2">
+                                    <span class="text-muted">Størrelser</span>
+                                    <span>@string.Join(", ", sizes)</span>
+                                </div>
+                            }
+                            else if (product is Tank tank)
+                            {
+                                <div class="d-flex justify-content-between pt-2">
+                                    <span class="text-muted">Volume</span>
+                                    <span>@tank.Volume L</span>
+                                </div>
+
+                            }
+                            else if (product is Regulator regulator)
+                            {
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">Første trin</span>
+                                    <span>@regulator.FirstStage</span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="text-muted">Andet trin</span>
+                                    <span>@regulator.SecondStage</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between pt-2">
+                                    <span class="text-muted">Octopus</span>
+                                    <span>@regulator.Octopus</span>
+                                </div>
+                            }
+                            else if (product is Fin fin)
+                            {
+                                List<Fin> fins = products.OfType<Fin>().ToList();
+                                List<string> sizes = fins.Select(s => s.Size).Distinct().ToList();
+
+                                <div class="d-flex justify-content-between py-2">
+                                    <span class="text-muted">Størrelser</span>
+                                    <span>@string.Join(", ", sizes)</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+    
+    @* <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
         @foreach (var product in Model)
         {
             string path = "";
@@ -99,9 +209,10 @@
                 </div>
             </article>
         }
-    </div>
+    </div> *@
 </section>
 
 
             
+
 

@@ -5,18 +5,15 @@ namespace DiveDeepWebApp.Data
 {
     public class DiveDeepContext : DbContext
     {
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
 
-        DbSet<Category> Categories { get; set; }
-        DbSet<Product> Products { get; set; }
-        //DbSet<Package> Packages { get; set; }
-        //DbSet<PackageProduct> PackageProducts { get; set; }
-
-        DbSet<BCD> BCDs { get; set; }
-        DbSet<Fin> Fins { get; set; }
-        DbSet<Mask> Masks { get; set; }
-        DbSet<Regulator> Regulators { get; set; }
-        DbSet<Suit> Suits { get; set; }
-        DbSet<Tank> Tanks { get; set; }
+        public DbSet<BCD> BCDs { get; set; }
+        public DbSet<Fin> Fins { get; set; }
+        public DbSet<Mask> Masks { get; set; }
+        public DbSet<Regulator> Regulators { get; set; }
+        public DbSet<Suit> Suits { get; set; }
+        public DbSet<Tank> Tanks { get; set; }
 
         public DiveDeepContext(DbContextOptions options) : base(options)
         {
