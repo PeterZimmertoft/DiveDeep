@@ -8,10 +8,7 @@
 
 <section class="py-4 py-lg-5">
     <div class="mx-auto" style="max-width: 960px;">
-        <a class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold mb-3"
-           asp-controller="products"
-           asp-action="products"
-           asp-route-categoryId="@product.CategoryId">
+        <a class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold mb-3" asp-controller="products" asp-action="products" asp-route-categoryId="@product.CategoryId">
             <span aria-hidden="true">&larr;</span>
             Tilbage til produkter
         </a>
@@ -61,6 +58,26 @@
                         {
                             <partial name="_Fin" model="@Model.OfType<Fin>().ToList()" />
                         }
+
+                        <div class="border-top mt-4 pt-4">
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label small fw-semibold" for="bookingStart">Startdato</label>
+                                    <input class="form-control rounded-3" type="date" id="bookingStart" name="bookingStart">
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <label class="form-label small fw-semibold" for="bookingEnd">Slutdato</label>
+                                    <input class="form-control rounded-3" type="date" id="bookingEnd" name="bookingEnd">
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary rounded-pill fw-semibold w-100 py-2" type="button"> 
+                                        Book 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
