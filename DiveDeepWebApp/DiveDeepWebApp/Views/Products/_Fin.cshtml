@@ -1,6 +1,6 @@
-﻿@model List<BCD>
+﻿@model List<Fin>
 @{
-    BCD product = Model.First();
+    Fin product = Model.First();
     List<string> sizes = Model.Select(x => x.Size).Distinct().ToList();
 }
 

@@ -1,0 +1,67 @@
+﻿@model List<Suit>
+@{
+    Suit product = Model.First();
+
+    List<string> genders = Model.Select(x => x.Gender).Distinct().ToList();
+    List<string> sizes = Model.Select(x => x.Size).Distinct().ToList();
+    List<string> thicknesses = Model.Select(x => x.Thickness!).Distinct().ToList();
+}
+
+<div class="d-flex flex-column gap-4">
+    <div class="small bg-light rounded-3 px-3 mb-0">
+        <div class="d-flex align-items-center justify-content-between gap-3 py-2 border-bottom">
+            <span class="text-muted fw-normal">Model</span>
+            <span class="fw-semibold text-end mb-0">@product.Model</span>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between gap-3 py-2">
+            <span class="text-muted fw-normal">Type</span>
+            <span class="fw-semibold text-end mb-0">@product.Type</span>
+        </div>
+    </div>
+
+    <fieldset class="border-0 p-0 m-0">
+        <legend class="h6 fw-semibold mb-2">Vælg køn</legend>
+        <div class="d-flex flex-wrap gap-2">
+            @foreach (string gender in genders)
+            {
+                string id = $"gender-{gender}";
+
+                <input class="btn-check" type="radio" name="selectedGender" id="@id" value="@gender">
+                <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
+                    @gender
+                </label>
+            }
+        </div>
+    </fieldset>
+
+    <fieldset class="border-0 p-0 m-0">
+        <legend class="h6 fw-semibold mb-2">Vælg størrelse</legend>
+        <div class="d-flex flex-wrap gap-2">
+            @foreach (string size in sizes)
+            {
+                string id = $"size-{size}";
+
+                <input class="btn-check" type="radio" name="selectedSize" id="@id" value="@size">
+                <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
+                    @size
+                </label>
+            }
+        </div>
+    </fieldset>
+
+    <fieldset class="border-0 p-0 m-0">
+        <legend class="h6 fw-semibold mb-2">Vælg tykkelse</legend>
+        <div class="d-flex flex-wrap gap-2">
+            @foreach (string thickness in thicknesses)
+            {
+                string id = $"thickness-{thickness}";
+
+                <input class="btn-check" type="radio" name="selectedThickness" id="@id" value="@thickness" checked="@(thicknesses.Count == 1)">
+                <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
+                    @thickness
+                </label>
+            }
+        </div>
+    </fieldset>
+</div>

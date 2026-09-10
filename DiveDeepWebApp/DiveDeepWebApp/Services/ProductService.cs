@@ -19,21 +19,7 @@ namespace DiveDeepWebApp.Services
             
             string category = products.FirstOrDefault()?.Category?.Name ?? "Produkter";
             Dictionary<string, List<Product>> productsByName = products
-                .GroupBy(product => 
-                {
-                    if (product is Tank tank)
-                    {
-                        return $"{tank.Volume} liters tank";
-                    } 
-                    else if (product is Regulator regulator)
-                    {
-                        return $"{regulator.FirstStage} / {regulator.SecondStage}";
-                    }
-
-                    dynamic dynamicProduct = (dynamic)product;
-                    string model = (string)dynamicProduct.Model;
-                    return model;
-                })
+                .GroupBy(product => product.Name)
                 .ToDictionary(group => group.Key, group => group.ToList());
 
             return new ProductsViewModel
@@ -46,6 +32,11 @@ namespace DiveDeepWebApp.Services
         public Product? GetById(int productId)
         {
             return productRepository.GetById(productId);
+        }
+
+        public List<Product> GetAllByName(string name)
+        {
+            return productRepository.GetAllByName(name);
         }
     }
 }

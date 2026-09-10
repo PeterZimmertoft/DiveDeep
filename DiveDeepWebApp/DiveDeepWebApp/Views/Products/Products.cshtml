@@ -22,20 +22,18 @@
                     </div>
 
                     <div class="card-body d-flex flex-column p-4">
-                        <div>
-                            <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
-                            <h2 class="h5 mb-0">@productName</h2>
-                        </div>
+                        <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
+                        <h2 class="h5 mb-0">@productName</h2>
 
-                            @if (product is Suit suit)
-                            {
-                                <div class="small mt-3">
-                                    <div class="d-flex justify-content-between pt-2">
-                                        <span class="text-muted">Type</span>
-                                        <span>@suit.Type</span>
-                                    </div>
+                        @if (product is Suit suit)
+                        {
+                            <div class="small mt-3">
+                                <div class="d-flex justify-content-between pt-2">
+                                    <span class="text-muted">Type</span>
+                                    <span>@suit.Type</span>
                                 </div>
-                            }
+                            </div>
+                        }
                     </div>
                 </div>
             </a>
