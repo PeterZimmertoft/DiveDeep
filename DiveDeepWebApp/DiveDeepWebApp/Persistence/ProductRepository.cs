@@ -21,5 +21,15 @@ namespace DiveDeepWebApp.Persistence
                 .Include(x => x.Category)
                 .ToList();
         }
+
+        public Product? GetById(int productId)
+        {
+            return context.Products
+                .AsNoTracking()
+                .Where(p => p.Id == productId)
+                .Include(p => p.Category)
+                .FirstOrDefault(); 
+        }
+
     }
 }

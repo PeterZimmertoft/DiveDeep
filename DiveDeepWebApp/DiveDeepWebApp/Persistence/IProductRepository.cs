@@ -5,5 +5,7 @@ namespace DiveDeepWebApp.Persistence
     public interface IProductRepository
     {
         List<Product> GetByCategoryId(int categoryId);
+
+        Product? GetById(int productId);
     }
 }

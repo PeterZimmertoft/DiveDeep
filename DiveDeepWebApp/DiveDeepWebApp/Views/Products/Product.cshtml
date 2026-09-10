@@ -1,8 +1,13 @@
-﻿@model List<Category>
+﻿@model Product
 @{
     ViewData["title"] = "Produkt??? - Dive Deep";
 }
 
+
 <section class="py-4">
     <h1 class="mb-4 display-6 fw-bold mb-1">Produkt underside</h1>
+    @if (Model is BCD bcd)
+    {
+        <partial name="_BCD" model="@Model"/>
+    }
 </section>

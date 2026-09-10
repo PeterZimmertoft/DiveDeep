@@ -42,5 +42,10 @@ namespace DiveDeepWebApp.Services
                 ProductsByName = productsByName
             };
         }
+
+        public Product? GetById(int productId)
+        {
+            return productRepository.GetById(productId);
+        }
     }
 }

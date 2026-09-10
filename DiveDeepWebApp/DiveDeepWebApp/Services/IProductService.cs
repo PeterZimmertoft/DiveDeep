@@ -1,9 +1,12 @@
-﻿using DiveDeepWebApp.ViewModels;
+﻿using DiveDeepWebApp.Models;
+using DiveDeepWebApp.ViewModels;
 
 namespace DiveDeepWebApp.Services
 {
     public interface IProductService
     {
         ProductsViewModel GetByCategoryId(int categoryId);
+
+        Product? GetById(int productId);
     }
 }
