@@ -5,13 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiveDeepWebApp.Models
 {
-    public class Product
+    public abstract class Product
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
         public string Brand { get; set; } = string.Empty;
+
+        //[Required]
+        public abstract string Name { get; set; } 
 
         [Required]
         public double Price { get; set; }
@@ -28,7 +31,5 @@ namespace DiveDeepWebApp.Models
         [ValidateNever]
         [BindNever]
         public Category Category { get; set; }
-
-        //public List<PackageProduct> PackageProducts { get; set; }
     }
 }

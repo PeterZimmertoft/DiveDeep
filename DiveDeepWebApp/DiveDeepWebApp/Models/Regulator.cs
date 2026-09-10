@@ -7,6 +7,12 @@ namespace DiveDeepWebApp.Models
 {
     public class Regulator : Product
     {
+        public override string Name
+        {
+            get => $"{FirstStage} / {SecondStage}";
+            set;
+        }
+
         [Required]
         public string FirstStage { get; set; } = string.Empty;
         

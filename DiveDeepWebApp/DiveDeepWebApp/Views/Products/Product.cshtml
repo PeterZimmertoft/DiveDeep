@@ -1,13 +1,51 @@
 ﻿@model Product
 @{
-    ViewData["title"] = "Produkt??? - Dive Deep";
+    ViewData["Title"] = $"{Model.Brand} - Dive Deep";
+    byte[] productImage = Model.Image is { Length: > 0 } ? Model.Image : Model.Category?.Image ?? Array.Empty<byte>();
 }
 
 
 <section class="py-4">
-    <h1 class="mb-4 display-6 fw-bold mb-1">Produkt underside</h1>
-    @if (Model is BCD bcd)
-    {
-        <partial name="_BCD" model="@Model"/>
-    }
+    <a class="d-inline-block text-decoration-none mb-4" asp-controller="products" asp-action="products" asp-route-categoryId="@Model.CategoryId">
+        &larr; Tilbage til produkter
+    </a>
+
+    <div class="card border-0 rounded-4 shadow-sm overflow-hidden mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex flex-column flex-md-row align-items-md-start gap-4">
+                <div class="bg-light rounded-4 d-flex align-items-center justify-content-center flex-shrink-0 p-3" style="width: 200px; height: 200px;">
+                    @* @if (productImage.Length > 0)
+                    {
+                        <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid w-100 h-100" style="object-fit: contain;" alt="@Model.Brand">
+                    }
+                    else
+                    {
+                        <span class="text-muted small text-center">Intet billede tilgængeligt</span>
+                    } *@
+                </div>
+            </div>
+
+            @*     <div class="flex-grow-1">
+                    <p class="text-uppercase text-muted small fw-semibold mb-1">@Model.Category?.Name</p>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                        <h1 class="h2 mb-0">@Model.Brand</h1>
+                        <span class="badge rounded-pill bg-primary text-white">@Model.Price,- DKK</span>
+                    </div>
+
+                    @if (Model is BCD bcd)
+                    {
+                        <partial name="_BCD" model="@bcd" />
+                    }
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <div class="border-top mt-4 pt-4">
+                    <h2 class="h5 mb-2">Beskrivelse</h2>
+                    <p class="text-muted mb-0">@Model.Description</p>
+                </div>
+            } *@
+        </div>
+    </div>
 </section>

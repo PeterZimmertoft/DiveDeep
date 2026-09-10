@@ -1,4 +1,22 @@
 ﻿@model BCD
 
-<h1>@Model.Model</h1>
-<h2>@Model.Brand</h2>
+@{
+    string[] sizes = Model.Size.Split(
+        ',',
+        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+}
+
+<h2 class="h4 mt-2 mb-4">@Model.Model</h2>
+
+<fieldset>
+    <legend class="small fw-semibold mb-2">Vælg størrelse</legend>
+    <div class="d-flex flex-wrap gap-2">
+        @for (int i = 0; i < sizes.Length; i++)
+        {
+            string inputId = $"bcd-size-{i}";
+
+            <input class="btn-check" type="radio" name="selectedSize" id="@inputId" value="@sizes[i]" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-pill px-4" for="@inputId">@sizes[i]</label>
+        }
+    </div>
+</fieldset>

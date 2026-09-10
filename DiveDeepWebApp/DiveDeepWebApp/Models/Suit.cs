@@ -7,6 +7,12 @@ namespace DiveDeepWebApp.Models
 {
     public class Suit : Product
     {
+        public override string Name
+        {
+            get => Model;
+            set;
+        }
+
         [Required]
         public string Model { get; set; } = string.Empty;
 

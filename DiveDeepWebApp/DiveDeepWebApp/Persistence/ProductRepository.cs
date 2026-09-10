@@ -27,8 +27,16 @@ namespace DiveDeepWebApp.Persistence
             return context.Products
                 .AsNoTracking()
                 .Where(p => p.Id == productId)
-                .Include(p => p.Category)
                 .FirstOrDefault(); 
+        }
+
+        public List<Product> GetAllByName(string name)
+        {
+            return context.Products
+                .AsNoTracking()
+                .Where(p => p.Name == name)
+                .Include(p => p.Category)
+                .ToList();
         }
 
     }
