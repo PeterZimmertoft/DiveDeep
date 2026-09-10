@@ -22,197 +22,23 @@
                     </div>
 
                     <div class="card-body d-flex flex-column p-4">
-                        <div class="mb-3">
+                        <div>
                             <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
-
-                            <div class="mb-1">
-                                <h2 class="h5 mb-0">
-                                    <span>@productName</span>
-                                </h2>
-                            </div>
-
-                            <p class="text-muted small mb-0">@product.Description</p>
+                            <h2 class="h5 mb-0">@productName</h2>
                         </div>
 
-                        <div class="small">
-                            @if (product is BCD bcd)
+                            @if (product is Suit suit)
                             {
-                                List<BCD> bcds = products.OfType<BCD>().ToList();
-                                List<string> sizes = bcds.Select(s => s.Size).Distinct().ToList();
-
-                                <div class="d-flex justify-content-between py-2">
-                                    <span class="text-muted">Størrelser</span>
-                                    <span>@string.Join(", ", sizes)</span>
+                                <div class="small mt-3">
+                                    <div class="d-flex justify-content-between pt-2">
+                                        <span class="text-muted">Type</span>
+                                        <span>@suit.Type</span>
+                                    </div>
                                 </div>
                             }
-                            else if (product is Suit suit)
-                            {
-                                List<Suit> suits = products.OfType<Suit>().ToList();
-
-                                List<string> genders = suits.Select(s => s.Gender).Distinct().ToList();
-                                List<string?> thickness = suits.Select(s => s.Thickness).Distinct().ToList();
-                                List<string> sizes = suits.Select(s => s.Size).Distinct().ToList();
-
-                                <div class="d-flex justify-content-between border-bottom py-2">
-                                    <span class="text-muted">Type</span>
-                                    <span>@suit.Type</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between border-bottom py-2">
-                                    <span class="text-muted">Køn</span>
-                                    <span>@string.Join(", ", genders)</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between border-bottom py-2">
-                                    <span class="text-muted">Tykkelse</span>
-                                    <span>@string.Join(", ", thickness)</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between py-2">
-                                    <span class="text-muted">Størrelser</span>
-                                    <span>@string.Join(", ", sizes)</span>
-                                </div>
-                            }
-                            else if (product is Tank tank)
-                            {
-                                <div class="d-flex justify-content-between pt-2">
-                                    <span class="text-muted">Volume</span>
-                                    <span>@tank.Volume L</span>
-                                </div>
-
-                            }
-                            else if (product is Regulator regulator)
-                            {
-                                <div class="d-flex justify-content-between border-bottom py-2">
-                                    <span class="text-muted">Første trin</span>
-                                    <span>@regulator.FirstStage</span>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between border-bottom py-2">
-                                    <span class="text-muted">Andet trin</span>
-                                    <span>@regulator.SecondStage</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between pt-2">
-                                    <span class="text-muted">Octopus</span>
-                                    <span>@regulator.Octopus</span>
-                                </div>
-                            }
-                            else if (product is Fin fin)
-                            {
-                                List<Fin> fins = products.OfType<Fin>().ToList();
-                                List<string> sizes = fins.Select(s => s.Size).Distinct().ToList();
-
-                                <div class="d-flex justify-content-between py-2">
-                                    <span class="text-muted">Størrelser</span>
-                                    <span>@string.Join(", ", sizes)</span>
-                                </div>
-                            }
-                        </div>
                     </div>
                 </div>
             </a>
         }
     </div>
-    
-    @* <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
-        @foreach (var product in Model)
-        {
-            string path = "";
-            string productType = "Udstyr";
-
-            if (product is BCD)
-            {
-                path = "/bcd.png";
-                productType = "BCD";
-            }
-            else if (product is Suit)
-            {
-                path = "/suit.png";
-                productType = "Dykkerdragt";
-            }
-            else if (product is Tank)
-            {
-                path = "/tank.png";
-                productType = "Tank";
-            }
-            else if (product is Regulator)
-            {
-                path = "/regulator.png";
-                productType = "Regulatorsæt";
-            }
-            else if (product is Mask)
-            {
-                path = "/mask.png";
-                productType = "Maske";
-            }
-            else if (product is Fin)
-            {
-                path = "/fin.png";
-                productType = "Finner";
-            }
-
-            <article class="col">
-                <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
-                    <div class="bg-light position-relative d-flex align-items-center justify-content-center p-4" style="height: 210px;">
-                        <span class="badge rounded-pill bg-primary text-white position-absolute top-0 end-0 m-3">@product.Price,- DKK</span>
-                        <img src="@path" class="img-fluid h-100" style="object-fit: contain;" alt="@product.Brand @productType">
-                    </div>
-
-                    <div class="card-body d-flex flex-column p-4">
-                        <div class="mb-3">
-                            <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
-
-                            <div class="mb-1">
-                                <h2 class="h5 mb-0">
-                                    @if (product is Tank)
-                                    {
-                                        <span>@product.Volume liters tank</span>
-                                    }
-                                    else if (product is Regulator)
-                                    {
-                                        <span>@product.FirstStage / @product.SecondStage</span>
-                                    }
-                                    else
-                                    {
-                                        <span>@product.Model</span>
-                                    }
-                                </h2>
-                            </div>
-
-                            <p class="text-muted small mb-0">@product.Description</p>
-                        </div>
-
-                        <div class="small">
-                            @if (product is Suit)
-                            {
-                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Type</span><span>@product.Type</span></div>
-                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Tykkelse</span><span>@product.Thickness</span></div>
-                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Størrelser</span><span class="text-end ms-3">@product.Size</span></div>
-                            }
-                            else if (product is Regulator)
-                            {
-                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Første trin</span><span>@product.FirstStage</span></div>
-                                <div class="d-flex justify-content-between border-bottom py-2"><span class="text-muted">Andet trin</span><span>@product.SecondStage</span></div>
-                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Octopus</span><span>@product.Octopus</span></div>
-                            }
-                            else if (product is BCD || product is Fin)
-                            {
-                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Størrelser</span><span class="text-end ms-3">@product.Size</span></div>
-                            }
-                            else if (product is Tank)
-                            {
-                                <div class="d-flex justify-content-between pt-2"><span class="text-muted">Volumen</span><span>@product.Volume L</span></div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </article>
-        }
-    </div> *@
 </section>
-
-
-            
-
-
