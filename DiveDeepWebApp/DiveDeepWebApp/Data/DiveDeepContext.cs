@@ -245,7 +245,7 @@ namespace DiveDeepWebApp.Data
                 new Fin { Id = 133, Brand = "Fourth Element", Model = "Tech", Size = "S", Price = 75, CategoryId = 6, Image = noImage },
                 new Fin { Id = 134, Brand = "Fourth Element", Model = "Tech", Size = "M", Price = 75, CategoryId = 6, Image = noImage },
                 new Fin { Id = 135, Brand = "Fourth Element", Model = "Tech", Size = "L", Price = 75, CategoryId = 6, Image = noImage },
-                new Fin { Id = 136, Brand = "Fourth Element", Model = "Tech", Size = "L", Price = 75, CategoryId = 6, Image = noImage },
+                new Fin { Id = 136, Brand = "Fourth Element", Model = "Tech", Size = "XL", Price = 75, CategoryId = 6, Image = noImage },
 
                 new Fin { Id = 137, Brand = "Fourth Element", Model = "Rec Fin", Size = "XS", Price = 80, CategoryId = 6, Image = noImage },
                 new Fin { Id = 138, Brand = "Fourth Element", Model = "Rec Fin", Size = "S", Price = 80, CategoryId = 6, Image = noImage },
