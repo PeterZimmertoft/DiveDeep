@@ -17,6 +17,6 @@ namespace DiveDeepWebApp.Models
         public DateTime EndDate { get; set; }
 
         [Required]
-        public List<Product> Products { get; set; }
+        public List<BookingProduct> BookingProducts { get; set; }
     }
 }

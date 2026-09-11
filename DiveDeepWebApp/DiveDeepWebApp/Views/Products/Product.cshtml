@@ -1,6 +1,6 @@
-﻿@model List<Product>
+﻿@model ProductViewModel
 @{
-    Product product = Model.First();
+    Product product = Model.Variants.First();
 
     ViewData["Title"] = $"{product.Name} - Dive Deep";
     byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
@@ -36,27 +36,27 @@
 
                         @if (product is BCD)
                         {
-                            <partial name="_BCD" model="@Model.OfType<BCD>().ToList()" />
+                            <partial name="_BCD" model="@Model" />
                         }
                         else if (product is Suit)
                         {
-                            <partial name="_Suit" model="@Model.OfType<Suit>().ToList()" />
+                            <partial name="_Suit" model="@Model" />
                         }
                         else if (product is Tank)
                         {
-                            <partial name="_Tank" model="@Model.OfType<Tank>().ToList()" />
+                            <partial name="_Tank" model="@Model" />
                         }
                         else if (product is Regulator)
                         {
-                            <partial name="_Regulator" model="@Model.OfType<Regulator>().ToList()" />
+                            <partial name="_Regulator" model="@Model" />
                         }
                         else if (product is Mask)
                         {
-                            <partial name="_Mask" model="@Model.OfType<Mask>().ToList()" />
+                            <partial name="_Mask" model="@Model" />
                         }
                         else if (product is Fin)
                         {
-                            <partial name="_Fin" model="@Model.OfType<Fin>().ToList()" />
+                            <partial name="_Fin" model="@Model" />
                         }
 
                         <div class="border-top mt-4 pt-4">

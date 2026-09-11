@@ -1,6 +1,7 @@
 ﻿using DiveDeepWebApp.Models;
 using DiveDeepWebApp.Persistence;
 using DiveDeepWebApp.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DiveDeepWebApp.Services
 {
@@ -29,14 +30,23 @@ namespace DiveDeepWebApp.Services
             };
         }
 
-        public Product? GetById(int productId)
+        public ProductViewModel GetProductViewModel(int productId)
         {
-            return productRepository.GetById(productId);
+
+            Product? product = productRepository.GetById(productId);
+            if (product == null) return new ProductViewModel
+            {
+                Variants = new List<Product>()
+            };
+
+            List<Product> products = productRepository.GetAllByName(product.Name);
+            return new ProductViewModel
+            {
+                Variants = products
+            };
+
         }
 
-        public List<Product> GetAllByName(string name)
-        {
-            return productRepository.GetAllByName(name);
-        }
+        
     }
 }

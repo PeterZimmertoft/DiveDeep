@@ -1,10 +1,11 @@
-﻿@model List<Suit>
+﻿@model ProductViewModel
 @{
-    Suit product = Model.First();
+    List<Suit> variants = Model.Variants.OfType<Suit>().ToList();
+    Suit product = variants.First();
 
-    List<string> genders = Model.Select(x => x.Gender).Distinct().ToList();
-    List<string> sizes = Model.Select(x => x.Size).Distinct().ToList();
-    List<string> thicknesses = Model.Select(x => x.Thickness!).Distinct().ToList();
+    List<string> genders = variants.Select(x => x.Gender).Distinct().ToList();
+    List<string> sizes = variants.Select(x => x.Size).Distinct().ToList();
+    List<string> thicknesses = variants.Select(x => x.Thickness!).Distinct().ToList();
 }
 
 <div class="d-flex flex-column gap-4">
@@ -27,7 +28,7 @@
             {
                 string id = $"gender-{gender}";
 
-                <input class="btn-check" type="radio" name="selectedGender" id="@id" value="@gender">
+                <input asp-for="Gender" class="btn-check" type="radio" name="selectedGender" id="@id" value="@gender">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @gender
                 </label>

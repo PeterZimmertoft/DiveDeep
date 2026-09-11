@@ -7,6 +7,8 @@ namespace DiveDeepWebApp.Data
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingProduct> BookingProducts { get; set; }
 
         public DbSet<BCD> BCDs { get; set; }
         public DbSet<Fin> Fins { get; set; }
@@ -33,6 +35,21 @@ namespace DiveDeepWebApp.Data
             modelBuilder.Entity<Regulator>().ToTable("Regulators");
             modelBuilder.Entity<Mask>().ToTable("Masks");
             modelBuilder.Entity<Fin>().ToTable("Fins");
+
+            modelBuilder.Entity<Booking>().ToTable("Bookings");
+            modelBuilder.Entity<BookingProduct>()
+                .ToTable("BookingProducts")
+                .HasKey(bp => new { bp.BookingId, bp.ProductId });
+
+            modelBuilder.Entity<BookingProduct>()
+                .HasOne<Booking>(bp => bp.Booking)
+                .WithMany(b => b.BookingProducts)
+                .HasForeignKey(bp => bp.BookingId);
+
+            modelBuilder.Entity<BookingProduct>()
+                .HasOne<Product>(bp => bp.Product)
+                .WithMany(p => p.BookingProducts)
+                .HasForeignKey(bp => bp.ProductId);
 
             //modelBuilder.Entity<PackageProduct>()
             //    .HasKey(packageProduct => new { packageProduct.PackageId, packageProduct.ProductId });

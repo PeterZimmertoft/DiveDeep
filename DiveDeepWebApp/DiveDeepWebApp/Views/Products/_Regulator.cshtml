@@ -1,6 +1,8 @@
-﻿@model List<Regulator>
+﻿@model ProductViewModel
 @{
-    Regulator product = Model.First();
+    List<Regulator> variants = Model.Variants.OfType<Regulator>().ToList();
+    Regulator product = variants.First();
+    
 }
 
 <div class="d-flex flex-column gap-4">

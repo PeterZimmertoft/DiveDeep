@@ -1,6 +1,8 @@
-﻿@model List<Mask>
+﻿@model ProductViewModel
 @{
-    Mask product = Model.First();
+    List<Mask> variants = Model.Variants.OfType<Mask>().ToList();
+    Mask product = variants.First();
+    
 }
 
 <div class="d-flex flex-column gap-4">

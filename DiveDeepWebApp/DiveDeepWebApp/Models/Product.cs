@@ -31,5 +31,7 @@ namespace DiveDeepWebApp.Models
         [ValidateNever]
         [BindNever]
         public Category Category { get; set; }
+
+        public List<BookingProduct> BookingProducts { get; set; }
     }
 }

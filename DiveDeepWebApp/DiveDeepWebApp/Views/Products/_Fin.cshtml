@@ -1,7 +1,9 @@
-﻿@model List<Fin>
+﻿@model ProductViewModel
 @{
-    Fin product = Model.First();
-    List<string> sizes = Model.Select(x => x.Size).Distinct().ToList();
+    List<Fin> variants = Model.Variants.OfType<Fin>().ToList();
+    Fin product = variants.First();
+
+    List<string> sizes = variants.Select(x => x.Size).Distinct().ToList();
 }
 
 <div class="d-flex flex-column gap-4">
@@ -19,7 +21,7 @@
             {
                 string id = $"size-{size}";
 
-                <input class="btn-check" type="radio" name="selectedSize" id="@id" value="@size">
+                <input asp-for="Size" class="btn-check" type="radio" name="selectedSize" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @size
                 </label>

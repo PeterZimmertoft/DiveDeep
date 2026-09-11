@@ -1,6 +1,7 @@
-﻿@model List<Tank>
+﻿@model ProductViewModel
 @{
-    Tank product = Model.First();
+    List<Tank> variants = Model.Variants.OfType<Tank>().ToList();
+    Tank product = variants.First();
 }
 
 <div class="d-flex flex-column gap-4">

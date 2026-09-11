@@ -31,11 +31,8 @@ namespace DiveDeepWebApp.Controllers
 
         public IActionResult Product(int productId)
         {
-            Models.Product? product = productService.GetById(productId);
-            if (product == null) return View();
-
-            List<Models.Product> products = productService.GetAllByName(product.Name);
-            return View(products);
+            ProductViewModel productViewModel = productService.GetProductViewModel(productId);
+            return View(productViewModel);
         }
     }
 }
