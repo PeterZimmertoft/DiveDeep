@@ -13,7 +13,7 @@
             Tilbage til produkter
         </a>
 
-        <article class="card border-0 rounded-4 shadow-sm overflow-hidden">
+        <form method="post" asp-controller="booking" asp-action="book" class="card border-0 rounded-4 shadow-sm overflow-hidden">
             <div class="row g-0">
                 <div class="col-12 col-md-5 bg-light d-flex align-items-center justify-content-center p-4 p-lg-5" style="min-height: 320px;">
                     <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid w-100 h-100" style="max-height: 340px; object-fit: contain;" alt="@product.Name">
@@ -33,6 +33,19 @@
                             <span class="d-block text-muted small mb-1">Pris</span>
                             <span class="h4 fw-bold text-primary mb-0">@product.Price,- DKK</span>
                         </div>
+                        @* @for (int i = 0; i < Model.Variants.Count; i++)
+                            {
+                                <input type="hidden" asp-for="Variants[i]" />
+                            } *@
+                        @* <input asp-for="Variants" type="hidden" name="Variants" value="@Model.Variants" /> *@
+                        @for (int i = 0; i < Model.Variants.Count; i++)
+                            {
+                                <input type="hidden" asp-for="Variants[i].Id" name="Variants" value="@Model.Variants[i].Id" />
+                            }
+                        @* @foreach (Product variant in Model.Variants)
+                        {
+                            <input type="hidden" asp-for="Variants" name="Variants" value="@variant" />
+                        } *@
 
                         @if (product is BCD)
                         {
@@ -72,7 +85,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="btn btn-primary rounded-pill fw-semibold w-100 py-2" type="button"> 
+                                    <button class="btn btn-primary rounded-pill fw-semibold w-100 py-2" type="submit"> 
                                         Book 
                                     </button>
                                 </div>
@@ -81,6 +94,6 @@
                     </div>
                 </div>
             </div>
-        </article>
+        </form>
     </div>
 </section>

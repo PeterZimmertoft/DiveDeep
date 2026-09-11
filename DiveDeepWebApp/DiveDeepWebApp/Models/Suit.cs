@@ -26,5 +26,10 @@ namespace DiveDeepWebApp.Models
         public string Gender {  get; set; } = string.Empty;
 
         public string? Thickness { get; set; } = string.Empty;
+
+        public override bool MatchesOptions(string? size, string? thickness, string? gender)
+        {
+            return Size == size && Thickness == thickness && Gender == gender;
+        }
     }
 }

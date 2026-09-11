@@ -28,7 +28,7 @@
             {
                 string id = $"gender-{gender}";
 
-                <input asp-for="Gender" class="btn-check" type="radio" name="selectedGender" id="@id" value="@gender">
+                <input asp-for="Gender" class="btn-check" type="radio" name="Gender" id="@id" value="@gender">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @gender
                 </label>
@@ -43,7 +43,7 @@
             {
                 string id = $"size-{size}";
 
-                <input class="btn-check" type="radio" name="selectedSize" id="@id" value="@size">
+                <input class="btn-check" type="radio" name="Size" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @size
                 </label>
@@ -58,7 +58,7 @@
             {
                 string id = $"thickness-{thickness}";
 
-                <input class="btn-check" type="radio" name="selectedThickness" id="@id" value="@thickness" checked="@(thicknesses.Count == 1)">
+                <input class="btn-check" type="radio" name="Thickness" id="@id" value="@thickness" checked="@(thicknesses.Count == 1)">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @thickness
                 </label>
