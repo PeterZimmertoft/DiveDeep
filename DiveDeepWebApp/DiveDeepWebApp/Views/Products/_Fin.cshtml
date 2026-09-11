@@ -21,11 +21,16 @@
             {
                 string id = $"size-{size}";
 
-                <input asp-for="Size" class="btn-check" type="radio" name="selectedSize" id="@id" value="@size">
+                <input asp-for="Size" class="btn-check" type="radio" name="Size" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @size
                 </label>
             }
         </div>
+
+        <span class="d-block text-danger mt-1" asp-validation-for="Size"></span>
     </div>
+
+    <input asp-for="Thickness" type="hidden" value="N/A">
+    <input asp-for="Gender" type="hidden" value="N/A">
 </div>

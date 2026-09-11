@@ -14,6 +14,11 @@ namespace DiveDeepWebApp.Services
             this.productRepository = productRepository;
         }
 
+        public List<Product> GetAllByName(string name)
+        {
+            return productRepository.GetAllByName(name);
+        }
+
         public ProductsViewModel GetByCategoryId(int categoryId)
         {
             List<Product> products = productRepository.GetByCategoryId(categoryId);
@@ -42,11 +47,9 @@ namespace DiveDeepWebApp.Services
             List<Product> products = productRepository.GetAllByName(product.Name);
             return new ProductViewModel
             {
-                Variants = products
+                Variants = products,
+                ProductName = product.Name
             };
-
         }
-
-        
     }
 }
