@@ -2,8 +2,58 @@
     ViewData["Title"] = "Dive Deep";
 }
 
-<section class="py-4 py-lg-5">
+@* <section class="py-4 py-lg-5">
     <div class="text-center mx-auto mb-5" style="max-width: 650px;">
         <h1 class="display-5 fw-bold mt-2 mb-3">Pakkevising?</h1>
+    </div>
+</section> *@
+
+
+<section class="py-4 py-lg-5">
+    <div class="text-center mx-auto mb-5" style="max-width: 650px;">
+        <h1 class="display-5 fw-bold mt-2 mb-3">Alt du behøver samlet i én pakke - spar 20%!</h1>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <article class="col-lg-5">
+            <div class="card h-100 border-0 rounded-5 shadow-sm overflow-hidden bg-white">
+                <div class="position-relative d-flex align-items-center justify-content-center p-4" style="height: 245px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
+                    <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
+                        6 produkter
+                    </span>
+
+                    <img src="./divingSet.png" class="img-fluid h-100" style="object-fit: contain;" alt="diving set">
+                </div>
+
+                <div class="card-body p-4 d-flex flex-column">
+                    <h2 class="h3 fw-bold mb-3">Komplet dykkersæt</h2>
+
+                    <div class="d-flex align-items-center justify-content-end mt-auto pt-3 border-top">
+                        <a class="btn btn-primary rounded-pill px-4" asp-area="" asp-controller="products" asp-action="package" asp-route-package="DivingSet">Se pakken <span aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="col-lg-5">
+            <div class="card h-100 border-0 rounded-5 shadow-sm overflow-hidden bg-white">
+                <div class="position-relative d-flex align-items-center justify-content-center p-4" style="height: 245px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
+                    <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
+                         3 produkter
+                    </span>
+
+                    <img src="./snorkelSet.png" class="img-fluid h-100" style="object-fit: contain;" alt="diving set">
+                </div>
+
+                <div class="card-body p-4 d-flex flex-column">
+                    <h2 class="h3 fw-bold mb-3">Komplet snorkelsæt</h2>
+
+                    <div class="d-flex align-items-center justify-content-end mt-auto pt-3 border-top">
+                        <a class="btn btn-primary rounded-pill px-4" asp-area="" asp-controller="products" asp-action="package" asp-route-package="SnorkelSet">Se pakken <span aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+            </div>
+        </article>
     </div>
 </section>
