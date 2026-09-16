@@ -34,6 +34,8 @@ namespace DiveDeepWebApp.Models
 
         public List<BookingProduct> BookingProducts { get; set; }
 
+        public List<PackageProduct> PackageProducts { get; set; }
+
         public virtual bool MatchesOptions(string? size, string? thickness, string? gender)
         {
             return false;

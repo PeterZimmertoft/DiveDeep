@@ -8,7 +8,9 @@ namespace DiveDeepWebApp.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Package> Packages { get; set; }
         public DbSet<BookingProduct> BookingProducts { get; set; }
+        public DbSet<PackageProduct> PackageProducts { get; set; }
 
         public DbSet<BCD> BCDs { get; set; }
         public DbSet<Fin> Fins { get; set; }
@@ -51,18 +53,19 @@ namespace DiveDeepWebApp.Data
                 .WithMany(p => p.BookingProducts)
                 .HasForeignKey(bp => bp.ProductId);
 
-            //modelBuilder.Entity<PackageProduct>()
-            //    .HasKey(packageProduct => new { packageProduct.PackageId, packageProduct.ProductId });
+            modelBuilder.Entity<PackageProduct>()
+                .ToTable("PackageProducts")
+                .HasKey(packageProduct => new { packageProduct.PackageId, packageProduct.ProductId });
 
-            //modelBuilder.Entity<PackageProduct>()
-            //    .HasOne<Package>(pp => pp.Package)
-            //    .WithMany(p => p.PackageProducts)
-            //    .HasForeignKey(pp => pp.PackageId);
+            modelBuilder.Entity<PackageProduct>()
+                .HasOne<Package>(pp => pp.Package)
+                .WithMany(p => p.PackageProducts)
+                .HasForeignKey(pp => pp.PackageId);
 
-            //modelBuilder.Entity<PackageProduct>()
-            //    .HasOne<Product>(pp => pp.Product)
-            //    .WithMany(p => p.PackageProducts)
-            //    .HasForeignKey(pp => pp.ProductId);
+            modelBuilder.Entity<PackageProduct>()
+                .HasOne<Product>(pp => pp.Product)
+                .WithMany(p => p.PackageProducts)
+                .HasForeignKey(pp => pp.ProductId);
 
             SeedData(modelBuilder);
         }
@@ -270,6 +273,26 @@ namespace DiveDeepWebApp.Data
                 new Fin { Id = 140, Brand = "Fourth Element", Model = "Rec Fin", Size = "L", Price = 80, CategoryId = 6, Image = noImage },
                 new Fin { Id = 141, Brand = "Fourth Element", Model = "Rec Fin", Size = "XL", Price = 80, CategoryId = 6, Image = noImage }
             );
+
+            modelBuilder.Entity<Package>().HasData(
+                new Package { Id = 1, Name = "Komplet dykkersæt", Image = divingSetImage, Description = "Denne all‑around dykkerpakke er skabt til dig, der vil opleve havet med udstyr, der føles naturligt og trygt fra første sekund under overfladen. Scubapro‑kvaliteten går igen i hele sættet og giver en harmonisk pasform og stabil oplevelse, uanset hvor du dykker. Kombinationen af 5 mm dragt, Hydros Pro BCD, 12 L tank og MK25EVO/S600 regulatorsættet er en gennemprøvet opsætning, der leverer både komfort og sikkerhed. Masken og finnerne er valgt for deres fleksibilitet og lette håndtering, så både nye og erfarne dykkere kan glide ubesværet gennem vandet. En stærk, velafbalanceret pakke til dig, der vil dykke dybt — og dykke godt." },
+                new Package { Id = 2, Name = "Komplet snorkelsæt", Image = snorkelSetImage, Description = "Denne pakke er skabt til dig, der vil udforske havet med udstyr, der føles let, behageligt og intuitivt fra første øjeblik. Masken og snorklen giver høj komfort og en pasform, der gør det nemt at fokusere på oplevelsen under overfladen, mens finnerne leverer en jævn, kraftfuld fremdrift, uanset om du snorkler langs kysten eller dykker ned i det blå. Hele sættet er let, robust og nemt at transportere, så du kan tage det med på både små og store eventyr. Du får premium kvalitet, der løfter oplevelsen — uden at prisen løber løbsk." }
+                );
+
+            modelBuilder.Entity<PackageProduct>().HasData(
+                //Komplet dykketsæt
+                new PackageProduct { PackageId = 1, ProductId = 7}, //BCD
+                new PackageProduct { PackageId = 1, ProductId = 13 }, //Suit
+                new PackageProduct { PackageId = 1, ProductId = 95 }, //Tank
+                new PackageProduct { PackageId = 1, ProductId = 97 }, //Regulator
+                new PackageProduct { PackageId = 1, ProductId = 101 }, //Mask
+                new PackageProduct { PackageId = 1, ProductId = 117 }, //Fin
+
+                //Komplet snorkelsæt
+                new PackageProduct { PackageId = 2, ProductId = 101 }, //Mask
+                new PackageProduct { PackageId = 2, ProductId = 117 } //Fin
+                );
+            
 
             //modelBuilder.Entity<Package>().HasData(
             //    new { Id = 1, Name = "Komplet dykkersæt", Image = divingSetImage },
