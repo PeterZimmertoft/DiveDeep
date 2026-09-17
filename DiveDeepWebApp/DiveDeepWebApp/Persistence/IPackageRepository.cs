@@ -5,5 +5,7 @@ namespace DiveDeepWebApp.Persistence
     public interface IPackageRepository
     {
         public List<Package> GetAll();
+
+        public Package? GetById(int packageId);
     }
 }

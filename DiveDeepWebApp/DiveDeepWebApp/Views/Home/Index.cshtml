@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Package>
+@{
     ViewData["Title"] = "Dive Deep";
 }
 
@@ -16,27 +17,37 @@
 
     <div class="row g-4 justify-content-center">
 
-        <article class="col-lg-5">
-            <div class="card h-100 border-0 rounded-5 shadow-sm overflow-hidden bg-white">
-                <div class="position-relative d-flex align-items-center justify-content-center p-4" style="height: 245px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
-                    <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
-                        6 produkter
-                    </span>
+        @foreach (Package package in Model)
+        {
 
-                    <img src="./divingSet.png" class="img-fluid h-100" style="object-fit: contain;" alt="diving set">
-                </div>
 
-                <div class="card-body p-4 d-flex flex-column">
-                    <h2 class="h3 fw-bold mb-3">Komplet dykkersæt</h2>
+            <article class="col-lg-5">
+                <div class="card h-100 border-0 rounded-5 shadow-sm overflow-hidden bg-white">
+                    <div class="position-relative d-flex align-items-center justify-content-center p-4" style="height: 245px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
+                        <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
+                            @package.PackageProducts.Count produkter
+                        </span>
 
-                    <div class="d-flex align-items-center justify-content-end mt-auto pt-3 border-top">
-                        <a class="btn btn-primary rounded-pill px-4" asp-area="" asp-controller="products" asp-action="package" asp-route-package="DivingSet">Se pakken <span aria-hidden="true">→</span></a>
+                        <img src="data:image/png;base64,@Convert.ToBase64String(package.Image)" class="img-fluid h-100" style="object-fit: contain;" alt="diving set">
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h2 class="h3 fw-bold mb-3">@package.Name</h2>
+
+                        <div class="d-flex align-items-center justify-content-end mt-auto pt-3 border-top">
+                            <a class="btn btn-primary rounded-pill px-4" asp-controller="home" asp-action="package" asp-route-packageId="@package.Id">Se pakken <span aria-hidden="true">→</span></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </article>
+            </article>
+        }
 
-        <article class="col-lg-5">
+
+
+
+        
+
+        @* <article class="col-lg-5">
             <div class="card h-100 border-0 rounded-5 shadow-sm overflow-hidden bg-white">
                 <div class="position-relative d-flex align-items-center justify-content-center p-4" style="height: 245px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
                     <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
@@ -50,10 +61,10 @@
                     <h2 class="h3 fw-bold mb-3">Komplet snorkelsæt</h2>
 
                     <div class="d-flex align-items-center justify-content-end mt-auto pt-3 border-top">
-                        <a class="btn btn-primary rounded-pill px-4" asp-area="" asp-controller="products" asp-action="package" asp-route-package="SnorkelSet">Se pakken <span aria-hidden="true">→</span></a>
+                        <a class="btn btn-primary rounded-pill px-4" asp-controller="products" asp-action="home" asp-route-package="SnorkelSet">Se pakken <span aria-hidden="true">→</span></a>
                     </div>
                 </div>
             </div>
-        </article>
+        </article> *@
     </div>
 </section>

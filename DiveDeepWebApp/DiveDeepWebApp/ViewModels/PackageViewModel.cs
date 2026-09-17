@@ -13,6 +13,6 @@ namespace DiveDeepWebApp.ViewModels
         [ValidateNever]
         public string Description { get; set; }
         
-        List<PackageProductViewModel> packageProductsVM { get; set; }
+        public List<PackageProductViewModel> packageProductsVM { get; set; }
     }
 }

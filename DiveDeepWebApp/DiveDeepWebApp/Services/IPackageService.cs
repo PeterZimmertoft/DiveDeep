@@ -7,6 +7,6 @@ namespace DiveDeepWebApp.Services
     {
         public List<Package> GetAll();
 
-        public List<PackageProductViewModel> 
+        public PackageViewModel GetPackageViewModel(int packageId);
     }
 }

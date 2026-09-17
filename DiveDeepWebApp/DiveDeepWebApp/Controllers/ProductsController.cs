@@ -105,24 +105,6 @@ namespace DiveDeepWebApp.Controllers
                     productId = variant.Id 
                 }
             );
-        }
-        
-        public IActionResult Package(string package)
-        {
-            List<ProductViewModel> productsVM = new List<ProductViewModel>();
-
-            if (package == "DivingSet")
-            {
-                //productsVM.Add(productService.GetProductViewModel(13) );
-
-                ViewBag.Action = "DivingSet";
-            }
-            else if (package == "SnorkelSet")
-            {
-                ViewBag.Action = "SnorkelSet";
-            }
-
-            return View();
-        }
+        } 
     }
 }

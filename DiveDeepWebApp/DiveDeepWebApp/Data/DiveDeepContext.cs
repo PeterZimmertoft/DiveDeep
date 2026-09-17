@@ -53,6 +53,7 @@ namespace DiveDeepWebApp.Data
                 .WithMany(p => p.BookingProducts)
                 .HasForeignKey(bp => bp.ProductId);
 
+            modelBuilder.Entity<Package>().ToTable("Packages");
             modelBuilder.Entity<PackageProduct>()
                 .ToTable("PackageProducts")
                 .HasKey(packageProduct => new { packageProduct.PackageId, packageProduct.ProductId });

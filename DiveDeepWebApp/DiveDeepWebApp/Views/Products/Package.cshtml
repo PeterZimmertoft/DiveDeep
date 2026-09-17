@@ -1,19 +1,12 @@
-﻿@{
+﻿@model PackageViewModel
+
+@{
     ViewData["Title"] = $"Pakke - Dive Deep";
 }
 
-@{
-    string action = ViewBag.Action ?? string.Empty;
-}
 
-@if (action == "DivingSet")
-{
-    <partial name="_DivingSet" model="@Model" />
-}
-else if (action == "SnorkelSet")
-{
-    <partial name="_SnorkelSet" model="@Model" />
-}
+
+
 
 
 

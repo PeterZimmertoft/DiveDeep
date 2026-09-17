@@ -20,5 +20,19 @@ namespace DiveDeepWebApp.Persistence
                 .Include(p => p.PackageProducts)
                 .ToList();
         }
+
+        public Package? GetById(int packageId)
+        {
+            Package? package = context.Packages
+                .Where(p => p.Id == packageId)
+                .AsNoTracking()
+                .Include(p => p.PackageProducts)
+                .Include(p => p.PackageProducts)
+                .FirstOrDefault();
+
+            return package == null ? null : package;
+
+
+        }
     }
 }
