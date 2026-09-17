@@ -1,4 +1,4 @@
-﻿@model PackageProductViewModel
+﻿@model ProductSelectionViewModel
 @{
     List<Suit> variants = Model.Variants.OfType<Suit>().ToList();
     Suit product = variants.First();
@@ -28,7 +28,7 @@
             {
                 string id = $"{product.Id}-gender-{gender}";
 
-                <input asp-for="Gender" class="btn-check" type="radio" name="Gender" id="@id" value="@gender">
+                <input asp-for="Gender" class="btn-check" type="radio" id="@id" value="@gender">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @gender
                 </label>
@@ -45,7 +45,7 @@
             {
                 string id = $"{product.Id}-size-{size}";
 
-                <input asp-for="Size" class="btn-check" type="radio" name="Size" id="@id" value="@size">
+                <input asp-for="Size" class="btn-check" type="radio" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @size
                 </label>
@@ -62,7 +62,7 @@
             {
                 string id = $"{product.Id}-thickness-{thickness}";
 
-                <input asp-for="Thickness" class="btn-check" type="radio" name="Thickness" id="@id" value="@thickness" checked="@(thicknesses.Count == 1)">
+                <input asp-for="Thickness" class="btn-check" type="radio" id="@id" value="@thickness" checked="@(thicknesses.Count == 1)">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @thickness
                 </label>

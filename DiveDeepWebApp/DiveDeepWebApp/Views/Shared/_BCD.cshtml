@@ -1,4 +1,4 @@
-﻿@model PackageProductViewModel
+﻿@model ProductSelectionViewModel
 @{
     List<BCD> variants = Model.Variants.OfType<BCD>().ToList();
     BCD product = variants.First();
@@ -21,7 +21,7 @@
             {
                 string id = $"{product.Id}-size-{size}";
 
-                <input asp-for="Size" class="btn-check" type="radio" name="Size" id="@id" value="@size">
+                <input asp-for="Size" class="btn-check" type="radio" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">
                     @size
                 </label>

@@ -21,6 +21,11 @@ namespace DiveDeepWebApp.Services
             return packageRepository.GetAll();
         }
 
+        public Package? GetById(int packageId)
+        {
+            return packageRepository.GetById(packageId);
+        }
+
         public PackageViewModel GetPackageViewModel(int packageId)
         {
             PackageViewModel packageViewModel = new PackageViewModel();
@@ -28,6 +33,7 @@ namespace DiveDeepWebApp.Services
             Package? package = packageRepository.GetById(packageId);
             if (package != null)
             {
+                packageViewModel.Id = package.Id;
                 packageViewModel.Name = package.Name;
                 packageViewModel.Description = package.Description;
                 packageViewModel.Image = package.Image;

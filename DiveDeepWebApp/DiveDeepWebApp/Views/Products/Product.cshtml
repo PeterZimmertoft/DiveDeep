@@ -56,8 +56,10 @@
                         else
                         {
                             <div class="mb-4">
-                                <span class="d-block text-muted small mb-1">Pris</span>
-                                <span class="h4 fw-bold text-primary mb-0">@product.Price,- DKK</span>
+                                <span class="d-block text-muted small mb-1">Pris pr. dag</span>
+                                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                                    <span class="h4 fw-bold text-primary mb-0">@product.Price,- DKK</span>
+                                </div>
                             </div>
 
                             <input type="hidden" asp-for="ProductName" name="ProductName" value="@Model.ProductName" />
