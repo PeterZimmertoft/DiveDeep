@@ -1,0 +1,85 @@
+﻿@model PackageViewModel
+
+@{
+    ViewData["Title"] = $"Pakke - Dive Deep";
+}
+
+<section class="py-4 py-lg-5">
+    <div class="mx-auto" style="max-width: 1080px;">
+        <a class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold mb-4" asp-controller="Home" asp-action="Index">
+            <span aria-hidden="true">&larr;</span>
+            Tilbage til pakker
+        </a>
+
+        <article class="card border-0 rounded-5 shadow-sm overflow-hidden bg-white mb-5">
+            <div class="row g-0 align-items-stretch">
+                <div class="col-12 col-lg-5">
+                    <div class="h-100 d-flex align-items-center justify-content-center p-4 p-lg-5" style="min-height: 290px; background: linear-gradient(145deg, #edf8fd 0%, #f8fcff 100%);">
+                        @if (Model.Image?.Length > 0)
+                        {
+                            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Image)" class="img-fluid w-100 h-100" style="max-height: 310px; object-fit: contain;" alt="@Model.Name">
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                    <div class="card-body d-flex flex-column justify-content-center h-100 p-4 p-lg-5">
+                        <p class="text-uppercase text-primary small fw-semibold mb-2">Dykkerpakke</p>
+                        <h1 class="display-6 fw-bold mb-3">@Model.Name</h1>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Description))
+                        {
+                            <p class="text-muted lh-lg mb-4">@Model.Description</p>
+                        }
+
+                        <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                            <span class="badge rounded-pill bg-primary px-3 py-2">@Model.packageProductsVM.Count produkter</span>
+                            <span class="small text-muted">Et komplet sæt til dit næste eventyr.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="d-flex flex-column flex-sm-row align-items-sm-end justify-content-between gap-2 mb-4">
+            <div>
+                <p class="text-uppercase text-primary small fw-semibold mb-1">Din pakke</p>
+                <h2 class="h3 fw-bold mb-0">Dette er inkluderet</h2>
+            </div>
+            <p class="small text-muted mb-0">Alle produkterne nedenfor er inkluderet i pakken.</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (PackageProductViewModel packageProduct in Model.packageProductsVM)
+            {
+                <div class="col-12 col-md-6">
+                    @{
+                        Product product = packageProduct.Variants.First();
+                        byte[] productImage = product.Image?.Length > 0 ? product.Image : product.Category.Image;
+                    }
+
+                    <article class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white">
+                        <div class="row g-0 h-100">
+                            <div class="col-4">
+                                <div class="h-100 d-flex align-items-center justify-content-center p-3" style="min-height: 150px; background: #f8fcff;">
+                                    <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid w-100 h-100" style="max-height: 130px; object-fit: contain;" alt="@product.Name">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body p-4">
+                                    <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
+                                    <h3 class="h5 fw-bold mb-2">@product.Name</h3>
+                                    @if (!string.IsNullOrWhiteSpace(product.Description))
+                                    {
+                                        <p class="small text-muted mb-0">@product.Description</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
