@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+﻿@model PackageProductViewModel
 @{
     List<Fin> variants = Model.Variants.OfType<Fin>().ToList();
     Fin product = variants.First();
@@ -19,7 +19,7 @@
         <div class="d-flex flex-wrap gap-2">
             @foreach (string size in sizes)
             {
-                string id = $"size-{size}";
+                string id = $"{product.Id}-size-{size}";
 
                 <input asp-for="Size" class="btn-check" type="radio" name="Size" id="@id" value="@size">
                 <label class="btn btn-sm btn-outline-primary rounded-pill fw-semibold px-3 py-1" for="@id">

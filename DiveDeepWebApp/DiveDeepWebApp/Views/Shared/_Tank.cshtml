@@ -1,15 +1,14 @@
-﻿@model ProductViewModel
+﻿@model PackageProductViewModel
 @{
-    List<Mask> variants = Model.Variants.OfType<Mask>().ToList();
-    Mask product = variants.First();
-    
+    List<Tank> variants = Model.Variants.OfType<Tank>().ToList();
+    Tank product = variants.First();
 }
 
 <div class="d-flex flex-column gap-4">
     <div class="small bg-light rounded-3 px-3 mb-0">
         <div class="d-flex align-items-center justify-content-between gap-3 py-2">
-            <span class="text-muted fw-normal">Model</span>
-            <span class="fw-semibold text-end mb-0">@product.Model</span>
+            <span class="text-muted fw-normal">Volumen</span>
+            <span class="fw-semibold text-end mb-0">@product.Volume liter</span>
         </div>
     </div>
 
