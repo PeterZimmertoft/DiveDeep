@@ -1,0 +1,21 @@
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    var isManagePage = ViewContext.ActionDescriptor.RouteValues["page"]?.StartsWith("/Account/Manage", StringComparison.OrdinalIgnoreCase) == true;
+}
+
+<section class="identity-page py-4 py-lg-5">
+    @if (isManagePage)
+    {
+        @RenderBody()
+    }
+    else
+    {
+        <div class="identity-simple identity-content bg-white p-4 p-md-5 mx-auto">
+            @RenderBody()
+        </div>
+    }
+</section>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

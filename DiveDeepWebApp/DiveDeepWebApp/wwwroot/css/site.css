@@ -53,3 +53,154 @@ body {
 footer span {
     line-height: normal;
 }
+
+/* Identity shares the rounded cards and ocean colours of the public pages. */
+.identity-simple {
+  max-width: 500px;
+  border: 1px solid #e0edf4;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 28px rgba(24, 68, 96, 0.07);
+}
+
+.identity-form-heading {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0edf4;
+}
+
+.identity-page .identity-simple h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.identity-page .identity-simple .form-control,
+.identity-page .identity-simple .btn {
+  border-radius: 0.75rem;
+}
+
+.identity-page .identity-simple .form-control {
+  padding: 0.75rem 1rem;
+  background-color: #fbfdff;
+}
+
+.identity-simple .form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.identity-simple .checkbox .form-label {
+  font-weight: 400;
+}
+
+.identity-page .identity-simple .btn {
+  padding: 0.75rem 1rem;
+}
+
+.identity-simple .identity-form-links {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e0edf4;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.identity-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.identity-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.identity-content h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #596773;
+  line-height: 1.6;
+}
+
+.identity-content h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.identity-content hr {
+  color: #c3dce9;
+  margin: 1.5rem 0;
+}
+
+.identity-content > .row > .col-md-4,
+.identity-content > .row > .col-md-6 {
+  width: 100%;
+  max-width: 540px;
+}
+
+.identity-page .form-control {
+  border-color: #cbdde8;
+  border-radius: 0.85rem;
+}
+
+.identity-page .form-control:focus {
+  border-color: #0d6efd;
+}
+
+.identity-page .form-control:disabled {
+  background-color: #f0f7fb;
+}
+
+.identity-page .btn {
+  border-radius: 50rem;
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  white-space: normal;
+}
+
+.identity-page .btn-lg {
+  font-size: 1rem;
+}
+
+.identity-page .text-danger {
+  font-size: 0.875rem;
+}
+
+.identity-page .validation-summary-valid,
+.identity-page .field-validation-valid {
+  display: none;
+}
+
+.identity-page .checkbox + div + div {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.identity-page .nav-pills {
+  gap: 0.5rem;
+}
+
+.identity-page .nav-pills .nav-link {
+  border-radius: 1rem;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+}
+
+.identity-page .nav-pills .nav-link:not(.active):hover {
+  background-color: #edf8fd;
+}
+
+.identity-page .nav-pills .nav-link.active {
+  background: linear-gradient(145deg, #0d6efd 0%, #0a8fc2 100%);
+}
+
+.identity-page .alert {
+  border-radius: 1rem;
+}
+
+.identity-page pre,
+.identity-page code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
