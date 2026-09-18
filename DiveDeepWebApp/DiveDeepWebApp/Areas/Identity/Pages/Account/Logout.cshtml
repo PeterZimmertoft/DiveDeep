@@ -5,7 +5,9 @@
 }
 
 <header>
-    <h1>@ViewData["Title"]</h1>
+    <div class="identity-form-heading text-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
     @{
         if (User.Identity?.IsAuthenticated ?? false)
         {
