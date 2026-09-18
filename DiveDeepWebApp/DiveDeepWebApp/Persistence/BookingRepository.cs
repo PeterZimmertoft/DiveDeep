@@ -1,5 +1,6 @@
 ﻿using DiveDeepWebApp.Data;
 using DiveDeepWebApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepWebApp.Persistence
 {
@@ -16,6 +17,24 @@ namespace DiveDeepWebApp.Persistence
         {
             context.Bookings.Add(booking);
             context.SaveChanges();
+        }
+
+        public List<Booking> GetAllByUserId(string userId)
+        {
+            List<Booking> bookings = context.Bookings
+                .Where(b => b.UserId == userId)
+                .Include(b => b.BookingProducts)
+                .ToList();
+            foreach (Booking booking in bookings)
+            {
+                foreach (BookingProduct bookingProduct in booking.BookingProducts)
+                {
+                    context.Entry(bookingProduct)
+                    .Reference(pp => pp.Product)
+                    .Load();
+                }
+            }
+            return bookings;
         }
 
         public bool HasOverlappingBooking(int productId, DateTime startDate, DateTime endDate)

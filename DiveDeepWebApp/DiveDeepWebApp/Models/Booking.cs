@@ -26,6 +26,6 @@ namespace DiveDeepWebApp.Models
 
         [ValidateNever]
         [BindNever]
-        public ApplicationUser? User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }
