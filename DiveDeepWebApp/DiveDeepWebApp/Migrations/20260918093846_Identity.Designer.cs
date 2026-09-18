@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiveDeepWebApp.Migrations
 {
     [DbContext(typeof(DiveDeepContext))]
-    [Migration("20260918083117_IdentityFix")]
-    partial class IdentityFix
+    [Migration("20260918093846_Identity")]
+    partial class Identity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,7 +104,13 @@ namespace DiveDeepWebApp.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings", (string)null);
                 });
@@ -2500,6 +2506,17 @@ namespace DiveDeepWebApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DiveDeepWebApp.Models.Booking", b =>
+                {
+                    b.HasOne("DiveDeepWebApp.Data.ApplicationUser", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DiveDeepWebApp.Models.BookingProduct", b =>
                 {
                     b.HasOne("DiveDeepWebApp.Models.Booking", "Booking")
@@ -2652,6 +2669,11 @@ namespace DiveDeepWebApp.Migrations
                         .HasForeignKey("DiveDeepWebApp.Models.Tank", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DiveDeepWebApp.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("DiveDeepWebApp.Models.Booking", b =>

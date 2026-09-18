@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using DiveDeepWebApp.Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,5 +19,13 @@ namespace DiveDeepWebApp.Models
 
         [Required]
         public List<BookingProduct> BookingProducts { get; set; }
+
+        [Required]
+        [Display(Name = "User")]
+        public string UserId { get; set; }
+
+        [ValidateNever]
+        [BindNever]
+        public ApplicationUser? User { get; set; }
     }
 }

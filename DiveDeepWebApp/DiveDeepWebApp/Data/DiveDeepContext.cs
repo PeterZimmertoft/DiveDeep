@@ -69,6 +69,11 @@ namespace DiveDeepWebApp.Data
                 .WithMany(p => p.PackageProducts)
                 .HasForeignKey(pp => pp.ProductId);
 
+            modelBuilder.Entity<Booking>()
+                .HasOne<ApplicationUser>(b => b.User)
+                .WithMany(user => user.Bookings)
+                .HasForeignKey(b => b.UserId);
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
