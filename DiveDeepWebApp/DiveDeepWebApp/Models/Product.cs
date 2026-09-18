@@ -27,6 +27,7 @@ namespace DiveDeepWebApp.Models
 
         [Required]
         public int CategoryId { get; set; }
+        public int Quantity { get; set; } = 5;
 
         [ValidateNever]
         [BindNever]
@@ -35,6 +36,7 @@ namespace DiveDeepWebApp.Models
         public List<BookingProduct> BookingProducts { get; set; }
 
         public List<PackageProduct> PackageProducts { get; set; }
+        public List<CartItem> CartItemsWithProduct { get; set; }
 
         public virtual bool MatchesOptions(string? size, string? thickness, string? gender)
         {

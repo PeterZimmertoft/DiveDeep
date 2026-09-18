@@ -8,5 +8,6 @@
         public string Description { get; set; }
 
         public List<PackageProduct> PackageProducts { get; set; }
+        public List<CartItem> CartItemsWithPackage { get; set; }
     }
 }

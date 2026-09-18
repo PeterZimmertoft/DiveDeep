@@ -29,27 +29,11 @@
                             <p class="text-muted lh-lg mb-4">@product.Description</p>
                         }
 
-                        @if (TempData["BookingSuccess"] != null)
+                        @if (TempData["Message"] != null)
                         {
                             <div class="bg-light border rounded-3 p-3 p-lg-4">
                                 <div class="flex-grow-1">
-                                    <h2 class="h5 fw-bold mb-1">Booking bekræftet</h2>
-                                    <p class="text-muted mb-3">Du har booket dette produkt.</p>
-
-                                    <div class="row g-3">
-                                        <div class="col-12 col-sm-6">
-                                            <span class="d-block text-muted small mb-1">Fra</span>
-                                            <span class="fw-semibold">
-                                                @Convert.ToDateTime(TempData["BookingStart"]).ToString("dd-MM-yyyy")
-                                            </span>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <span class="d-block text-muted small mb-1">Til</span>
-                                            <span class="fw-semibold">
-                                                @Convert.ToDateTime(TempData["BookingEnd"]).ToString("dd-MM-yyyy")
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <h2 class="h5 fw-bold mb-1">@TempData["Message"]</h2>
                                 </div>
                             </div>
                         }
@@ -91,33 +75,11 @@
 
                             <div class="border-top mt-4 pt-4">
                                 <div class="row g-3">
-                                    <div class="col-12 col-sm-6">
-                                        <label class="form-label small fw-semibold" for="StartDate">Startdato</label>
-                                        <input asp-for="StartDate" class="form-control rounded-3" type="date" id="StartDate" name="StartDate">
-                                        <span class="d-block text-danger mt-1" asp-validation-for="StartDate"></span>
-                                    </div>
-
-                                    <div class="col-12 col-sm-6">
-                                        <label class="form-label small fw-semibold" for="EndDate">Slutdato</label>
-                                        <input asp-for="EndDate" class="form-control rounded-3" type="date" id="EndDate" name="EndDate">
-                                        <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
-                                    </div>
-
-                                    <span class="d-block text-danger mt-1" asp-validation-for="BookingError"></span>
-
                                     <div class="col-12">
-                                        @if (TempData["Message"] != null)
-                                        {
-                                            <h1>@TempData["Message"]</h1>
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-primary rounded-pill fw-semibold w-100 py-2" type="submit">
-                                                Book
-                                            </button>
-                                        }
+                                        <button class="btn btn-primary rounded-pill fw-semibold w-100 py-2" type="submit">
+                                            Læg i kurv
+                                        </button>
                                     </div>
-
                                 </div>
                             </div>
                         }

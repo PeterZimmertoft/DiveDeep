@@ -4,6 +4,7 @@ using DiveDeepWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiveDeepWebApp.Migrations
 {
     [DbContext(typeof(DiveDeepContext))]
-    partial class DiveDeepContextModelSnapshot : ModelSnapshot
+    [Migration("20260918120246_Cart")]
+    partial class Cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +101,6 @@ namespace DiveDeepWebApp.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -121,9 +121,6 @@ namespace DiveDeepWebApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("BookingId", "ProductId");
@@ -363,9 +360,6 @@ namespace DiveDeepWebApp.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -536,7 +530,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Navigator Lite BCD",
                             Price = 125.0,
-                            Quantity = 5,
                             Model = "Navigator Lite BCD",
                             Size = "S"
                         },
@@ -549,7 +542,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Navigator Lite BCD",
                             Price = 125.0,
-                            Quantity = 5,
                             Model = "Navigator Lite BCD",
                             Size = "M"
                         },
@@ -562,7 +554,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Navigator Lite BCD",
                             Price = 125.0,
-                            Quantity = 5,
                             Model = "Navigator Lite BCD",
                             Size = "L"
                         },
@@ -575,7 +566,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Glide",
                             Price = 140.0,
-                            Quantity = 5,
                             Model = "BCD Glide",
                             Size = "S"
                         },
@@ -588,7 +578,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Glide",
                             Price = 140.0,
-                            Quantity = 5,
                             Model = "BCD Glide",
                             Size = "M"
                         },
@@ -601,7 +590,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Glide",
                             Price = 140.0,
-                            Quantity = 5,
                             Model = "BCD Glide",
                             Size = "L"
                         },
@@ -614,7 +602,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Hydros Pro",
                             Price = 200.0,
-                            Quantity = 5,
                             Model = "BCD Hydros Pro",
                             Size = "S"
                         },
@@ -627,7 +614,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Hydros Pro",
                             Price = 200.0,
-                            Quantity = 5,
                             Model = "BCD Hydros Pro",
                             Size = "M"
                         },
@@ -640,7 +626,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Hydros Pro",
                             Price = 200.0,
-                            Quantity = 5,
                             Model = "BCD Hydros Pro",
                             Size = "L"
                         },
@@ -653,7 +638,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Modular",
                             Price = 145.0,
-                            Quantity = 5,
                             Model = "BCD Modular",
                             Size = "S"
                         },
@@ -666,7 +650,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Modular",
                             Price = 145.0,
-                            Quantity = 5,
                             Model = "BCD Modular",
                             Size = "M"
                         },
@@ -679,7 +662,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "BCD Modular",
                             Price = 145.0,
-                            Quantity = 5,
                             Model = "BCD Modular",
                             Size = "L"
                         });
@@ -709,7 +691,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Jet Fin",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Jet Fin",
                             Size = "XS"
                         },
@@ -722,7 +703,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Jet Fin",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Jet Fin",
                             Size = "S"
                         },
@@ -735,7 +715,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Jet Fin",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Jet Fin",
                             Size = "M"
                         },
@@ -748,7 +727,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Jet Fin",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Jet Fin",
                             Size = "L"
                         },
@@ -761,7 +739,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Jet Fin",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Jet Fin",
                             Size = "XL"
                         },
@@ -774,7 +751,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "GO Travel",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "GO Travel",
                             Size = "XS"
                         },
@@ -787,7 +763,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "GO Travel",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "GO Travel",
                             Size = "S"
                         },
@@ -800,7 +775,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "GO Travel",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "GO Travel",
                             Size = "M"
                         },
@@ -813,7 +787,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "GO Travel",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "GO Travel",
                             Size = "L"
                         },
@@ -826,7 +799,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "GO Travel",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "GO Travel",
                             Size = "XL"
                         },
@@ -839,7 +811,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Seawing Supernova",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "Seawing Supernova",
                             Size = "XS"
                         },
@@ -852,7 +823,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Seawing Supernova",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "Seawing Supernova",
                             Size = "S"
                         },
@@ -865,7 +835,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Seawing Supernova",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "Seawing Supernova",
                             Size = "M"
                         },
@@ -878,7 +847,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Seawing Supernova",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "Seawing Supernova",
                             Size = "L"
                         },
@@ -891,7 +859,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Seawing Supernova",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "Seawing Supernova",
                             Size = "XL"
                         },
@@ -904,7 +871,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Propulsion",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Propulsion",
                             Size = "XS"
                         },
@@ -917,7 +883,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Propulsion",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Propulsion",
                             Size = "S"
                         },
@@ -930,7 +895,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Propulsion",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Propulsion",
                             Size = "M"
                         },
@@ -943,7 +907,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Propulsion",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Propulsion",
                             Size = "L"
                         },
@@ -956,7 +919,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Propulsion",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Propulsion",
                             Size = "XL"
                         },
@@ -969,7 +931,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "ALA",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "ALA",
                             Size = "XS"
                         },
@@ -982,7 +943,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "ALA",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "ALA",
                             Size = "S"
                         },
@@ -995,7 +955,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "ALA",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "ALA",
                             Size = "M"
                         },
@@ -1008,7 +967,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "ALA",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "ALA",
                             Size = "L"
                         },
@@ -1021,7 +979,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "ALA",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "ALA",
                             Size = "XL"
                         },
@@ -1034,7 +991,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Tech",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Tech",
                             Size = "XS"
                         },
@@ -1047,7 +1003,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Tech",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Tech",
                             Size = "S"
                         },
@@ -1060,7 +1015,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Tech",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Tech",
                             Size = "M"
                         },
@@ -1073,7 +1027,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Tech",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Tech",
                             Size = "L"
                         },
@@ -1086,7 +1039,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Tech",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Tech",
                             Size = "XL"
                         },
@@ -1099,7 +1051,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Rec Fin",
                             Price = 80.0,
-                            Quantity = 5,
                             Model = "Rec Fin",
                             Size = "XS"
                         },
@@ -1112,7 +1063,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Rec Fin",
                             Price = 80.0,
-                            Quantity = 5,
                             Model = "Rec Fin",
                             Size = "S"
                         },
@@ -1125,7 +1075,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Rec Fin",
                             Price = 80.0,
-                            Quantity = 5,
                             Model = "Rec Fin",
                             Size = "M"
                         },
@@ -1138,7 +1087,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Rec Fin",
                             Price = 80.0,
-                            Quantity = 5,
                             Model = "Rec Fin",
                             Size = "L"
                         },
@@ -1151,7 +1099,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Rec Fin",
                             Price = 80.0,
-                            Quantity = 5,
                             Model = "Rec Fin",
                             Size = "XL"
                         });
@@ -1177,7 +1124,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Ghost",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Ghost"
                         },
                         new
@@ -1189,7 +1135,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D-Mask",
                             Price = 60.0,
-                            Quantity = 5,
                             Model = "D-Mask"
                         },
                         new
@@ -1201,7 +1146,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Spectra Mini",
                             Price = 50.0,
-                            Quantity = 5,
                             Model = "Spectra Mini"
                         },
                         new
@@ -1213,7 +1157,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Crystal VU",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Crystal VU"
                         },
                         new
@@ -1225,7 +1168,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Scout Kontrast",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Scout Kontrast"
                         },
                         new
@@ -1237,7 +1179,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Scout Enhance",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Scout Enhance"
                         },
                         new
@@ -1249,7 +1190,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Element",
                             Price = 75.0,
-                            Quantity = 5,
                             Model = "Element"
                         });
                 });
@@ -1282,7 +1222,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "MK25EVO / S600",
                             Price = 125.0,
-                            Quantity = 5,
                             FirstStage = "MK25EVO",
                             Octopus = "R105",
                             SecondStage = "S600"
@@ -1296,7 +1235,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "MK17EVO / C370",
                             Price = 100.0,
-                            Quantity = 5,
                             FirstStage = "MK17EVO",
                             Octopus = "R095",
                             SecondStage = "C370"
@@ -1310,7 +1248,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "MK25EVO BT / A700 Carbon BT",
                             Price = 150.0,
-                            Quantity = 5,
                             FirstStage = "MK25EVO BT",
                             Octopus = "S270",
                             SecondStage = "A700 Carbon BT"
@@ -1352,7 +1289,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XS",
@@ -1368,7 +1304,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "S",
@@ -1384,7 +1319,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "M",
@@ -1400,7 +1334,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "L",
@@ -1416,7 +1349,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XL",
@@ -1432,7 +1364,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XS",
@@ -1448,7 +1379,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "S",
@@ -1464,7 +1394,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "M",
@@ -1480,7 +1409,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "L",
@@ -1496,7 +1424,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XL",
@@ -1512,7 +1439,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XS",
@@ -1528,7 +1454,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "S",
@@ -1544,7 +1469,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "M",
@@ -1560,7 +1484,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "L",
@@ -1576,7 +1499,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Definition",
                             Size = "XL",
@@ -1592,7 +1514,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XS",
@@ -1608,7 +1529,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "S",
@@ -1624,7 +1544,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "M",
@@ -1640,7 +1559,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "L",
@@ -1656,7 +1574,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XL",
@@ -1672,7 +1589,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XS",
@@ -1688,7 +1604,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "S",
@@ -1704,7 +1619,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "M",
@@ -1720,7 +1634,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "L",
@@ -1736,7 +1649,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XL",
@@ -1752,7 +1664,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XS",
@@ -1768,7 +1679,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "S",
@@ -1784,7 +1694,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "M",
@@ -1800,7 +1709,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "L",
@@ -1816,7 +1724,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Definition",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Definition",
                             Size = "XL",
@@ -1832,7 +1739,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "W5",
                             Size = "XS",
@@ -1848,7 +1754,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "W5",
                             Size = "S",
@@ -1864,7 +1769,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "W5",
                             Size = "M",
@@ -1880,7 +1784,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "W5",
                             Size = "L",
@@ -1896,7 +1799,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "W5",
                             Size = "XL",
@@ -1912,7 +1814,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "W5",
                             Size = "XS",
@@ -1928,7 +1829,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "W5",
                             Size = "S",
@@ -1944,7 +1844,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "W5",
                             Size = "M",
@@ -1960,7 +1859,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "W5",
                             Size = "L",
@@ -1976,7 +1874,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "W5",
                             Price = 100.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "W5",
                             Size = "XL",
@@ -1992,7 +1889,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Proteus",
                             Size = "XS",
@@ -2008,7 +1904,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Proteus",
                             Size = "S",
@@ -2024,7 +1919,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Proteus",
                             Size = "M",
@@ -2040,7 +1934,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Proteus",
                             Size = "L",
@@ -2056,7 +1949,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Proteus",
                             Size = "XL",
@@ -2072,7 +1964,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Proteus",
                             Size = "XS",
@@ -2088,7 +1979,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Proteus",
                             Size = "S",
@@ -2104,7 +1994,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Proteus",
                             Size = "M",
@@ -2120,7 +2009,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Proteus",
                             Size = "L",
@@ -2136,7 +2024,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Proteus",
                             Price = 120.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Proteus",
                             Size = "XL",
@@ -2152,7 +2039,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Exodry 4.0",
                             Size = "XS",
@@ -2168,7 +2054,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Exodry 4.0",
                             Size = "S",
@@ -2184,7 +2069,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Exodry 4.0",
                             Size = "M",
@@ -2200,7 +2084,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Exodry 4.0",
                             Size = "L",
@@ -2216,7 +2099,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "Exodry 4.0",
                             Size = "XL",
@@ -2232,7 +2114,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Exodry 4.0",
                             Size = "XS",
@@ -2248,7 +2129,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Exodry 4.0",
                             Size = "S",
@@ -2264,7 +2144,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Exodry 4.0",
                             Size = "M",
@@ -2280,7 +2159,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Exodry 4.0",
                             Size = "L",
@@ -2296,7 +2174,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "Exodry 4.0",
                             Price = 300.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "Exodry 4.0",
                             Size = "XL",
@@ -2312,7 +2189,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "D7 Evo",
                             Size = "XS",
@@ -2328,7 +2204,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "D7 Evo",
                             Size = "S",
@@ -2344,7 +2219,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "D7 Evo",
                             Size = "M",
@@ -2360,7 +2234,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "D7 Evo",
                             Size = "L",
@@ -2376,7 +2249,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "D7 Evo",
                             Size = "XL",
@@ -2392,7 +2264,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "D7 Evo",
                             Size = "XS",
@@ -2408,7 +2279,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "D7 Evo",
                             Size = "S",
@@ -2424,7 +2294,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "D7 Evo",
                             Size = "M",
@@ -2440,7 +2309,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "D7 Evo",
                             Size = "L",
@@ -2456,7 +2324,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "D7 Evo",
                             Price = 320.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "D7 Evo",
                             Size = "XL",
@@ -2472,7 +2339,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "E.Lite Plus",
                             Size = "XS",
@@ -2488,7 +2354,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "E.Lite Plus",
                             Size = "S",
@@ -2504,7 +2369,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "E.Lite Plus",
                             Size = "M",
@@ -2520,7 +2384,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "E.Lite Plus",
                             Size = "L",
@@ -2536,7 +2399,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Herre",
                             Model = "E.Lite Plus",
                             Size = "XL",
@@ -2552,7 +2414,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "E.Lite Plus",
                             Size = "XS",
@@ -2568,7 +2429,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "E.Lite Plus",
                             Size = "S",
@@ -2584,7 +2444,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "E.Lite Plus",
                             Size = "M",
@@ -2600,7 +2459,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "E.Lite Plus",
                             Size = "L",
@@ -2616,7 +2474,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "E.Lite Plus",
                             Price = 350.0,
-                            Quantity = 5,
                             Gender = "Dame",
                             Model = "E.Lite Plus",
                             Size = "XL",
@@ -2644,7 +2501,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "5L tank",
                             Price = 150.0,
-                            Quantity = 5,
                             Volume = 5
                         },
                         new
@@ -2656,7 +2512,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "10L tank",
                             Price = 160.0,
-                            Quantity = 5,
                             Volume = 10
                         },
                         new
@@ -2668,7 +2523,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "12L tank",
                             Price = 170.0,
-                            Quantity = 5,
                             Volume = 12
                         },
                         new
@@ -2680,7 +2534,6 @@ namespace DiveDeepWebApp.Migrations
                             Image = new byte[0],
                             Name = "15L tank",
                             Price = 180.0,
-                            Quantity = 5,
                             Volume = 15
                         });
                 });

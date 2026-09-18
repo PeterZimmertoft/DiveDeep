@@ -37,12 +37,11 @@ namespace DiveDeepWebApp.Services
                 packageViewModel.Name = package.Name;
                 packageViewModel.Description = package.Description;
                 packageViewModel.Image = package.Image;
-                packageViewModel.packageProductsVM = new List<PackageProductViewModel>();
+                packageViewModel.packageProductsVM = new List<ProductViewModel>();
 
                 foreach (PackageProduct packageProduct in package.PackageProducts)
                 {
-                    
-                    packageViewModel.packageProductsVM.Add( new PackageProductViewModel 
+                    packageViewModel.packageProductsVM.Add(new ProductViewModel 
                     { 
                         ProductName = packageProduct.Product.Name,
                         Variants = productRepository.GetAllByName(packageProduct.Product.Name) 

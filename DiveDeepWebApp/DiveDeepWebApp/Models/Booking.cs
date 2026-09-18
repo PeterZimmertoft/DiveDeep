@@ -18,6 +18,9 @@ namespace DiveDeepWebApp.Models
         public DateTime EndDate { get; set; }
 
         [Required]
+        public double Price { get; set; }
+
+        [Required]
         public List<BookingProduct> BookingProducts { get; set; }
 
         [Required]

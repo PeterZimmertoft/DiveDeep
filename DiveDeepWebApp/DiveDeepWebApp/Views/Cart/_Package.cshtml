@@ -1,0 +1,58 @@
+@model CartItemViewModel
+@{
+    Package package = Model.Package!;
+    List<CartItem> products = Model.Products;
+
+    double price = products.Sum(item => item.Product!.Price); 
+    double discountedPrice = price * 0.80;
+}
+
+<li class="list-group-item border-light p-3 p-md-4">
+    <div class="row g-3 g-md-4 align-items-start">
+        <div class="col-auto">
+            <div class="bg-light rounded-4 p-2 p-md-3">
+                <img src="data:image/png;base64,@Convert.ToBase64String(package.Image)" alt="@package.Name" width="80" height="80" class="object-fit-contain" />
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                    <p class="small fw-semibold text-muted mb-1">Pakke - spar 20%</p>
+                    <h3 class="h5 fw-bold mb-2 text-break">@package.Name</h3>
+                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@products.Count produkter</span>
+                </div>
+
+                <div class="text-md-end flex-shrink-0">
+                    <span class="d-block small text-muted text-decoration-line-through mb-1 text-nowrap">@price,- DKK</span>
+                    <span class="d-block h5 fw-bold text-primary mb-1 text-nowrap">@discountedPrice,- DKK</span>
+                    <span class="small text-muted">pr. dag</span>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2">
+                <span class="small text-danger mt-3 mb-0" asp-validation-for="ErrorMessage"></span>
+
+                <form asp-controller="cart" asp-action="RemovePackage" method="post">
+                    @for (int i = 0; i < products.Count; i++)
+                    {
+                        <input type="hidden" name="Products[@i].Id" value="@products[i].Id" />
+                    }
+
+                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3" aria-label="Fjern @package.Name fra kurven">Fjern</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top pt-3 mt-3">
+        <h4 class="small fw-semibold text-muted mb-3">Produkter i pakken</h4>
+
+        <ul class="list-unstyled mb-0">
+            @foreach (CartItem item in products)
+            {
+                <partial name="_PackageProduct" model="@item" />        
+            }
+        </ul>
+    </div>
+</li>

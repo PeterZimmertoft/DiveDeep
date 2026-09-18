@@ -8,9 +8,12 @@ namespace DiveDeepWebApp.Data
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Package> Packages { get; set; }
         public DbSet<BookingProduct> BookingProducts { get; set; }
+
+        public DbSet<Package> Packages { get; set; }
         public DbSet<PackageProduct> PackageProducts { get; set; }
 
         public DbSet<BCD> BCDs { get; set; }
@@ -73,6 +76,22 @@ namespace DiveDeepWebApp.Data
                 .HasOne<ApplicationUser>(b => b.User)
                 .WithMany(user => user.Bookings)
                 .HasForeignKey(b => b.UserId);
+
+            modelBuilder.Entity<CartItem>().ToTable("CartItems");
+            modelBuilder.Entity<CartItem>()
+                .HasOne<ApplicationUser>(cartItem => cartItem.User)
+                .WithMany(user => user.CartItems)
+                .HasForeignKey(cartItem => cartItem.UserId);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne<Product>(cartItem => cartItem.Product)
+                .WithMany(product => product.CartItemsWithProduct)
+                .HasForeignKey(cartItem => cartItem.ProductId);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne<Package>(cartItem => cartItem.Package)
+                .WithMany(package => package.CartItemsWithPackage)
+                .HasForeignKey(cartItem => cartItem.PackageId);
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

@@ -13,7 +13,6 @@
 
         <a class="btn btn-primary rounded-pill px-4 py-2 fw-semibold align-self-start align-self-md-center flex-shrink-0" asp-controller="products" asp-action="index">Find udstyr <span aria-hidden="true">&rarr;</span></a>
     </div>
-
     
     <div class="card border-0 rounded-4 bg-white shadow-sm overflow-hidden">
         <div class="table-responsive" role="region" aria-label="Bookingoversigt" tabindex="0">
@@ -22,6 +21,7 @@
                     <tr>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Booking</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Lejet produkter</th>
+                        <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Pris</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Fra</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Til</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Status</th>
@@ -32,10 +32,27 @@
                     @foreach (Booking booking in Model)
                     {
                         <tr>
-                            <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">@booking.Id</th>
-                            <td class="px-3 px-md-4 py-4 text-nowrap"><span class="d-block fw-semibold mb-1">@booking.BookingProducts.Count produkter</span><span class="small text-muted">Våddragt, maske og finner</span></td>
-                            <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-25">@Convert.ToDateTime(booking.StartDate).ToString("dd-MM-yyyy"))</time></td>
-                            <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-28">@Convert.ToDateTime(booking.EndDate).ToString("dd-MM-yyyy"))</time></td>
+                            <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">
+                                #@booking.Id
+                            </th>
+
+                            <td class="px-3 px-md-4 py-4 text-nowrap">
+                                <span class="d-block fw-semibold mb-1">@booking.BookingProducts.Count produkter</span>
+                                <span class="small text-muted">
+                                </span>
+                            </td>
+
+                            <td class="px-3 px-md-4 py-4 text-nowrap">
+                                <span class="small text-nowrap">@booking.Price,- DKK</span>
+                            </td>
+
+                            <td class="px-3 px-md-4 py-4 text-nowrap">
+                                <span class="small text-nowrap">@Convert.ToDateTime(booking.StartDate).ToString("dd\\/MM\\/yyyy")</span>
+                            </td>
+
+                            <td class="px-3 px-md-4 py-4 text-nowrap">
+                                <span class="small text-nowrap">@Convert.ToDateTime(booking.EndDate).ToString("dd\\/MM\\/yyyy")</span>
+                            </td>
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
                                 @if (booking.StartDate > DateTime.Now)
@@ -44,40 +61,15 @@
                                 }
                                 else if (booking.StartDate < DateTime.Now && booking.EndDate > DateTime.Now)
                                 {
-                                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gang</span>
+                                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gangværnede</span>
                                 }
                                 else if (booking.EndDate < DateTime.Now)
                                 {
                                     <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2">Afsluttet</span>
                                 }
-                                </td>
+                            </td>
                         </tr>
                     }
-
-
-                    @* <tr>
-                        <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">#1042</th>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><span class="d-block fw-semibold mb-1">Komplet dykkersæt</span><span class="small text-muted">Våddragt, maske og finner</span></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-25">25. sep. 2026</time></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-28">28. sep. 2026</time></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2">Kommende</span></td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">#1038</th>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><span class="d-block fw-semibold mb-1">Våddragt og dykkercomputer</span><span class="small text-muted">2 produkter</span></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-17">17. sep. 2026</time></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-09-20">20. sep. 2026</time></td>
-                        <td class="px-3 px-md-4 py-4 text-nowrap"><span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gang</span></td>
-                    </tr>
-                    
-                    <tr>
-                        <th scope="row" class="border-bottom-0 px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">#1015</th>
-                        <td class="border-bottom-0 px-3 px-md-4 py-4 text-nowrap"><span class="d-block fw-semibold mb-1">Maske og finner</span><span class="small text-muted">2 produkter</span></td>
-                        <td class="border-bottom-0 px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-08-10">10. aug. 2026</time></td>
-                        <td class="border-bottom-0 px-3 px-md-4 py-4 text-nowrap"><time class="small text-nowrap" datetime="2026-08-12">12. aug. 2026</time></td>
-                        <td class="border-bottom-0 px-3 px-md-4 py-4 text-nowrap"><span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2">Afsluttet</span></td>
-                    </tr> *@
                 </tbody>
             </table>
         </div>

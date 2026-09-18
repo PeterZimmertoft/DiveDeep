@@ -5,4 +5,5 @@ namespace DiveDeepWebApp.Data;
 public class ApplicationUser : IdentityUser
 {
     public List<Booking> Bookings { get; set; }
+    public List<CartItem> CartItems { get; set; }
 }

@@ -3,20 +3,25 @@ using DiveDeepWebApp.Models;
 using DiveDeepWebApp.Persistence;
 using DiveDeepWebApp.Services;
 using DiveDeepWebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using DiveDeepWebApp.Data;
 
 namespace DiveDeepWebApp.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ICategoryRepository categoryRepository;
         private readonly IProductService productService;
-        private readonly IBookingRepository bookingRepository;
+        private readonly ICartService cartService;
 
-        public ProductsController(ICategoryRepository categoryRepository, IProductService productService, IBookingRepository bookingRepository) 
+        public ProductsController(UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IProductService productService, ICartService cartService) 
         {
+            this.userManager = userManager; 
             this.categoryRepository = categoryRepository;
             this.productService = productService;
-            this.bookingRepository = bookingRepository;
+            this.cartService = cartService;
         }
 
         public IActionResult Index()
@@ -37,26 +42,18 @@ namespace DiveDeepWebApp.Controllers
             return View(productViewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Product(ProductViewModel productVM)
         {
+            string? userId = userManager.GetUserId(User);
+            if (userId == null) return View(productVM);
+
             List<Product> variants = productService.GetAllByName(productVM.ProductName);
             productVM.Variants = variants;
 
             if (!ModelState.IsValid)
             {
-                return View(productVM);
-            }
-
-            if (DateTime.Today > productVM.StartDate)
-            {
-                ModelState.AddModelError(nameof(ProductViewModel.BookingError), "Startdatoen skal ligge i fremtiden!");
-                return View(productVM);
-            }
-
-            if (productVM.StartDate > productVM.EndDate)
-            {
-                ModelState.AddModelError(nameof(ProductViewModel.BookingError), "Slutdato skal være efter startdato!");
                 return View(productVM);
             }
 
@@ -68,39 +65,22 @@ namespace DiveDeepWebApp.Controllers
 
             if (variant == null)
             {
-                ModelState.AddModelError(nameof(ProductViewModel.BookingError), "Der opstod en fejl!");
                 return View(productVM);
             }
 
-            DateTime startDate = (DateTime)productVM.StartDate;
-            DateTime endDate = (DateTime)productVM.EndDate;
-
-            if (bookingRepository.HasOverlappingBooking(variant.Id, startDate, endDate))
+            cartService.Create(new CartItem
             {
-                ModelState.AddModelError(nameof(ProductViewModel.BookingError), "Produktet er allerede udlejet i denne periode!");
-                return View(productVM);
-            }
-
-            bookingRepository.Create(new Booking
-            {
-                StartDate = (DateTime)productVM.StartDate,
-                EndDate = (DateTime)productVM.EndDate!,
-                BookingProducts = new List<BookingProduct>
-                {
-                    new BookingProduct
-                    {
-                        ProductId = variant.Id
-                    }
-                }
+                UserId = userId,
+                ProductId = variant.Id,
+                Quantity = 1
             });
 
-            TempData["BookingSuccess"] = true;
-            TempData["BookingStart"] = startDate;
-            TempData["BookingEnd"] = endDate;
-
+            TempData["Message"] = "Du har tilføjet dette produkt til din kurv.";
+            
             return RedirectToAction(
                 nameof(Product),
-                new {
+                new 
+                {
                     categoryId = variant.CategoryId,
                     productId = variant.Id 
                 }

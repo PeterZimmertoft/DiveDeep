@@ -1,4 +1,4 @@
-﻿@model ProductSelectionViewModel
+﻿@model ProductViewModel
 @{
     List<BCD> variants = Model.Variants.OfType<BCD>().ToList();
     BCD product = variants.First();

@@ -7,6 +7,6 @@ namespace DiveDeepWebApp.Persistence
         void Create(Booking booking);
         List<Booking> GetAllByUserId(string userId);
 
-        bool HasOverlappingBooking(int productId, DateTime startDate, DateTime endDate);
+        bool IsBookingAvailable(int productId, int quantity, DateTime startDate, DateTime endDate);
     }
 }

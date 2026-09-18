@@ -12,6 +12,7 @@ namespace DiveDeepWebApp.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IBookingRepository bookingRepo;
+
         public BookingsController(IBookingRepository bookingRepo, UserManager<ApplicationUser> userManager)
         {
             this.bookingRepo = bookingRepo;
@@ -19,9 +20,10 @@ namespace DiveDeepWebApp.Controllers
         }
         public IActionResult Index()
         {
-            string userId = userManager.GetUserId(User);
-            List<Booking> bookings = bookingRepo.GetAllByUserId(userId);
+            string? userId = userManager.GetUserId(User);
+            if (userId == null) return RedirectToAction("Home", "Index");
 
+            List<Booking> bookings = bookingRepo.GetAllByUserId(userId);
             return View(bookings);
         }
     }

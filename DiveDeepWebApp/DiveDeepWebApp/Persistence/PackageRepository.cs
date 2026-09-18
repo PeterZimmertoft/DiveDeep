@@ -31,7 +31,6 @@ namespace DiveDeepWebApp.Persistence
 
             if (package == null) return null;
             
-            
             foreach (PackageProduct packageProduct in package.PackageProducts)
             {
                 context.Entry(packageProduct)

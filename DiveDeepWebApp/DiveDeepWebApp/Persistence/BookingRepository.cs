@@ -24,7 +24,9 @@ namespace DiveDeepWebApp.Persistence
             List<Booking> bookings = context.Bookings
                 .Where(b => b.UserId == userId)
                 .Include(b => b.BookingProducts)
+                .OrderByDescending(b => b.Id)
                 .ToList();
+                
             foreach (Booking booking in bookings)
             {
                 foreach (BookingProduct bookingProduct in booking.BookingProducts)
@@ -34,16 +36,34 @@ namespace DiveDeepWebApp.Persistence
                     .Load();
                 }
             }
+
             return bookings;
         }
 
-        public bool HasOverlappingBooking(int productId, DateTime startDate, DateTime endDate)
+        public bool IsBookingAvailable(int productId, int quantity, DateTime startDate, DateTime endDate)
         {
-            return context.BookingProducts.Any(bp =>
-                bp.ProductId == productId &&
-                startDate < bp.Booking.EndDate &&
-                endDate > bp.Booking.StartDate
-            );
+            Product? product = context.Products.Find(productId);
+            if (product == null) return false;
+
+            List<BookingProduct> bookingsWithProduct = context.BookingProducts
+                .Include(bp => bp.Booking)
+                .Where(bp => bp.ProductId == productId)
+                .Where(bp => startDate <= bp.Booking.EndDate)
+                .Where(bp => endDate >= bp.Booking.StartDate)
+                .ToList();
+
+            for (DateTime day = startDate.Date; day <= endDate.Date; day = day.AddDays(1))
+            {
+                int bookedQuantity = bookingsWithProduct
+                    .Where(bp => bp.Booking.StartDate.Date <= day)
+                    .Where(bp => bp.Booking.EndDate.Date >= day)
+                    .Sum(bp => bp.Quantity);
+
+                if (bookedQuantity + quantity > product.Quantity)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

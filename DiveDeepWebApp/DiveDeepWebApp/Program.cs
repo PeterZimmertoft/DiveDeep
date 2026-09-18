@@ -23,10 +23,13 @@ namespace DiveDeepWebApp
 
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
             builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+
+            builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
+            builder.Services.AddScoped<ICartService, CartService>();
 
             var app = builder.Build();
 
@@ -50,7 +53,7 @@ namespace DiveDeepWebApp
             app.MapControllerRoute(
                 name: "package",
                 pattern: "package/{packageId}",
-                defaults: new { controller = "Home", action = "Package" });
+                defaults: new { controller = "Packages", action = "Package" });
 
             app.MapControllerRoute(
                 name: "product",

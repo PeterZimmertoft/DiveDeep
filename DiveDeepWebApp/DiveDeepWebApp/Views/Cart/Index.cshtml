@@ -1,0 +1,158 @@
+@model CartViewModel
+@{
+    ViewData["Title"] = "Min kurv - Dive Deep";
+    int totalItems = Model.Items.Count;
+
+    double totalPricePerDay = Model.Items.Sum(item =>
+    {
+        if (item.Package != null)
+        {
+            double packagePrice = item.Products.Sum(product => product.Product!.Price);
+            return packagePrice * 0.80;
+        }
+        else
+        {
+            CartItem cartItem = item.Products.First();
+            return cartItem.Product!.Price * cartItem.Quantity;
+        }
+    });
+}
+
+<section class="pt-4 pb-5" aria-labelledby="cart-title">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 id="cart-title" class="display-6 fw-bold mb-2">Min kurv</h1>
+        </div>
+
+        <a class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold align-self-start align-self-md-center" asp-controller="Products" asp-action="Index">
+            Find mere udstyr <span aria-hidden="true">&rarr;</span>
+        </a>
+    </div>
+
+    <div class="row g-4 align-items-start">
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 rounded-4 shadow-sm overflow-hidden">
+                <ul class="list-group list-group-flush">
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        if (Model.Items[i].Package == null)
+                        {
+                            <partial name="_Product" for="Items[i]" />
+                        }
+                        else
+                        {
+                            <partial name="_Package" for="Items[i]" />
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <aside class="card border-light rounded-4 shadow-sm overflow-hidden" aria-labelledby="cart-summary-title">
+                <div class="border-bottom p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <h2 id="cart-summary-title" class="h5 fw-bold mb-0">Din booking</h2>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2 flex-shrink-0">
+                            @totalItems 
+
+                            @if (totalItems == 1) 
+                            { 
+                                <text>vare</text> 
+                            } 
+                            else 
+                            { 
+                                <text>varer</text>
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <form method="post" asp-controller="Cart" asp-action="Index" class="card-body p-4">
+                    <fieldset class="mb-0">
+                        <legend class="h6 fw-semibold mb-0">Lejeperiode</legend>
+
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                <label for="cart-start-date" class="form-label small fw-semibold">Fra</label>
+                                <input id="cart-start-date" asp-for="StartDate" type="date" class="form-control rounded-3 p-3" />
+                                <span class="d-block text-danger mt-1" asp-validation-for="StartDate"></span>
+                            </div>
+                        
+                            <div class="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                <label for="cart-end-date" class="form-label small fw-semibold">Til</label>
+                                <input id="cart-end-date" asp-for="EndDate" type="date" class="form-control rounded-3 p-3" />
+                                <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
+                            </div>
+                        </div>
+                        
+                        <span class="d-block text-danger mt-2" asp-validation-for="ErrorMessage"></span>
+                    </fieldset>
+
+                    <div class="border-top pt-4 mt-3">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+                            <div>
+                                <span class="d-block fw-semibold">I alt</span>
+                                <span class="small text-muted">For hele lejeperioden</span>
+                            </div>
+
+                            <span id="cart-total" class="h4 fw-bold text-primary mb-0 text-nowrap" data-price-per-day="@totalPricePerDay">- DKK</span>
+                        </div>
+
+                        <button type="submit" id="cart-book-button" class="btn btn-primary rounded-pill w-100 py-3 fw-semibold" disabled>
+                            Book udstyr 
+                            <span class="ms-2" aria-hidden="true">&rarr;</span>
+                        </button>
+                    </div>
+                </form>
+            </aside>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.querySelectorAll(".cart-quantity-form select")
+            .forEach(select => {
+                select.addEventListener("change", () => {
+                    select.form.requestSubmit();
+                });
+            });
+            
+        const startInput = document.getElementById("cart-start-date");
+        const endInput = document.getElementById("cart-end-date");
+        const totalElement = document.getElementById("cart-total");
+        const bookButton = document.getElementById("cart-book-button");
+
+        const pricePerDay = Number(totalElement.dataset.pricePerDay);
+
+        function updateTotal() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = startInput.valueAsNumber;
+            const end = endInput.valueAsNumber;
+            const todayNumber = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+            const validPeriod = Number.isFinite(start) && Number.isFinite(end) && startInput.checkValidity() && endInput.checkValidity() && start >= todayNumber && end >= start;
+            if (!validPeriod || pricePerDay <= 0) {
+                totalElement.textContent = "— DKK";
+                bookButton.disabled = true;
+                return;
+            }
+
+            const days = Math.round((end - start) / 86400000) + 1;
+            const totalPrice = pricePerDay * days;
+
+            totalElement.textContent = `${totalPrice},- DKK`;
+            bookButton.disabled = false;
+        }
+
+        startInput.addEventListener("change", updateTotal);
+        endInput.addEventListener("change", updateTotal);
+
+        updateTotal();
+    </script>
+}
