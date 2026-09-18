@@ -23,24 +23,26 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div id="mainNavigation" class="navbar-collapse collapse justify-content-end">
-                        <ul class="navbar-nav align-items-lg-center gap-lg-2 py-3 py-lg-0">
+                    <div id="mainNavigation" class="navbar-collapse collapse justify-content-between">
+                        <ul class="navbar-nav align-items-lg-center py-3 py-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-3" asp-area="" asp-controller="home" asp-action="index">Forside</a>
+                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="index">Forside</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-3" asp-area="" asp-controller="products" asp-action="index">Produkter</a>
+                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="products" asp-action="index">Produkter</a>
                             </li>
                             
                             <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-3" asp-area="" asp-controller="home" asp-action="aboutus">Om os</a>
+                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="aboutus">Om os</a>
                             </li>
                             
                             <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-3" asp-area="" asp-controller="home" asp-action="contact">Kontakt os</a>
+                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="contact">Kontakt os</a>
                             </li>
                         </ul>
+
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
             </nav>

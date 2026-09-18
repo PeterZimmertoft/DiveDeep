@@ -1,9 +1,10 @@
 ﻿using DiveDeepWebApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepWebApp.Data
 {
-    public class DiveDeepContext : DbContext
+    public class DiveDeepContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -69,6 +70,7 @@ namespace DiveDeepWebApp.Data
                 .HasForeignKey(pp => pp.ProductId);
 
             SeedData(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
         private static void SeedData(ModelBuilder modelBuilder)
         {
@@ -292,24 +294,7 @@ namespace DiveDeepWebApp.Data
                 //Komplet snorkelsæt
                 new PackageProduct { PackageId = 2, ProductId = 101 }, //Mask
                 new PackageProduct { PackageId = 2, ProductId = 117 } //Fin
-                );
-            
-
-            //modelBuilder.Entity<Package>().HasData(
-            //    new { Id = 1, Name = "Komplet dykkersæt", Image = divingSetImage },
-            //    new { Id = 2, Name = "Komplet snorkelsæt", Image = snorkelSetImage }
-            //);
-
-            //modelBuilder.Entity<PackageProduct>().HasData(
-            //    new { PackageId = 1, ProductId = 1 },
-            //    new { PackageId = 1, ProductId = 5 },
-            //    new { PackageId = 1, ProductId = 17 },
-            //    new { PackageId = 1, ProductId = 13 },
-            //    new { PackageId = 1, ProductId = 27 },
-            //    new { PackageId = 1, ProductId = 20 },
-            //    new { PackageId = 2, ProductId = 21 },
-            //    new { PackageId = 2, ProductId = 28 }
-            //);
+            );
         }
     }
 }

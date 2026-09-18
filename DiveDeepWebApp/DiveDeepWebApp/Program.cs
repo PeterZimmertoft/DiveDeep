@@ -2,6 +2,7 @@ using DiveDeepWebApp.Data;
 using DiveDeepWebApp.Persistence;
 using DiveDeepWebApp.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DiveDeepWebApp
 {
@@ -14,6 +15,8 @@ namespace DiveDeepWebApp
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
+
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -38,8 +41,11 @@ namespace DiveDeepWebApp
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapStaticAssets();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "package",
