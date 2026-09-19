@@ -1,7 +1,7 @@
 @model CartViewModel
 @{
     ViewData["Title"] = "Min kurv - Dive Deep";
-    int totalItems = Model.Items.Count;
+    int totalItems = Model.Items.Sum(x => x.Products.Sum(b => b.Quantity));
 
     double totalPricePerDay = Model.Items.Sum(item =>
     {

@@ -39,15 +39,8 @@
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
                                 <span class="d-block fw-semibold mb-1">
-                                    @{
-                                        int productCount = 0;
-                                        foreach (BookingProduct bookingProduct in booking.BookingProducts)
-                                        {
-                                            productCount += bookingProduct.Quantity;
-                                        }
-                                    }
-                                    @productCount 
-                                    @if (productCount == 1)
+                                    @booking.BookingProducts.Sum(bookingProduct => bookingProduct.Quantity)
+                                    @if (booking.BookingProducts.Count() == 1)
                                     {
                                         <text>produkt</text>
                                     }
