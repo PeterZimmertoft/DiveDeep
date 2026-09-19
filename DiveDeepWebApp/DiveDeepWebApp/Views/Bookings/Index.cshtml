@@ -114,14 +114,23 @@
                                                 Product product = bookingProduct.Product;
                                                 byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
 
-                                                <div class="col-12 col-md-4">
-                                                    <div class="d-flex align-items-center gap-3 bg-white rounded-3 border p-3 h-100">
-                                                        <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" alt="@product.Name" width="56" height="56" class="object-fit-contain flex-shrink-0" />
+                                                <div class="col-12 col-xl-4">
+                                                    <div class="d-flex align-items-start gap-3 bg-white rounded-3 border p-3 h-100">
+                                                        <div class="bg-light rounded-3 p-2 flex-shrink-0">
+                                                            <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" alt="@product.Name" width="56" height="56" class="object-fit-contain" />
+                                                        </div>
                                                         
                                                         <div class="flex-grow-1 min-width-0">
-                                                            <span class="d-block small text-muted">@product.Brand</span>
-                                                            <span class="d-block fw-semibold text-break">@product.Name</span>
-                                                            <div class="d-flex flex-wrap gap-2">
+                                                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                                                <div>
+                                                                    <span class="d-block small text-muted">@product.Brand</span>
+                                                                    <span class="d-block fw-semibold text-break">@product.Name</span>
+                                                                </div>
+                                                                
+                                                                <span class="small text-muted text-nowrap pt-1">@bookingProduct.Quantity stk.</span>
+                                                            </div>
+
+                                                            <div class="d-flex flex-wrap gap-2 mt-2">
                                                                 @if (product is BCD bcd)
                                                                 {
                                                                     <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
@@ -141,12 +150,6 @@
                                                                 }
                                                             </div>
                                                         </div>
-                                                        
-
-
-                                                        <span class="badge rounded-pill bg-light text-secondary border fw-normal">
-                                                            @bookingProduct.Quantity stk.
-                                                        </span>
                                                     </div>
                                                 </div>
                                             }
