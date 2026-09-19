@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = $"{Model.Name} - Dive Deep";
     var message = TempData["Message"];
+
+    double price = Model.packageProductsVM.Sum(x => x.Variants.First().Price);
+    double discountedPrice = price * 0.80;
 }
 
 <section class="py-4 py-lg-5">
@@ -41,8 +44,14 @@
                         }
                         else
                         {
-                            <div class="d-flex flex-wrap align-items-center gap-3 pt-3">
+                            <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 pt-3">
                                 <span class="badge rounded-pill bg-primary px-3 py-2">@Model.packageProductsVM.Count produkter</span>
+
+                                <div class="text-sm-end">
+                                    <span class="d-block small text-muted text-decoration-line-through">@price,- DKK</span>
+                                    <span class="d-block h4 fw-bold text-primary mb-1">@discountedPrice,- DKK</span>
+                                    <span class="d-block small text-muted">pr. dag</span>
+                                </div>
                             </div>
                         }
                     </div>
@@ -90,6 +99,7 @@
                             <div class="card-body d-flex flex-column p-4">
                                 <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
                                 <h3 class="h5 fw-bold mb-2">@product.Name</h3>
+                                <span class="d-block fw-semibold text-primary mb-3">@product.Price,- DKK <span class="small fw-normal text-muted">pr. dag</span></span>
 
                                 @if (!string.IsNullOrWhiteSpace(product.Description))
                                 {
@@ -112,6 +122,12 @@
 
             <div class="border-top pt-4 pb-5">
                 <div class="row g-3">
+                    <div class="col-12 col-md-auto d-flex align-items-center">
+                        <div>
+                            <span class="d-block small text-muted text-decoration-line-through">@price,- DKK</span>
+                            <span class="h5 fw-bold text-primary mb-0">@discountedPrice,- DKK <span class="small fw-normal text-muted">pr. dag</span></span>
+                        </div>
+                    </div>
                     <div class="col-12 col-md-auto ms-md-auto">
                         <button class="btn btn-primary rounded-pill fw-semibold w-100 px-4" type="submit">
                             Læg i kurv

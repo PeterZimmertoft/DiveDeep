@@ -18,6 +18,7 @@ namespace DiveDeepWebApp.Persistence
             return context.Packages
                 .AsNoTracking()
                 .Include(p => p.PackageProducts)
+                .ThenInclude(pp => pp.Product)
                 .ToList();
         }
 
