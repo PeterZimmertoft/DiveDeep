@@ -27,20 +27,10 @@ namespace DiveDeepWebApp.Persistence
                 .Where(p => p.Id == packageId)
                 .AsNoTracking()
                 .Include(p => p.PackageProducts)
+                .ThenInclude(pp => pp.Product)
                 .FirstOrDefault();
 
-            if (package == null) return null;
-            
-            foreach (PackageProduct packageProduct in package.PackageProducts)
-            {
-                context.Entry(packageProduct)
-                    .Reference(pp => pp.Product)
-                    .Load();
-            }
-
             return package;
-
-
         }
     }
 }

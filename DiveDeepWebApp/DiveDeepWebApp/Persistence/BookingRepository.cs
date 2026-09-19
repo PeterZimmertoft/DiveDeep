@@ -24,19 +24,11 @@ namespace DiveDeepWebApp.Persistence
             List<Booking> bookings = context.Bookings
                 .Where(b => b.UserId == userId)
                 .Include(b => b.BookingProducts)
+                .ThenInclude(bp => bp.Product)
+                .ThenInclude(p => p.Category)
                 .OrderByDescending(b => b.Id)
                 .ToList();
                 
-            foreach (Booking booking in bookings)
-            {
-                foreach (BookingProduct bookingProduct in booking.BookingProducts)
-                {
-                    context.Entry(bookingProduct)
-                    .Reference(pp => pp.Product)
-                    .Load();
-                }
-            }
-
             return bookings;
         }
 

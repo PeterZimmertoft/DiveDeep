@@ -2,8 +2,8 @@
 @{
     CartItem cartItem = Model.Products.First();
     Product product = cartItem.Product!;
+    
     byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
-
     double price = product.Price * cartItem.Quantity;
 }
 

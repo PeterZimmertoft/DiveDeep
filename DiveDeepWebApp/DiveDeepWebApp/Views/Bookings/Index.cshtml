@@ -16,7 +16,7 @@
     
     <div class="card border-0 rounded-4 bg-white shadow-sm overflow-hidden">
         <div class="table-responsive" role="region" aria-label="Bookingoversigt" tabindex="0">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table align-middle mb-0">
                 <thead class="table-light small text-nowrap">
                     <tr>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Booking</th>
@@ -25,6 +25,7 @@
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Fra</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Til</th>
                         <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Status</th>
+                        <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary text-end">Handlinger</th>
                     </tr>
                 </thead>
 
@@ -37,13 +38,21 @@
                             </th>
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
-                                <span class="d-block fw-semibold mb-1">@booking.BookingProducts.Count produkter</span>
-                                <span class="small text-muted">
+                                <span class="d-block fw-semibold mb-1">
+                                    @booking.BookingProducts.Count
+                                    @if (booking.BookingProducts.Count == 1)
+                                    {
+                                        <text>produkt</text>
+                                    }
+                                    else
+                                    {
+                                        <text>produkter</text>
+                                    }
                                 </span>
                             </td>
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
-                                <span class="small text-nowrap">@booking.Price,- DKK</span>
+                                <span class="fw-semibold text-primary text-nowrap">@booking.Price,- DKK</span>
                             </td>
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
@@ -61,12 +70,64 @@
                                 }
                                 else if (booking.StartDate < DateTime.Now && booking.EndDate > DateTime.Now)
                                 {
-                                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gangværnede</span>
+                                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gang</span>
                                 }
                                 else if (booking.EndDate < DateTime.Now)
                                 {
                                     <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2">Afsluttet</span>
                                 }
+                            </td>
+
+                            <td class="px-3 px-md-4 py-4 text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                        Ændr
+                                    </button>
+
+                                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
+                                        Vis detaljer
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="7" class="border-0 p-0">
+                                <div id="booking-details-@booking.Id" class="collapse">
+                                    <div class="bg-light border-top px-3 px-md-4 py-4">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                            <h2 class="h6 fw-bold mb-0">Udstyr i booking #@booking.Id</h2>
+                                            
+                                            <span class="small text-muted">
+                                                @booking.BookingProducts.Sum(product => product.Quantity) 
+                                                stk. i alt
+                                            </span>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            @foreach (BookingProduct bookingProduct in booking.BookingProducts)
+                                            {
+                                                Product product = bookingProduct.Product;
+                                                byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="d-flex align-items-center gap-3 bg-white rounded-3 border p-3 h-100">
+                                                        <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" alt="@product.Name" width="56" height="56" class="object-fit-contain flex-shrink-0" />
+                                                        
+                                                        <div class="flex-grow-1 min-width-0">
+                                                            <span class="d-block small text-muted">@product.Brand</span>
+                                                            <span class="d-block fw-semibold text-break">@product.Name</span>
+                                                        </div>
+
+                                                        <span class="badge rounded-pill bg-light text-secondary border fw-normal">
+                                                            @bookingProduct.Quantity stk.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }
