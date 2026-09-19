@@ -39,8 +39,15 @@
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
                                 <span class="d-block fw-semibold mb-1">
-                                    @booking.BookingProducts.Count
-                                    @if (booking.BookingProducts.Count == 1)
+                                    @{
+                                        int productCount = 0;
+                                        foreach (BookingProduct bookingProduct in booking.BookingProducts)
+                                        {
+                                            productCount += bookingProduct.Quantity;
+                                        }
+                                    }
+                                    @productCount 
+                                    @if (productCount == 1)
                                     {
                                         <text>produkt</text>
                                     }
@@ -80,12 +87,16 @@
 
                             <td class="px-3 px-md-4 py-4 text-end">
                                 <div class="d-flex justify-content-end gap-2">
-                                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
-                                        Ændr
-                                    </button>
-
                                     <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
                                         Vis detaljer
+                                    </button>
+                                    
+                                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                        Ændre
+                                    </button>
+                                    
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                        Slet
                                     </button>
                                 </div>
                             </td>
@@ -117,7 +128,28 @@
                                                         <div class="flex-grow-1 min-width-0">
                                                             <span class="d-block small text-muted">@product.Brand</span>
                                                             <span class="d-block fw-semibold text-break">@product.Name</span>
+                                                            <div class="d-flex flex-wrap gap-2">
+                                                                @if (product is BCD bcd)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
+                                                                }
+                                                                else if (product is Suit suit)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
+                                                                    @if (suit.Thickness != "N/A")
+                                                                    {
+                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Thickness</span>
+                                                                    }
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
+                                                                }
+                                                                else if (product is Fin fin)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
+                                                                }
+                                                            </div>
                                                         </div>
+                                                        
+
 
                                                         <span class="badge rounded-pill bg-light text-secondary border fw-normal">
                                                             @bookingProduct.Quantity stk.

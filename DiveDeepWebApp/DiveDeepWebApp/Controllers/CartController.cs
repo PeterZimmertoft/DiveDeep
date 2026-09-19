@@ -87,9 +87,9 @@ namespace DiveDeepWebApp.Controllers
 
             // handtering af hvis 2 identiske produkter er i samme kurv, men det ikke fremgør af deres Quantity
             // f.eks. det ene produkt er en del af en pakke, og det andet produkt er et enkelt ståede produkt
-            for (int i=0; i < cartItems.Count-1; i++)
+            for (int i = 0; i < cartItems.Count - 1; i++)
             {
-                for (int j=i+1; j < cartItems.Count; j++)
+                for (int j = i + 1; j < cartItems.Count; j++)
                 {
                     if (cartItems[i].ProductId == cartItems[j].ProductId)
                     {
@@ -98,7 +98,6 @@ namespace DiveDeepWebApp.Controllers
                     }
                 }
             }
-            //
 
             List<BookingProduct> bookingProducts = cartItems
                 .Where(item => item.ProductId != null)
