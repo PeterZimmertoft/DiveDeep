@@ -1,4 +1,4 @@
-﻿using DiveDeepWebApp.Models;
+using DiveDeepWebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -351,12 +351,9 @@ namespace DiveDeepWebApp.Data
             );
 
 
-            //password hashing
-            PasswordHasher<ApplicationUser> hasher = new PasswordHasher<ApplicationUser>();
-
-            string? hash = hasher.HashPassword(
-                new ApplicationUser(),
-                "Admin123.");
+            // Keep the seed hash fixed and aligned with the migration snapshot.
+            // HashPassword generates a random salt and must not run inside HasData.
+            const string hash = "AQAAAAIAAYagAAAAEGQ6yjNdMhGgwFxgREzQh5mclL2YGASMrLAtbColyu1JpaFmffKLycMIgkyghLV3DQ==";
             //Admin user
             modelBuilder.Entity<ApplicationUser>().HasData(
                  new ApplicationUser
