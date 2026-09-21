@@ -1,6 +1,8 @@
 ﻿using DiveDeepWebApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks.Dataflow;
 
 namespace DiveDeepWebApp.Data
 {
@@ -98,6 +100,7 @@ namespace DiveDeepWebApp.Data
         }
         private static void SeedData(ModelBuilder modelBuilder)
         {
+            /*
             byte[] noImage = Array.Empty<byte>();
             byte[] bcdImage = File.ReadAllBytes("./wwwroot/BCD.png");
             byte[] suitImage = File.ReadAllBytes("./wwwroot/Suit.png");
@@ -108,6 +111,17 @@ namespace DiveDeepWebApp.Data
 
             byte[] divingSetImage = File.ReadAllBytes("./wwwroot/divingSet.png");
             byte[] snorkelSetImage = File.ReadAllBytes("./wwwroot/snorkelSet.png");
+            */
+            byte[] noImage = Array.Empty<byte>();
+            byte[] bcdImage = Array.Empty<byte>();
+            byte[] suitImage = Array.Empty<byte>();
+            byte[] tankImage = Array.Empty<byte>();
+            byte[] regulatorImage = Array.Empty<byte>();
+            byte[] maskImage = Array.Empty<byte>();
+            byte[] finImage = Array.Empty<byte>();
+
+            byte[] divingSetImage = Array.Empty<byte>();
+            byte[] snorkelSetImage = Array.Empty<byte>();
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "BCD", Description = "Stabile og komfortable BCD’er, der giver sikker opdriftskontrol og god pasform. Velegnet til både nye og erfarne dykkere, uanset om du dykker i Danmark eller på rejser.", Image = bcdImage },
@@ -318,6 +332,54 @@ namespace DiveDeepWebApp.Data
                 //Komplet snorkelsæt
                 new PackageProduct { PackageId = 2, ProductId = 101 }, //Mask
                 new PackageProduct { PackageId = 2, ProductId = 117 } //Fin
+            );
+
+
+            ///////////////////////ADMIN AND ROLE/////////////////////////
+            const string userId = "seed-admin-user";
+            const string roleId = "seed-admin-role";
+
+            //Admin role
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = roleId,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = "seed-admin-role-v1"
+                }
+            );
+
+
+            //password hashing
+            PasswordHasher<ApplicationUser> hasher = new PasswordHasher<ApplicationUser>();
+
+            string? hash = hasher.HashPassword(
+                new ApplicationUser(),
+                "Admin123.");
+            //Admin user
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                 new ApplicationUser
+                 {
+                     Id = userId,
+                     UserName = "admin@gmail.com",
+                     NormalizedUserName = "ADMIN@GMAIL.COM",
+                     Email = "admin@gmail.com",
+                     NormalizedEmail = "ADMIN@GMAIL.COM",
+                     EmailConfirmed = true,
+                     PasswordHash = hash,
+                     SecurityStamp = "seed-admin-security-v1",
+                     ConcurrencyStamp = "seed-admin-user-v1"
+                 }
+            );
+
+            // admin user gets admin role
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = userId,
+                    RoleId = roleId
+                }
             );
         }
     }

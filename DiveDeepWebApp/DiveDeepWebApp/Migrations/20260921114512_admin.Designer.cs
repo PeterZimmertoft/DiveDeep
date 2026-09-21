@@ -4,6 +4,7 @@ using DiveDeepWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DiveDeepWebApp.Migrations
 {
     [DbContext(typeof(DiveDeepContext))]
-    partial class DiveDeepContextModelSnapshot : ModelSnapshot
+    [Migration("20260921114512_admin")]
+    partial class admin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,16 +95,16 @@ namespace DiveDeepWebApp.Migrations
                             Id = "seed-admin-user",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "seed-admin-user-v1",
-                            Email = "admin@gmail.com",
+                            Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGQ6yjNdMhGgwFxgREzQh5mclL2YGASMrLAtbColyu1JpaFmffKLycMIgkyghLV3DQ==",
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPxcsLXn8kn0tnREzHlDNF2MGBT3A2u5G+wwW5bSVZC37CX1oZaYk/z8uY3B2tiZuw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "seed-admin-security-v1",
                             TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
+                            UserName = "admin@example.com"
                         });
                 });
 

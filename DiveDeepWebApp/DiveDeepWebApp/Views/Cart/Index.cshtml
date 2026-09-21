@@ -81,7 +81,7 @@
                         
                             <div class="col-12 col-sm-6 col-lg-12 col-xl-6">
                                 <label for="cart-end-date" class="form-label small fw-semibold">Til</label>
-                                <input id="cart-end-date" asp-for="EndDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" />
+                                <input id="cart-end-date" asp-for="EndDate" type="date" min="@((Model.StartDate ?? DateTime.Today).ToString("yyyy-MM-dd"))" class="form-control rounded-3 p-3" />
                                 <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
                             </div>
                         </div>
@@ -128,6 +128,16 @@
 
         const pricePerDay = Number(totalElement.dataset.pricePerDay);
 
+        function updateEndDateMinimum() {
+            const minimumDate = startInput.value || startInput.min;
+
+            endInput.min = minimumDate;
+
+            if (endInput.value && endInput.value < minimumDate) {
+                endInput.value = minimumDate;
+            }
+        }
+
         function updateTotal() {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -150,9 +160,14 @@
             bookButton.disabled = false;
         }
 
-        startInput.addEventListener("change", updateTotal);
+        startInput.addEventListener("change", () => {
+            updateEndDateMinimum();
+            updateTotal();
+        });
+        
         endInput.addEventListener("change", updateTotal);
 
+        updateEndDateMinimum();
         updateTotal();
     </script>
 }
