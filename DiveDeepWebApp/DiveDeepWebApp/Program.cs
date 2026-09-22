@@ -39,8 +39,8 @@ namespace DiveDeepWebApp
                 {
                     try
                     {
-                        using var scope = app.Services.CreateScope();
-                        var context = scope.ServiceProvider.GetRequiredService<DiveDeepContext>();
+                        using IServiceScope scope = app.Services.CreateScope();
+                        DiveDeepContext context = scope.ServiceProvider.GetRequiredService<DiveDeepContext>();
                         await ImageSeeder.SeedAsync(context);
                     }
                     catch (Exception ex)
