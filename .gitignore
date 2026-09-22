@@ -430,3 +430,6 @@ FodyWeavers.xsd
 
 !**/Views/Packages/
 !**/Views/Packages/**
+
+!**/wwwroot/Packages/
+!**/wwwroot/Packages/**
