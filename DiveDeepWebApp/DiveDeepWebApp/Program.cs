@@ -33,6 +33,23 @@ namespace DiveDeepWebApp
 
             var app = builder.Build();
 
+            app.Lifetime.ApplicationStarted.Register(() =>
+            {
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        using var scope = app.Services.CreateScope();
+                        var context = scope.ServiceProvider.GetRequiredService<DiveDeepContext>();
+                        await ImageSeeder.SeedAsync(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        app.Logger.LogError(ex, "Image seeding failed.");
+                    }
+                });
+            });
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

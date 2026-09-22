@@ -100,36 +100,15 @@ namespace DiveDeepWebApp.Data
         }
         private static void SeedData(ModelBuilder modelBuilder)
         {
-            /*
             byte[] noImage = Array.Empty<byte>();
-            byte[] bcdImage = File.ReadAllBytes("./wwwroot/BCD.png");
-            byte[] suitImage = File.ReadAllBytes("./wwwroot/Suit.png");
-            byte[] tankImage = File.ReadAllBytes("./wwwroot/Tank.png");
-            byte[] regulatorImage = File.ReadAllBytes("./wwwroot/regulator.png");
-            byte[] maskImage = File.ReadAllBytes("./wwwroot/mask.png");
-            byte[] finImage = File.ReadAllBytes("./wwwroot/fin.png");
-
-            byte[] divingSetImage = File.ReadAllBytes("./wwwroot/divingSet.png");
-            byte[] snorkelSetImage = File.ReadAllBytes("./wwwroot/snorkelSet.png");
-            */
-            byte[] noImage = Array.Empty<byte>();
-            byte[] bcdImage = Array.Empty<byte>();
-            byte[] suitImage = Array.Empty<byte>();
-            byte[] tankImage = Array.Empty<byte>();
-            byte[] regulatorImage = Array.Empty<byte>();
-            byte[] maskImage = Array.Empty<byte>();
-            byte[] finImage = Array.Empty<byte>();
-
-            byte[] divingSetImage = Array.Empty<byte>();
-            byte[] snorkelSetImage = Array.Empty<byte>();
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "BCD", Description = "Stabile og komfortable BCD’er, der giver sikker opdriftskontrol og god pasform. Velegnet til både nye og erfarne dykkere, uanset om du dykker i Danmark eller på rejser.", Image = bcdImage },
-                new Category { Id = 2, Name = "Dykkerdragter", Description = "Våddragter og tørdragter i høj kvalitet, der giver optimal varme, komfort og bevægelsesfrihed. Perfekt til både koldt og varmt vand, og til dykkere på alle niveauer.", Image = suitImage },
-                new Category { Id = 3, Name = "Tanke", Description = "Robuste og driftssikre dykkerflasker i flere størrelser. Giver den rette balance mellem luftmængde og vægt, så du kan dykke sikkert og komfortabelt.", Image = tankImage },
-                new Category { Id = 4, Name = "Regulatorsæt", Description = "Pålidelige regulatorsæt med stabil luftlevering og høj åndingskomfort. Designet til sikker og behagelig dykning i både koldt og varmt vand.", Image = regulatorImage },
-                new Category { Id = 5, Name = "Maske/Snorkel", Description = "Komfortable masker med klart udsyn og god pasform samt snorkler til overfladesvømning. Ideelt til både snorkling og dykning.", Image = maskImage },
-                new Category { Id = 6, Name = "Finner", Description = "Effektive og behagelige finner, der giver stærk fremdrift og god kontrol under vand. Passer til både rekreative og mere krævende dyk.", Image = finImage }
+                new Category { Id = 1, Name = "BCD", Description = "Stabile og komfortable BCD’er, der giver sikker opdriftskontrol og god pasform. Velegnet til både nye og erfarne dykkere, uanset om du dykker i Danmark eller på rejser.", Image = noImage },
+                new Category { Id = 2, Name = "Dykkerdragter", Description = "Våddragter og tørdragter i høj kvalitet, der giver optimal varme, komfort og bevægelsesfrihed. Perfekt til både koldt og varmt vand, og til dykkere på alle niveauer.", Image = noImage },
+                new Category { Id = 3, Name = "Tanke", Description = "Robuste og driftssikre dykkerflasker i flere størrelser. Giver den rette balance mellem luftmængde og vægt, så du kan dykke sikkert og komfortabelt.", Image = noImage },
+                new Category { Id = 4, Name = "Regulatorsæt", Description = "Pålidelige regulatorsæt med stabil luftlevering og høj åndingskomfort. Designet til sikker og behagelig dykning i både koldt og varmt vand.", Image = noImage },
+                new Category { Id = 5, Name = "Maske/Snorkel", Description = "Komfortable masker med klart udsyn og god pasform samt snorkler til overfladesvømning. Ideelt til både snorkling og dykning.", Image = noImage },
+                new Category { Id = 6, Name = "Finner", Description = "Effektive og behagelige finner, der giver stærk fremdrift og god kontrol under vand. Passer til både rekreative og mere krævende dyk.", Image = noImage }
             );
 
             modelBuilder.Entity<BCD>().HasData(
@@ -316,9 +295,9 @@ namespace DiveDeepWebApp.Data
             );
 
             modelBuilder.Entity<Package>().HasData(
-                new Package { Id = 1, Name = "Komplet dykkersæt", Image = divingSetImage, Description = "Denne all‑around dykkerpakke er skabt til dig, der vil opleve havet med udstyr, der føles naturligt og trygt fra første sekund under overfladen. Scubapro‑kvaliteten går igen i hele sættet og giver en harmonisk pasform og stabil oplevelse, uanset hvor du dykker. Kombinationen af 5 mm dragt, Hydros Pro BCD, 12 L tank og MK25EVO/S600 regulatorsættet er en gennemprøvet opsætning, der leverer både komfort og sikkerhed. Masken og finnerne er valgt for deres fleksibilitet og lette håndtering, så både nye og erfarne dykkere kan glide ubesværet gennem vandet. En stærk, velafbalanceret pakke til dig, der vil dykke dybt — og dykke godt." },
-                new Package { Id = 2, Name = "Komplet snorkelsæt", Image = snorkelSetImage, Description = "Denne pakke er skabt til dig, der vil udforske havet med udstyr, der føles let, behageligt og intuitivt fra første øjeblik. Masken og snorklen giver høj komfort og en pasform, der gør det nemt at fokusere på oplevelsen under overfladen, mens finnerne leverer en jævn, kraftfuld fremdrift, uanset om du snorkler langs kysten eller dykker ned i det blå. Hele sættet er let, robust og nemt at transportere, så du kan tage det med på både små og store eventyr. Du får premium kvalitet, der løfter oplevelsen — uden at prisen løber løbsk." }
-                );
+                new Package { Id = 1, Name = "Komplet dykkersæt", Image = noImage, Description = "Denne all‑around dykkerpakke er skabt til dig, der vil opleve havet med udstyr, der føles naturligt og trygt fra første sekund under overfladen. Scubapro‑kvaliteten går igen i hele sættet og giver en harmonisk pasform og stabil oplevelse, uanset hvor du dykker. Kombinationen af 5 mm dragt, Hydros Pro BCD, 12 L tank og MK25EVO/S600 regulatorsættet er en gennemprøvet opsætning, der leverer både komfort og sikkerhed. Masken og finnerne er valgt for deres fleksibilitet og lette håndtering, så både nye og erfarne dykkere kan glide ubesværet gennem vandet. En stærk, velafbalanceret pakke til dig, der vil dykke dybt — og dykke godt." },
+                new Package { Id = 2, Name = "Komplet snorkelsæt", Image = noImage, Description = "Denne pakke er skabt til dig, der vil udforske havet med udstyr, der føles let, behageligt og intuitivt fra første øjeblik. Masken og snorklen giver høj komfort og en pasform, der gør det nemt at fokusere på oplevelsen under overfladen, mens finnerne leverer en jævn, kraftfuld fremdrift, uanset om du snorkler langs kysten eller dykker ned i det blå. Hele sættet er let, robust og nemt at transportere, så du kan tage det med på både små og store eventyr. Du får premium kvalitet, der løfter oplevelsen — uden at prisen løber løbsk." }
+            );
 
             modelBuilder.Entity<PackageProduct>().HasData(
                 //Komplet dykketsæt
