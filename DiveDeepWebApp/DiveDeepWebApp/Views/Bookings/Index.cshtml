@@ -82,13 +82,13 @@
                                 <div class="d-flex justify-content-end gap-2">
                                     @if (booking.StartDate > DateTime.Now)
                                     {
-                                        <button class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                        <a asp-controller="bookings" asp-action="delete" asp-route-bookingId="@booking.Id" onclick="return confirm('Er du sikker at du vil slette denne booking?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button">
                                             Slet
-                                        </button>
+                                        </a>
 
-                                        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                        <a asp-controller="bookings" asp-action="edit" asp-route-bookingId="@booking.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button">
                                             Ændre
-                                        </button>
+                                        </a>
                                     }
 
                                     <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">

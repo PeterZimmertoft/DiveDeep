@@ -57,5 +57,31 @@ namespace DiveDeepWebApp.Persistence
 
             return true;
         }
+
+        public void Delete(int bookingId)
+        {
+            Booking? bookingToDelete = context.Bookings.Find(bookingId);
+            if(bookingToDelete == null) return;
+
+            context.Bookings.Remove(bookingToDelete);
+            context.SaveChanges();
+        }
+
+        public void Update(Booking booking)
+        {
+            Booking? bookingToUpdate = context.Bookings.Find(booking.Id);
+            if (bookingToUpdate == null) return;
+
+            bookingToUpdate.StartDate = booking.StartDate;
+            bookingToUpdate.EndDate = booking.EndDate;
+            
+            context.SaveChanges();
+        }
+        public Booking? GetById(int id) 
+        {
+            return context.Bookings
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+        }
     }
 }

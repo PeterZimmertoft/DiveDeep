@@ -26,5 +26,17 @@ namespace DiveDeepWebApp.Controllers
             List<Booking> bookings = bookingRepo.GetAllByUserId(userId);
             return View(bookings);
         }
+
+        public IActionResult Delete(int bookingId)
+        {
+            bookingRepo.Delete(bookingId);
+
+            return RedirectToAction(nameof(Index)); 
+        }
+
+        public IActionResult Edit(int bookingId)
+        {
+            Booking? booking =  
+        }
     }
 }
