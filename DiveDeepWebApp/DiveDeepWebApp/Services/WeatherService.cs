@@ -98,18 +98,14 @@ namespace DiveDeepWebApp.Services
                 Task<WaveHeightResponse> waveHeightResponse = GetWaveHeightByGeocodeAsync(geocodeResponse.Result.Results.FirstOrDefault());
 
                 int weathercode = currentWeatherResponse.Result.CurrentWeather.WeatherCode;
-                bool thunder = false;
-
-                if (weathercode == 17 ||
-                    weathercode == 29 ||
-                    weathercode == 95 ||
-                    weathercode == 96 ||
-                    weathercode == 97 ||
+                bool thunder = 
+                    weathercode == 17 || 
+                    weathercode == 29 || 
+                    weathercode == 95 || 
+                    weathercode == 96 || 
+                    weathercode == 97 || 
                     weathercode == 98 ||
-                    weathercode == 99)
-                {
-                    thunder = true;
-                }
+                    weathercode == 99;
 
                 DateTime modified = DateTime.UnixEpoch.AddSeconds(waveHeightResponse.Result.CurrentHeightAndTemp.Time);
 
@@ -133,7 +129,5 @@ namespace DiveDeepWebApp.Services
                 };
             }
         }
-
-
     }
 }

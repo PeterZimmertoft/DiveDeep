@@ -1,96 +1,100 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"]</title>
-        <script type="importmap"></script>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/DiveDeepWebApp.styles.css" asp-append-version="true" />
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DiveDeepWebApp.styles.css" asp-append-version="true" />
+</head>
 
-    <body class="d-flex flex-column min-vh-100">
-        <header class="sticky-top">
-            <nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2 mb-3 position-relative" style="background-color: #f5fbff;">
-                <div class="container position-relative" style="z-index: 1;">
-                    <a class="navbar-brand py-0" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/transparent_logo.png" width="auto" height="52" alt="DiveDeep logo" />
-                    </a>
+<body class="d-flex flex-column min-vh-100">
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2 mb-3 position-relative" style="background-color: #f5fbff;">
+            <div class="container position-relative" style="z-index: 1;">
+                <a class="navbar-brand py-0" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/transparent_logo.png" width="auto" height="52" alt="DiveDeep logo" />
+                </a>
 
-                    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div id="mainNavigation" class="navbar-collapse collapse justify-content-between">
-                        <ul class="navbar-nav align-items-lg-center py-3 py-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="index">Forside</a>
-                            </li>
+                <div id="mainNavigation" class="navbar-collapse collapse justify-content-between">
+                    <ul class="navbar-nav align-items-lg-center py-3 py-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="index">Forside</a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="products" asp-action="index">Produkter</a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="aboutus">Om os</a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="contact">Kontakt os</a>
-                            </li>
-                        </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="products" asp-action="index">Produkter</a>
+                        </li>
 
-                        <partial name="_LoginPartial" />
-                    </div>
-                </div>
-            </nav>
-        </header>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="aboutus">Om os</a>
+                        </li>
 
-        <div class="container flex-grow-1">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-semibold px-2" asp-area="" asp-controller="home" asp-action="contact">Kontakt os</a>
+                        </li>
+                    </ul>
 
-        <footer class="footer text-dark border-top mt-5" style="background-color: #f5fbff;">
-            <div class="container py-5">
-                <div class="row g-4 justify-content-between align-items-start">
-                    <div class="col-12 col-md-auto">
-                        <p class="text-uppercase small fw-semibold text-primary mb-1">Åbningstider</p>
-                        <div class="d-flex flex-column gap-1 small text-muted">
-                            <span>Man–fre <strong class="text-dark fw-normal">10:00–17:30</strong></span>
-                            <span>Lørdag <strong class="text-dark fw-normal">10:00–14:00</strong></span>
-                            <span>Søndag <strong class="text-dark fw-normal">Lukket</strong></span>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-auto text-md-end">
-                        <p class="text-uppercase small fw-semibold text-primary mb-1">Find os</p>
-                        
-                        <address class="small text-muted mb-2">
-                            Dykkervej 10<br />
-                            5000 Odense C
-                        </address>
-
-                        <div class="d-flex flex-column align-items-md-end gap-0 small">
-                            <a class="text-dark text-decoration-none" href="tel:+4560708090">+45 60 70 80 90</a>
-                            <a class="text-dark text-decoration-none" href="mailto:info@divedeep.dk">info@divedeep.dk</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-top mt-4 pt-3 d-flex flex-column flex-sm-row justify-content-between gap-2 small text-muted">
-                    <span>&copy; 2026 DiveDeep</span>
-                    <span>CVR 81828384</span>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
-        </footer>
+        </nav>
+    </header>
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-dark border-top mt-5" style="background-color: #f5fbff;">
+        <div class="container py-5">
+            <div class="row g-4 justify-content-between align-items-start">
+                <div class="col-12 col-md-auto">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1">Åbningstider</p>
+                    <div class="d-flex flex-column gap-1 small text-muted">
+                        <span>Man–fre <strong class="text-dark fw-normal">10:00–17:30</strong></span>
+                        <span>Lørdag <strong class="text-dark fw-normal">10:00–14:00</strong></span>
+                        <span>Søndag <strong class="text-dark fw-normal">Lukket</strong></span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-auto">
+                    <partial name="_Weather", model="@Model" />
+                </div>
+
+                <div class="col-12 col-md-auto text-md-end">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1">Find os</p>
+
+                    <address class="small text-muted mb-2">
+                        Dykkervej 10<br />
+                        5000 Odense C
+                    </address>
+
+                    <div class="d-flex flex-column align-items-md-end gap-0 small">
+                        <a class="text-dark text-decoration-none" href="tel:+4560708090">+45 60 70 80 90</a>
+                        <a class="text-dark text-decoration-none" href="mailto:info@divedeep.dk">info@divedeep.dk</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-top mt-4 pt-3 d-flex flex-column flex-sm-row justify-content-between gap-2 small text-muted">
+                <span>&copy; 2026 DiveDeep</span>
+                <span>CVR 81828384</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>
