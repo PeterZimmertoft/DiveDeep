@@ -1,5 +1,6 @@
 ﻿using DiveDeepWebApp.Models;
 using DiveDeepWebApp.ViewModels;
+using System.Globalization;
 
 namespace DiveDeepWebApp.Services
 {
@@ -15,7 +16,7 @@ namespace DiveDeepWebApp.Services
         {
             using HttpClient client = _factory.CreateClient("Geocode");
 
-            HttpResponseMessage response = await client.GetAsync($"name={name}&count=1");
+            HttpResponseMessage response = await client.GetAsync($"search?name={name}&count=1");
 
             try
             {
@@ -37,12 +38,12 @@ namespace DiveDeepWebApp.Services
 
         public async Task<CurrentWeatherResponse> GetCurrentWeatherByGeocodeAsync(GeocodeResult result)
         {
-            double latitude = result.Latitude;
-            double longitude = result.Longitude;
+            string latitude = result.Latitude.ToString(CultureInfo.InvariantCulture);
+            string longitude = result.Longitude.ToString(CultureInfo.InvariantCulture);
 
             using HttpClient client = _factory.CreateClient("Weather");
 
-            HttpResponseMessage response = await client.GetAsync($"latitude={latitude}&longitude={longitude}&current=wind_speed_10m,precipitation,weather_code&timeformat=unixtime");
+            HttpResponseMessage response = await client.GetAsync($"forecast?latitude={latitude}&longitude={longitude}&current=wind_speed_10m,precipitation,weather_code&timeformat=unixtime");
 
             try
             {
@@ -63,12 +64,12 @@ namespace DiveDeepWebApp.Services
 
         public async Task<WaveHeightResponse> GetWaveHeightByGeocodeAsync(GeocodeResult result)
         {
-            double latitude = result.Latitude;
-            double longitude = result.Longitude;
+            string latitude = result.Latitude.ToString(CultureInfo.InvariantCulture);
+            string longitude = result.Longitude.ToString(CultureInfo.InvariantCulture);
 
             using HttpClient client = _factory.CreateClient("Wave");
 
-            HttpResponseMessage response = await client.GetAsync($"latitude={latitude}&longitude={longitude}&current=wave_height,sea_surface_temperature&forecast_days=1&timeformat=unixtime");
+            HttpResponseMessage response = await client.GetAsync($"marine?latitude={latitude}&longitude={longitude}&current=wave_height,sea_surface_temperature&forecast_days=1&timeformat=unixtime");
 
             try
             {
@@ -87,17 +88,17 @@ namespace DiveDeepWebApp.Services
             }
         }
 
-        public WeatherViewModel GetWeatherViewModel(string name)
+        public async Task<WeatherViewModel> GetWeatherViewModel(string name)
         {
             try
             {
-                Task<GeocodeResponse> geocodeResponse = GetGeocodeByNameAsync(name);
+                GeocodeResponse geocode = await GetGeocodeByNameAsync(name);
 
-                Task<CurrentWeatherResponse> currentWeatherResponse = GetCurrentWeatherByGeocodeAsync(geocodeResponse.Result.Results.FirstOrDefault());
+                CurrentWeatherResponse currentWeather = await GetCurrentWeatherByGeocodeAsync(geocode.Results.FirstOrDefault());
 
-                Task<WaveHeightResponse> waveHeightResponse = GetWaveHeightByGeocodeAsync(geocodeResponse.Result.Results.FirstOrDefault());
+                WaveHeightResponse waveHeight = await GetWaveHeightByGeocodeAsync(geocode.Results.FirstOrDefault());
 
-                int weathercode = currentWeatherResponse.Result.CurrentWeather.WeatherCode;
+                int weathercode = currentWeather.CurrentWeather.WeatherCode;
                 bool thunder = 
                     weathercode == 17 || 
                     weathercode == 29 || 
@@ -107,16 +108,22 @@ namespace DiveDeepWebApp.Services
                     weathercode == 98 ||
                     weathercode == 99;
 
-                DateTime modified = DateTime.UnixEpoch.AddSeconds(waveHeightResponse.Result.CurrentHeightAndTemp.Time);
+                if (waveHeight == null)
+                {
+                    //modified = DateTime.UnixEpoch.AddSeconds(waveHeight.CurrentHeightAndTemp.Time);
+                    throw new Exception();
+                }
+                DateTime modified = DateTime.UnixEpoch.AddSeconds(waveHeight.CurrentHeightAndTemp.Time);
+
 
                 return new WeatherViewModel
                 {
-                    City = geocodeResponse.Result.Results[0].Name,
-                    Country = geocodeResponse.Result.Results[0].Country,
-                    WaveHeight = waveHeightResponse.Result.CurrentHeightAndTemp.WaveHeight,
-                    SeaTemp = waveHeightResponse.Result.CurrentHeightAndTemp.SeaTemp,
-                    WindSpeed10m = currentWeatherResponse.Result.CurrentWeather.WindSpeed10m,
-                    Precipitation = currentWeatherResponse.Result.CurrentWeather.Precipitation,
+                    City = geocode.Results[0].Name,
+                    Country = geocode.Results[0].Country,
+                    WaveHeight = waveHeight.CurrentHeightAndTemp.WaveHeight,
+                    SeaTemp = waveHeight.CurrentHeightAndTemp.SeaTemp,
+                    WindSpeed10m = currentWeather.CurrentWeather.WindSpeed10m,
+                    Precipitation = currentWeather.CurrentWeather.Precipitation,
                     Thunder = thunder, //if thunder = true, there is thunder
                     Modified = modified
                 };

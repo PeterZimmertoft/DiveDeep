@@ -4,6 +4,7 @@ namespace DiveDeepWebApp.Models
 {
     public class WaveHeightResponse
     {
+        [JsonPropertyName("current")]
         public Current CurrentHeightAndTemp { get; set; }
     }
 

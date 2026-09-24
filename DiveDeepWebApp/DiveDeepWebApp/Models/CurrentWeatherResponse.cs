@@ -14,7 +14,7 @@ namespace DiveDeepWebApp.Models
         public double WindSpeed10m { get; set; }
 
         [JsonPropertyName("precipitation")] // always mm
-        public int Precipitation { get; set; }
+        public double Precipitation { get; set; }
 
         [JsonPropertyName("weather_code")] //if 95-99 or 17 or 29 = thunder!
         public int WeatherCode { get; set; }

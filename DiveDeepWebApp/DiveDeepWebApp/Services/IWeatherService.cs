@@ -17,6 +17,6 @@ namespace DiveDeepWebApp.Services
 
         Task<CurrentWeatherResponse> GetCurrentWeatherByGeocodeAsync(GeocodeResult result);
 
-        WeatherViewModel GetWeatherViewModel(string name);
+        Task<WeatherViewModel> GetWeatherViewModel(string name);
     }
 }

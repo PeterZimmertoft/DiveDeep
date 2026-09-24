@@ -3,6 +3,7 @@ using DiveDeepWebApp.Persistence;
 using DiveDeepWebApp.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using DiveDeepWebApp.ViewModels;
 
 namespace DiveDeepWebApp
 {
@@ -23,18 +24,18 @@ namespace DiveDeepWebApp
 
             builder.Services.AddHttpClient("Geocode", (client) =>
             {
-                client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/search?");
+                client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
             });
 
             builder.Services.AddHttpClient("Wave", (client) =>
             {
-                client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/marine?");
+                client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
             }
             );
 
             builder.Services.AddHttpClient("Weather", (client) =>
             {
-                client.BaseAddress = new Uri("https://api.open-meteo.com/v1/forecast?");
+                client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
             }
 );
 
@@ -47,6 +48,8 @@ namespace DiveDeepWebApp
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddScoped<ICartService, CartService>();
+
+            builder.Services.AddScoped<IWeatherService, WeatherService>();
 
             var app = builder.Build();
 

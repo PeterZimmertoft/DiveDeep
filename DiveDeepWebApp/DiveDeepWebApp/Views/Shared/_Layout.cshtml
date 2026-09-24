@@ -66,8 +66,13 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-auto">
-                    <partial name="_Weather", model="@Model" />
+                <div id="_Weather">
+                    <form id="nameForm">
+                        <input type="text" name="name" id="nameInput" placeholder="Enter name" />
+                        <button type="submit">Send</button>
+                    </form>
+
+                    <div id="weatherResult"></div>
                 </div>
 
                 <div class="col-12 col-md-auto text-md-end">
@@ -95,6 +100,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+
+    <script>
+            document.getElementById("nameForm").addEventListener("submit", async function(e) {
+                e.preventDefault(); // Stopper side-skift
+
+                const name = document.getElementById("nameInput").value;
+
+                const response = await fetch(`/Weather/WeatherPartial?name=${encodeURIComponent(name)}`, {
+                    method: 'GET'
+                });
+
+                const html = await response.text(); // HTML, ikke JSON
+
+                document.getElementById("weatherResult").innerHTML = html;
+            });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

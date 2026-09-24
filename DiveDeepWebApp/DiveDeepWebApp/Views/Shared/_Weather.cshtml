@@ -3,38 +3,42 @@
 *@
 @{
 }
+
 @model WeatherViewModel
+@{
+    var weatherVM = Model;
+}
 
 <div id="weatherResult" class="small text-muted mt-3">
-    @if (Model != null && string.IsNullOrEmpty(Model.ErrorMessage))
+    @if (weatherVM != null && string.IsNullOrEmpty(weatherVM.ErrorMessage))
     {
         <div class="p-2 border rounded bg-white">
-            <div><strong>@Model.City, @Model.Country</strong></div>
-            <div>Bølgehøjde: @Model.WaveHeight m</div>
-            <div>Havtemperatur: @Model.SeaTemp °C</div>
-            <div>Vindhastighed: @Model.WindSpeed10m km/t</div>
-            <div>Nedbør: @Model.Precipitation mm/t</div>
-            <div>Torden: @(Model.Thunder ? "Ja" : "Nej")</div>
+            <div><strong>@weatherVM.City, @weatherVM.Country</strong></div>
+            <div>Bølgehøjde: @weatherVM.WaveHeight m</div>
+            <div>Havtemperatur: @weatherVM.SeaTemp °C</div>
+            <div>Vindhastighed: @weatherVM.WindSpeed10m km/t</div>
+            <div>Nedbør: @weatherVM.Precipitation mm/t</div>
+            <div>Torden: @(weatherVM.Thunder ? "Ja" : "Nej")</div>
 
             @{
                 var reasons = new List<string>();
 
-                if (Model.WaveHeight > 1.5)
+                if (weatherVM.WaveHeight > 1.5)
                 {
                     reasons.Add("Bølgehøjden er over 1,5 meter, hvilket gør dykning utrygt.");
                 }
 
-                if (Model.WindSpeed10m > 28.8) // 8 m/s
+                if (weatherVM.WindSpeed10m > 28.8) // 8 m/s
                 {
                     reasons.Add("Vinden er kraftigere end 8 m/s, hvilket giver urolige og farlige forhold.");
                 }
 
-                if (Model.Precipitation > 2)
+                if (weatherVM.Precipitation > 2)
                 {
                     reasons.Add("Nedbøren overstiger 2 mm/t, hvilket reducerer sigtbarheden markant.");
                 }
 
-                if (Model.Thunder)
+                if (weatherVM.Thunder)
                 {
                     reasons.Add("Der er risiko for torden, hvilket gør dykning farligt.");
                 }
@@ -65,11 +69,12 @@
             </div>
 
             <div class="text-muted mt-1" style="font-size: 0.75rem;">
-                Opdateret: @Model.Modified.ToString("dd.MM.yyyy HH:mm")
+                Opdateret: @weatherVM.Modified.ToString("dd.MM.yyyy HH:mm")
             </div>
         </div>
     }
-    else if (Model != null && !string.IsNullOrEmpty(Model.ErrorMessage))
+    else if (weatherVM != null && !string.IsNullOrEmpty(weatherVM.ErrorMessage))
     {
-        <div class="text-danger">@Model.ErrorMessage</div>
+        <div class="text-danger">@weatherVM.ErrorMessage</div>
     }
+
