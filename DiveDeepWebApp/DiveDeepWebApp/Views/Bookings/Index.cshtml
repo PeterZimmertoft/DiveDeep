@@ -80,17 +80,22 @@
 
                             <td class="px-3 px-md-4 py-4 text-end">
                                 <div class="d-flex justify-content-end gap-2">
+                                    @if (booking.StartDate > DateTime.Now)
+                                    {
+                                        <button class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                            Slet
+                                        </button>
+
+                                        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
+                                            Ændre
+                                        </button>
+                                    }
+
                                     <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
                                         Vis detaljer
                                     </button>
                                     
-                                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
-                                        Ændre
-                                    </button>
                                     
-                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button" disabled="@(booking.StartDate.Date <= DateTime.Today)">
-                                        Slet
-                                    </button>
                                 </div>
                             </td>
                         </tr>
