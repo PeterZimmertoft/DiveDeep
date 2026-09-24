@@ -21,6 +21,23 @@ namespace DiveDeepWebApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddHttpClient("Geocode", (client) =>
+            {
+                client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/search?");
+            });
+
+            builder.Services.AddHttpClient("Wave", (client) =>
+            {
+                client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/marine?");
+            }
+            );
+
+            builder.Services.AddHttpClient("Weather", (client) =>
+            {
+                client.BaseAddress = new Uri("https://api.open-meteo.com/v1/forecast?");
+            }
+);
+
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IPackageRepository, PackageRepository>();
