@@ -225,8 +225,13 @@
   white-space: normal;
 }
 
+.admin-products-table,
 .admin-category-products-table {
   width: 100%;
+  table-layout: fixed;
+}
+
+.admin-category-products-table {
   margin: 0;
 }
 

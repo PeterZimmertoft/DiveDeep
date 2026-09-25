@@ -16,7 +16,14 @@
 
         <section class="card border-0 shadow-sm admin-table-card">
             <div class="table-responsive">
-                <table class="table align-middle mb-0 admin-table">
+                <table class="table align-middle mb-0 admin-table admin-products-table">
+                    <colgroup>
+                        <col style="width: 35%" />
+                        <col style="width: 25%" />
+                        <col style="width: 20%" />
+                        <col style="width: 20%" />
+                    </colgroup>
+                    
                     <thead class="table-light">
                         <tr>
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Produkt</th>
@@ -25,6 +32,7 @@
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary text-end">Handlinger</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                         @{ int categoryIndex = 0; }
                         @foreach (ProductsViewModel category in Model)
@@ -49,6 +57,12 @@
                                 <td colspan="4" class="border-0 p-0">
                                     <div id="category-products-@categoryIndex" class="collapse show">
                                         <table class="table align-middle mb-0 admin-category-products-table">
+                                            <colgroup>
+                                                <col style="width: 35%" />
+                                                <col style="width: 25%" />
+                                                <col style="width: 20%" />
+                                                <col style="width: 20%" />
+                                            </colgroup>
                                             <tbody>
                                                 @foreach (string productName in category.ProductsByName.Keys)
                                                 {
@@ -57,13 +71,40 @@
 
                                                     <tr>
                                                         <td class="px-3 px-md-4 py-4 text-nowrap">
-                                                        <span class="d-block mb-1"> @product.Name
-                                                        </span>
-                                                    </td>
+                                                            <div>
+                                                                <strong>@productName</strong>
+                                                                <span class="table-subtext">@product.Brand</span>
+                                                            </div>
+                                                        </td>
 
-                                                        <td><div class="admin-product-name"><span class="admin-product-mark">@product.Brand.First()@productName.First()</span><div><strong>@productName</strong><span class="table-subtext">@product.Brand</span></div></div></td>
-                                                        <td>@category.CategoryName</td>
-                                                        <td>@product.Price,- DKK</td>
+                                                        <td class="px-3 px-md-4 py-4 text-nowrap">
+                                                            <span class="d-block mb-1">
+                                                                @category.CategoryName
+                                                            </span>
+                                                        </td>
+
+                                                        <td class="px-3 px-md-4 py-4 text-nowrap">
+                                                            <span class="fw-semibold text-primary text-nowrap">@product.Price,- DKK</span>
+                                                        </td>
+
+                                                        <td class="px-3 px-md-4 py-4 text-end">
+                                                            <div class="d-flex flex-wrap justify-content-end gap-2">
+                                                                @* @if (booking.StartDate > DateTime.Now)
+                                                                {
+                                                                    <a asp-controller="admin" asp-action="deletebooking" asp-route-bookingId="@booking.Id" onclick="return confirm('Er du sikker at du vil slette denne booking?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button">
+                                                                        Slet
+                                                                    </a>
+
+                                                                    <a asp-controller="admin" asp-action="editbooking" asp-route-bookingId="@booking.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button">
+                                                                        Ændre
+                                                                    </a>
+                                                                }
+
+                                                                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
+                                                                    Vis detaljer
+                                                                </button> *@
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 }
                                             </tbody>
@@ -71,14 +112,8 @@
                                     </div>
                                 </td>
                             </tr>
+
                             categoryIndex++;
-                            @* @foreach (Product product in category.ProductsByName.Values)
-                            {
-                                <tr data-table-row data-search-value="@product.Name" data-category="@category.CategoryName">
-                                    <td><div class="admin-product-name"><span class="admin-product-mark">@product.Brand</span><div><strong>@product.Name</strong><span class="table-subtext">@product.Brand</span></div></div></td>
-                                    <td>@category.CategoryName</td><td>@product.Price kr.</td><td>@product.Stock</td><td><span class="badge bg-warning-subtle text-warning-emphasis">Få på lager</span></td>
-                                </tr>
-                            } *@
                         }
 
                         
