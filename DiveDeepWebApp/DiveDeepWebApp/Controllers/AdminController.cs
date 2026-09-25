@@ -1,5 +1,6 @@
 ﻿using DiveDeepWebApp.Models;
 using DiveDeepWebApp.Persistence;
+using DiveDeepWebApp.Services;
 using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,14 @@ namespace DiveDeepWebApp.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IProductService productService;
         private readonly IBookingRepository bookingRepository;
 
-        public AdminController(IBookingRepository bookingRepository)
+        public AdminController(ICategoryRepository categoryRepository, IProductService productService, IBookingRepository bookingRepository)
         {
+            this.categoryRepository = categoryRepository;
+            this.productService = productService;
             this.bookingRepository = bookingRepository;
         }
 
@@ -23,7 +28,15 @@ namespace DiveDeepWebApp.Controllers
 
         public IActionResult Products()
         {
-            return View();
+            List<ProductsViewModel> productsVM = new List<ProductsViewModel>();
+            List<Category> categories = categoryRepository.GetAll();
+            categories.ForEach(category =>
+            {
+                ProductsViewModel productsViewModel = productService.GetByCategoryId(category.Id);
+                productsVM.Add(productsViewModel); 
+            });
+
+            return View(productsVM);
         }
 
         public IActionResult Bookings()
