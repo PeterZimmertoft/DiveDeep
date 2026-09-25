@@ -1,0 +1,131 @@
+@model BookingEditViewModel
+
+@{
+    ViewData["Title"] = "Ændr booking - Dive Deep";
+}
+
+<section class="pt-4 pb-5" aria-labelledby="edit-booking-title">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 id="edit-booking-title" class="display-6 fw-bold mb-2">Ændr booking</h1>
+            <p class="text-muted mb-0">Opdater lejeperioden for booking #@Model.Id.</p>
+        </div>
+
+        <a class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold align-self-start align-self-md-center" asp-controller="bookings" asp-action="index">
+            <span aria-hidden="true">&larr;</span> Tilbage til mine bookinger
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 col-xl-7">
+            <div class="card border-0 rounded-4 shadow-sm overflow-hidden">
+                <div class="border-bottom p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">Lejeperiode</h2>
+                            <p class="small text-muted mb-0">Vælg den nye start- og slutdato.</p>
+                        </div>
+
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2">
+                            Booking #@Model.Id
+                        </span>
+                    </div>
+                </div>
+
+                <form method="post" asp-controller="Bookings" asp-action="Edit" asp-route-bookingId="@Model.Id" class="card-body p-4 p-md-5">
+                    <input asp-for="Id" type="hidden" />
+
+                    <fieldset>
+                        <legend class="visually-hidden">Ny lejeperiode</legend>
+
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <label for="booking-start-date" class="form-label small fw-semibold">Fra</label>
+                                <input id="booking-start-date" asp-for="StartDate" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" required />
+                                <span class="d-block text-danger mt-1" asp-validation-for="StartDate"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="booking-end-date" class="form-label small fw-semibold">Til</label>
+                                <input id="booking-end-date" asp-for="EndDate" type="date" min="@Model.StartDate.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" required />
+                                       
+                                <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
+                            </div>
+                        </div>
+                    
+                        <span class="d-block text-danger mt-1" asp-validation-for="ErrorMessage"></span>
+                    </fieldset>
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 border-top pt-4 mt-4">
+                        <p id="booking-period-summary" class="small text-muted mb-0" aria-live="polite"></p>
+
+                        <div class="d-flex flex-column-reverse flex-sm-row gap-2">
+                            <a class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold" asp-controller="bookings" asp-action="index">
+                                Annuller
+                            </a>
+
+                            <button type="submit" id="booking-save-button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" disabled>
+                                Gem ændringer <span class="ms-2" aria-hidden="true">&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const startInput = document.getElementById("booking-start-date");
+        const endInput = document.getElementById("booking-end-date");
+        const saveButton = document.getElementById("booking-save-button");
+        const periodSummary = document.getElementById("booking-period-summary");
+
+        function updateEndDateMinimum() {
+            const minimumDate = startInput.value || startInput.min;
+
+            endInput.min = minimumDate;
+
+            if (endInput.value && endInput.value < minimumDate) {
+                endInput.value = minimumDate;
+            }
+        }
+
+        function updatePeriod() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = startInput.valueAsNumber;
+            const end = endInput.valueAsNumber;
+            const todayNumber = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+            const validPeriod = Number.isFinite(start) && Number.isFinite(end) &&
+                startInput.checkValidity() && endInput.checkValidity() &&
+                start >= todayNumber && end >= start;
+
+            saveButton.disabled = !validPeriod;
+
+            if (!validPeriod) {
+                periodSummary.textContent = "Vælg en gyldig lejeperiode.";
+                return;
+            }
+
+            const days = Math.round((end - start) / 86400000) + 1;
+            periodSummary.textContent = days === 1
+                ? "Lejeperioden er 1 dag."
+                : `Lejeperioden er ${days} dage.`;
+        }
+
+        startInput.addEventListener("change", () => {
+            updateEndDateMinimum();
+            updatePeriod();
+        });
+
+        endInput.addEventListener("change", updatePeriod);
+
+        updateEndDateMinimum();
+        updatePeriod();
+    </script>
+}

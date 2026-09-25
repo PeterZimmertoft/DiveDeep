@@ -32,6 +32,8 @@
                 <tbody>
                     @foreach (Booking booking in Model)
                     {
+                        int count = booking.BookingProducts.Sum(bookingProduct => bookingProduct.Quantity);
+
                         <tr>
                             <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">
                                 #@booking.Id
@@ -39,8 +41,8 @@
 
                             <td class="px-3 px-md-4 py-4 text-nowrap">
                                 <span class="d-block fw-semibold mb-1">
-                                    @booking.BookingProducts.Sum(bookingProduct => bookingProduct.Quantity)
-                                    @if (booking.BookingProducts.Count() == 1)
+                                    @count
+                                    @if (count == 1)
                                     {
                                         <text>produkt</text>
                                     }
@@ -94,8 +96,6 @@
                                     <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
                                         Vis detaljer
                                     </button>
-                                    
-                                    
                                 </div>
                             </td>
                         </tr>

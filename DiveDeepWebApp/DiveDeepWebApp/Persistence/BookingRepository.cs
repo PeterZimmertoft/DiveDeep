@@ -61,7 +61,7 @@ namespace DiveDeepWebApp.Persistence
         public void Delete(int bookingId)
         {
             Booking? bookingToDelete = context.Bookings.Find(bookingId);
-            if(bookingToDelete == null) return;
+            if (bookingToDelete == null) return;
 
             context.Bookings.Remove(bookingToDelete);
             context.SaveChanges();
