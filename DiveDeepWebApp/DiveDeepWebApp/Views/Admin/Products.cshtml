@@ -8,10 +8,15 @@
     <partial name="_AdminSidebar" />
 
     <main class="min-width-0">
-        <div class="admin-page-header">
+        <div class="admin-page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
             <div>
                 <h1 class="display-6 fw-bold mb-2">Kategorier og produkter</h1>
             </div>
+
+            <a asp-controller="Admin" asp-action="CreateProduct" class="btn btn-primary rounded-pill px-4">
+                <span aria-hidden="true" class="me-1">+</span>
+                Opret produkt
+            </a>
         </div>
 
         <section class="card border-0 shadow-sm admin-table-card">
@@ -115,9 +120,14 @@
                                                                     <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#@variantsCollapseId" aria-expanded="false" aria-controls="@variantsCollapseId">
                                                                         Vis varianter
                                                                     </button>
-                                                                }
 
-                                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet alle varianter</button>
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet alle varianter</button>
+                                                                } 
+                                                                else
+                                                                {
+                                                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</button>
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</button>
+                                                                }
                                                             </div>
                                                         </td>
                                                     </tr>

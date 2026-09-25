@@ -1,0 +1,260 @@
+@model ProductCreateViewModel
+@{
+    ViewData["Title"] = "Opret produkt - Adminpanel - Dive Deep";
+}
+
+<div class="admin-layout py-4">
+    <partial name="_AdminSidebar" />
+
+    <main class="min-width-0">
+        <div class="admin-page-header">
+            <h1 class="display-6 fw-bold mb-2">Opret produkt</h1>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="CreateProduct">
+            <div class="row g-4">
+                <div class="col-12 col-xl-8">
+                    <section class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <h2 class="h5 fw-bold mb-4">Produktinformation</h2>
+
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label for="product-brand" class="form-label fw-semibold">Mærke</label>
+                                    <input id="product-brand" asp-for="Brand" type="text" class="form-control rounded-3" placeholder="F.eks. Scubapro" />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Brand"></span>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="product-category" class="form-label fw-semibold">Kategori</label>
+                                    <select id="product-category" asp-for="CategoryId" class="form-select rounded-3">
+                                        <option value="" selected disabled>Vælg kategori</option>
+                                        <option value="1">BCD</option>
+                                        <option value="2">Dykkerdragter</option>
+                                        <option value="3">Tanke</option>
+                                        <option value="4">Regulatorsæt</option>
+                                        <option value="5">Maske og snorkel</option>
+                                        <option value="6">Finner</option>
+                                    </select>
+
+                                    <span class="d-block text-danger mt-1" asp-validation-for="CategoryId"></span>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="product-price" class="form-label fw-semibold">Pris pr. dag</label>
+                                    <div class="input-group">
+                                        <input id="product-price" asp-for="Price" type="number" min="0" step="1" class="form-control rounded-start-3" placeholder="0" />
+                                        <span class="input-group-text rounded-end-3">DKK</span>
+                                    </div>
+                                    
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Price"></span>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="product-quantity" class="form-label fw-semibold">Antal på lager</label>
+                                    <input id="product-quantity" asp-for="Quantity" type="number" min="0" step="1" value="0" class="form-control rounded-3" />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Quantity"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="product-description" class="form-label fw-semibold">Beskrivelse</label>
+                                    <textarea id="product-description" asp-for="Description" class="form-control rounded-3" rows="6" maxlength="500" placeholder="Skriv en kort beskrivelse af produktet"></textarea>
+                                    <div class="form-text">Maks. 500 tegn.</div>
+
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card border-0 shadow-sm rounded-4 mt-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                <h2 class="h5 fw-bold mb-0">Produktegenskaber</h2>
+                                <span class="small text-muted">Afhænger af den valgte kategori</span>
+                            </div>
+
+                            <div id="product-properties-placeholder" class="alert alert-light border mb-0" role="status">
+                                Vælg en kategori for at udfylde produktets egenskaber.
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="1">
+                                <div class="col-12 col-md-6">
+                                    <label for="bcd-model" class="form-label fw-semibold">Model</label>
+                                    <input id="bcd-model" asp-for="Model" type="text" class="form-control rounded-3" placeholder="F.eks. Hydros Pro" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Model"></span>
+                                </div>
+                                
+                                <div class="col-12 col-md-6">
+                                    <label for="bcd-size" class="form-label fw-semibold">Størrelse</label>
+                                    <input id="bcd-size" asp-for="Size" type="text" class="form-control rounded-3" placeholder="F.eks. L" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Size"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="2">
+                                <div class="col-12 col-md-6">
+                                    <label for="suit-model" class="form-label fw-semibold">Model</label>
+                                    <input id="suit-model" asp-for="Model" type="text" class="form-control rounded-3" placeholder="F.eks. Definition" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Model"></span>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="suit-type" class="form-label fw-semibold">Dragttype</label>
+                                    <input id="suit-type" asp-for="Type" type="text" class="form-control rounded-3" placeholder="F.eks. våddragt" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Type"></span>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label for="suit-gender" class="form-label fw-semibold">Køn</label>
+                                    <select id="suit-gender" asp-for="Gender" class="form-select rounded-3" disabled>
+                                        <option value="" selected disabled>Vælg køn</option>
+                                        <option value="Herre">Herre</option>
+                                        <option value="Dame">Dame</option>
+                                        <option value="Unisex">Unisex</option>
+                                    </select>
+
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Gender"></span>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label for="suit-thickness" class="form-label fw-semibold">Tykkelse</label>
+                                    <input id="suit-thickness" asp-for="Thickness" type="text" class="form-control rounded-3" placeholder="F.eks. 5 mm" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Thickness"></span>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label for="suit-size" class="form-label fw-semibold">Størrelse</label>
+                                    <input id="suit-size" asp-for="Size" type="text" class="form-control rounded-3" placeholder="F.eks. M" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Size"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="3">
+                                <div class="col-12 col-md-6">
+                                    <label for="tank-volume" class="form-label fw-semibold">Volume</label>
+                                    <div class="input-group">
+                                        <input id="tank-volume" asp-for="Volume" type="number" min="1" step="1" class="form-control rounded-start-3" placeholder="12" disabled />
+                                        <span class="input-group-text rounded-end-3">liter</span>
+                                    </div>
+
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Volume"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="4">
+                                <div class="col-12 col-md-4">
+                                    <label for="regulator-first-stage" class="form-label fw-semibold">Førstetrin</label>
+                                    <input id="regulator-first-stage" asp-for="FirstStage" type="text" class="form-control rounded-3" placeholder="F.eks. MK25 EVO" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="FirstStage"></span>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label for="regulator-second-stage" class="form-label fw-semibold">Andettrin</label>
+                                    <input id="regulator-second-stage" asp-for="SecondStage" type="text" class="form-control rounded-3" placeholder="F.eks. S600" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="SecondStage"></span>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label for="regulator-octopus" class="form-label fw-semibold">Octopus</label>
+                                    <input id="regulator-octopus" asp-for="Octopus" type="text" class="form-control rounded-3" placeholder="F.eks. R195" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Octopus"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="5">
+                                <div class="col-12 col-md-6">
+                                    <label for="mask-model" class="form-label fw-semibold">Model</label>
+                                    <input id="mask-model" asp-for="Model" type="text" class="form-control rounded-3" placeholder="F.eks. D-Mask" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Model"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 d-none" data-category-id="6">
+                                <div class="col-12 col-md-6">
+                                    <label for="fin-model" class="form-label fw-semibold">Model</label>
+                                    <input id="fin-model" asp-for="Model" type="text" class="form-control rounded-3" placeholder="F.eks. Seawing Supernova" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Model"></span>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="fin-size" class="form-label fw-semibold">Størrelse</label>
+                                    <input id="fin-size" asp-for="Size" type="text" class="form-control rounded-3" placeholder="F.eks. M" disabled />
+                                    <span class="d-block text-danger mt-1" asp-validation-for="Size"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    @* <section class="card border-0 shadow-sm rounded-4 mt-4">
+                        <div class="card-body p-4">
+ 
+
+                            
+
+                            
+
+                            
+
+                            
+                        </div>
+                    </section> *@
+                </div>
+
+                <div class="col-12 col-xl-4">
+                    <section class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <h2 class="h5 fw-bold mb-4">Produktbillede</h2>
+
+                            <div>
+                                <label for="product-image" class="form-label fw-semibold">Produktbillede</label>
+                                <input id="product-image" name="Image" type="file" class="form-control rounded-3" accept="image/png,image/jpeg,image/webp" />
+                                <div class="form-text">PNG, JPG eller WebP.</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+                <a asp-controller="admin" asp-action="products" class="btn btn-outline-secondary rounded-pill px-4">Annuller</a>
+                <button type="submit" class="btn btn-primary rounded-pill px-4">Opret produkt</button>
+            </div>
+        </form>
+    </main>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script>
+        (() => {
+            const categorySelect = document.getElementById("product-category");
+            const placeholder = document.getElementById("product-properties-placeholder");
+            const propertyGroups = document.querySelectorAll("[data-category-id]");
+
+            const updateProductProperties = () => {
+                const selectedCategoryId = categorySelect.value;
+                const hasMatchingProperties = Array.from(propertyGroups).some(group =>
+                    group.dataset.categoryId === selectedCategoryId
+                );
+
+                placeholder.classList.toggle("d-none", hasMatchingProperties);
+
+                propertyGroups.forEach(group => {
+                    const isActive = group.dataset.categoryId === selectedCategoryId;
+                    group.classList.toggle("d-none", !isActive);
+
+                    group.querySelectorAll("input, select, textarea").forEach(field => {
+                        field.disabled = !isActive;
+                    });
+                });
+            };
+
+            categorySelect.addEventListener("change", updateProductProperties);
+            updateProductProperties();
+        })();
+    </script>
+}

@@ -8,5 +8,6 @@ namespace DiveDeepWebApp.Services
         ProductsViewModel GetByCategoryId(int categoryId);
         ProductViewModel GetProductViewModel(int productId);
         List<Product> GetAllByName(string name);
+        void Create(Product product);
     }
 }

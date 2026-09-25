@@ -39,5 +39,10 @@ namespace DiveDeepWebApp.Persistence
                 .ToList();
         }
 
+        public void Create(Product product)
+        {
+            context.Products.Add(product);
+            context.SaveChanges();
+        }
     }
 }

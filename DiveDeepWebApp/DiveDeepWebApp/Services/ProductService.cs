@@ -51,5 +51,10 @@ namespace DiveDeepWebApp.Services
                 ProductName = product.Name
             };
         }
+
+        public void Create(Product product)
+        {
+            productRepository.Create(product);
+        }
     }
 }
