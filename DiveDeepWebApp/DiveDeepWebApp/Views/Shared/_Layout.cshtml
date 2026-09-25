@@ -106,17 +106,20 @@
     
 
     <script>
-            document.getElementById("nameForm").addEventListener("submit", async function(e) {
-                e.preventDefault(); // Stopper side-skift
+            // Får fat i formen og lytter efter submit
+            document.getElementById("nameForm").addEventListener("submit", async function(e) { 
+                e.preventDefault(); // Stopper submit og side-skift
 
-                const name = document.getElementById("nameInput").value;
+                // henter værdien fra inputfeltet
+                const name = document.getElementById("nameInput").value; 
 
-                const response = await fetch(`/Weather/WeatherPartial?name=${encodeURIComponent(name)}`, {
+                // Kalder weather controller og actionmethod med name som argument
+                const response = await fetch(`/Weather/WeatherPartial?name=${encodeURIComponent(name)}`, { //sikrer at navne med mellemrum/æøå virker
                     method: 'GET'
                 });
-
+                // får fat i HTML'en fra response
                 const html = await response.text(); // HTML, ikke JSON
-
+                // finder weatherResult id i _weather.cshtml og sættet html ind.
                 document.getElementById("weatherResult").innerHTML = html;
             });
     </script>
