@@ -10,6 +10,27 @@
 <div id="weatherResult" class="small text-muted mt-3">
     @if (Model != null && string.IsNullOrEmpty(Model.ErrorMessage))
     {
+        var reasons = new List<string>();
+
+        if (Model.WaveHeight > 1.5)
+        {
+            reasons.Add("Bølgehøjden er over 1,5 meter, hvilket gør dykning utrygt.");
+        }
+        if (Model.WindSpeed10m > 28.8) // 8 m/s
+        {
+            reasons.Add("Vinden er kraftigere end 8 m/s, hvilket giver urolige og farlige forhold.");
+        }
+        if (Model.Precipitation > 2)
+        {
+            reasons.Add("Nedbøren overstiger 2 mm/t, hvilket reducerer sigtbarheden markant.");
+        }
+        if (Model.Thunder)
+        {
+            reasons.Add("Der er risiko for torden, hvilket gør dykning farligt.");
+        }
+        var isSafe = !reasons.Any();
+
+
         <div class="p-2 border rounded bg-white">
             <div><strong>@Model.City, @Model.Country</strong></div>
             <div>Bølgehøjde: @Model.WaveHeight m</div>
@@ -17,33 +38,12 @@
             <div>Vindhastighed: @Model.WindSpeed10m km/t</div>
             <div>Nedbør: @Model.Precipitation mm/t</div>
             <div>Torden: @(Model.Thunder ? "Ja" : "Nej")</div>
-            <div class="text-primary">@Model.SuitRecommendedThickness</div>
-
-            @{
-                var reasons = new List<string>();
-
-                if (Model.WaveHeight > 1.5)
-                {
-                    reasons.Add("Bølgehøjden er over 1,5 meter, hvilket gør dykning utrygt.");
-                }
-
-                if (Model.WindSpeed10m > 28.8) // 8 m/s
-                {
-                    reasons.Add("Vinden er kraftigere end 8 m/s, hvilket giver urolige og farlige forhold.");
-                }
-
-                if (Model.Precipitation > 2)
-                {
-                    reasons.Add("Nedbøren overstiger 2 mm/t, hvilket reducerer sigtbarheden markant.");
-                }
-
-                if (Model.Thunder)
-                {
-                    reasons.Add("Der er risiko for torden, hvilket gør dykning farligt.");
-                }
-
-                var isSafe = !reasons.Any();
+            @if (isSafe)
+            {
+                <div class="text-primary">@Model.SuitRecommendedThickness</div>
             }
+            
+
 
             <div class="mt-3">
                 @if (isSafe)
@@ -76,4 +76,4 @@
     {
         <p class="text-danger">@Model.ErrorMessage</p>
     }
-
+<div/>
