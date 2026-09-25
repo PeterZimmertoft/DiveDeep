@@ -18,9 +18,10 @@
             <div class="table-responsive">
                 <table class="table align-middle mb-0 admin-table admin-products-table">
                     <colgroup>
-                        <col style="width: 35%" />
-                        <col style="width: 25%" />
+                        <col style="width: 30%" />
                         <col style="width: 20%" />
+                        <col style="width: 15%" />
+                        <col style="width: 15%" />
                         <col style="width: 20%" />
                     </colgroup>
                     
@@ -29,6 +30,7 @@
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Produkt</th>
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Kategori</th>
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Pris pr. dag</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Antal varianter</th>
                             <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary text-end">Handlinger</th>
                         </tr>
                     </thead>
@@ -37,8 +39,9 @@
                         @{ int categoryIndex = 0; }
                         @foreach (ProductsViewModel category in Model)
                         {
+
                             <tr class="admin-category-row" data-category-heading="@category.CategoryName">
-                                <th colspan="4" scope="rowgroup">
+                                <th colspan="5" scope="rowgroup">
                                     <button type="button" class="admin-category-toggle" data-bs-toggle="collapse" data-bs-target="#category-products-@categoryIndex" aria-expanded="true" aria-controls="category-products-@categoryIndex">
                                         <span class="admin-category-label">
                                             @category.CategoryName 
@@ -54,20 +57,26 @@
                             </tr>
 
                             <tr class="admin-category-products-row">
-                                <td colspan="4" class="border-0 p-0">
+                                <td colspan="5" class="border-0 p-0">
                                     <div id="category-products-@categoryIndex" class="collapse show">
                                         <table class="table align-middle mb-0 admin-category-products-table">
                                             <colgroup>
-                                                <col style="width: 35%" />
-                                                <col style="width: 25%" />
+                                                <col style="width: 30%" />
                                                 <col style="width: 20%" />
+                                                <col style="width: 15%" />
+                                                <col style="width: 15%" />
                                                 <col style="width: 20%" />
                                             </colgroup>
+                                            
                                             <tbody>
+                                                @{ int productIndex = 0; }
                                                 @foreach (string productName in category.ProductsByName.Keys)
                                                 {
                                                     List<Product> products = category.ProductsByName[productName];
                                                     Product product = products.First();
+
+                                                    string variantsCollapseId = $"product-variants-{categoryIndex}-{productIndex}";
+                                                    int variants = products.Count();
 
                                                     <tr>
                                                         <td class="px-3 px-md-4 py-4 text-nowrap">
@@ -87,25 +96,146 @@
                                                             <span class="fw-semibold text-primary text-nowrap">@product.Price,- DKK</span>
                                                         </td>
 
+                                                        <td class="px-3 px-md-4 py-4 text-nowrap">
+                                                            @variants
+                                                            @if (variants == 1)
+                                                            {
+                                                                <text>variant</text>
+                                                            }
+                                                            else
+                                                            {
+                                                                <text>varianter</text>
+                                                            }
+                                                        </td>
+
                                                         <td class="px-3 px-md-4 py-4 text-end">
                                                             <div class="d-flex flex-wrap justify-content-end gap-2">
-                                                                @* @if (booking.StartDate > DateTime.Now)
+                                                                @if (variants > 1)
                                                                 {
-                                                                    <a asp-controller="admin" asp-action="deletebooking" asp-route-bookingId="@booking.Id" onclick="return confirm('Er du sikker at du vil slette denne booking?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button">
-                                                                        Slet
-                                                                    </a>
-
-                                                                    <a asp-controller="admin" asp-action="editbooking" asp-route-bookingId="@booking.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button">
-                                                                        Ændre
-                                                                    </a>
+                                                                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#@variantsCollapseId" aria-expanded="false" aria-controls="@variantsCollapseId">
+                                                                        Vis varianter
+                                                                    </button>
                                                                 }
 
-                                                                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
-                                                                    Vis detaljer
-                                                                </button> *@
+                                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet alle varianter</button>
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    @if (variants > 1)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="5" class="border-0 p-0 text-wrap">
+                                                                <div id="@variantsCollapseId" class="collapse overflow-hidden">
+                                                                    <div class="bg-light border-top px-3 px-md-4 py-4">
+                                                                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                                                            <h2 class="h6 fw-bold mb-0">Varianter af @productName</h2>
+                                                                            <span class="small text-muted">@variants varianter</span>
+                                                                        </div>
+
+                                                                        <div class="table-responsive bg-white border rounded-3">
+                                                                            <table class="table table-sm align-middle mb-0">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th scope="col" class="px-3 px-md-4 fw-semibold text-secondary">Variant</th>
+                                                                                        <th scope="col" class="px-3 px-md-4 fw-semibold text-secondary">Egenskaber</th>
+                                                                                        <th scope="col" class="px-3 px-md-4 fw-semibold text-secondary">Antal</th>
+                                                                                        <th scope="col" class="px-3 px-md-4 fw-semibold text-secondary text-end">Handlinger</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                
+                                                                                <tbody>
+                                                                                    @for (int index = 1; index <= variants; index++)
+                                                                                    {
+                                                                                        Product variant = products[index - 1];
+
+                                                                                        <tr>
+                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">Variant @index</td>
+
+                                                                                            <td class="px-3 px-md-4 text-nowrap">
+                                                                                                <div class="d-flex flex-wrap gap-2">
+                                                                                                    @if (variant is BCD bcd)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
+                                                                                                    }
+                                                                                                    else if (variant is Suit suit)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
+                                                                                                        @if (suit.Thickness != "N/A")
+                                                                                                        {
+                                                                                                            <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Thickness</span>
+                                                                                                        }
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
+                                                                                                    }
+                                                                                                    else if (variant is Fin fin)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
+                                                                                                    }
+                                                                                                </diV>
+                                                                                            </td>
+
+                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">@variant.Quantity</td>
+
+                                                                                            <td class="px-3 py-3 text-end">
+                                                                                                <div class="d-flex flex-wrap justify-content-end gap-2">
+                                                                                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</button>
+                                                                                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</button>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    }
+                                                                                    @* @for (int variantNumber = 1; variantNumber <= variants; variantNumber++)
+                                                                                    {
+                                                                                        string[] placeholderSizes = ["S", "M", "L"];
+                                                                                        string[] placeholderColors = ["Sort", "Blå", "Gul"];
+                                                                                        int[] placeholderQuantities = [5, 2, 0];
+                                                                                        string placeholderSize = placeholderSizes[variantNumber - 1];
+                                                                                        string placeholderColor = placeholderColors[variantNumber - 1];
+                                                                                        int placeholderQuantity = placeholderQuantities[variantNumber - 1];
+
+                                                                                        <tr>
+                                                                                            <td class="px-3 py-3 fw-semibold">Variant @variantNumber</td>
+                                                                                            <td class="px-3 py-3 text-wrap">
+                                                                                                <div class="d-flex flex-wrap gap-2">
+                                                                                                    @if (product is Suit suit)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @placeholderSize</span>
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Thickness</span>
+                                                                                                    }
+                                                                                                    else if (product is BCD || product is Fin)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @placeholderSize</span>
+                                                                                                    }
+                                                                                                    else if (product is Tank)
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@((variantNumber * 2) + 8)L</span>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Farve: @placeholderColor</span>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td class="px-3 py-3">@placeholderQuantity stk.</td>
+                                                                                            <td class="px-3 py-3 text-end">
+                                                                                                <div class="d-flex flex-wrap justify-content-end gap-2">
+                                                                                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</button>
+                                                                                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</button>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    } *@
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                    productIndex++;
                                                 }
                                             </tbody>
                                         </table>
