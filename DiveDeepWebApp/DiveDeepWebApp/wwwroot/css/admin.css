@@ -1,0 +1,238 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 92px;
+  min-height: 430px;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 5px 18px rgba(24, 68, 96, 0.07);
+}
+
+.admin-sidebar-subtitle {
+  color: #6c757d;
+  font-size: 0.78rem;
+}
+
+.admin-nav-link {
+  display: block;
+  padding: 0.65rem 0.8rem;
+  margin-top: 0.35rem;
+  color: #495057;
+  text-decoration: none;
+  border-radius: 0.65rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.admin-nav-link:hover {
+  color: #0d6efd;
+  background: #f5fbff;
+}
+
+.admin-nav-link.active {
+  color: #fff;
+  background: #0d6efd;
+}
+
+.admin-back-link {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.admin-back-link:hover {
+  color: #0d6efd;
+}
+
+.admin-page-header {
+  margin-bottom: 1.75rem;
+}
+
+.admin-page-header h1 {
+  color: #183f59;
+}
+
+.admin-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 112px;
+  padding: 1.35rem 1.5rem;
+  color: #212529;
+  text-decoration: none;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 5px 18px rgba(24, 68, 96, 0.07);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-link-card:hover {
+  color: #0d6efd;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(24, 68, 96, 0.1);
+}
+
+.admin-link-card div span,
+.table-subtext {
+  display: block;
+  color: #6c757d;
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+.admin-link-arrow {
+  color: #0d6efd;
+  font-size: 1.4rem;
+}
+
+.admin-table-card {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.admin-table-card .table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.admin-table-card .card-body {
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.admin-table-card .form-control,
+.admin-table-card .form-select {
+  border-color: #d8e4eb;
+  border-radius: 0.65rem;
+}
+
+.admin-table {
+  min-width: 720px;
+}
+
+.admin-bookings-table {
+  min-width: 900px;
+}
+
+.admin-bookings-table th,
+.admin-bookings-table td {
+  padding-right: 0.85rem;
+  padding-left: 0.85rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.95rem 1.25rem;
+  white-space: nowrap;
+}
+
+.admin-table th {
+  color: #5f6b73;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-bottom-color: #dfe9ef;
+}
+
+.admin-table td {
+  font-size: 0.88rem;
+}
+
+.admin-table .badge {
+  font-weight: 500;
+  padding: 0.45rem 0.7rem;
+  border-radius: 50rem;
+}
+
+.admin-table tbody tr:hover > td,
+.admin-table tbody tr:hover > th {
+  background: #fbfdff;
+}
+
+.admin-category-row th {
+  padding: 0.8rem 1.25rem;
+  color: #183f59;
+  background: #eef7fb;
+  border-top: 1px solid #d7e8f0;
+  border-bottom: 1px solid #d7e8f0;
+  font-size: 0.9rem;
+}
+
+.admin-category-row th span {
+  margin-left: 0.45rem;
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.admin-product-name {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-booking-details {
+  padding: 1.25rem;
+  background: #f7fafc;
+  border-top: 1px solid #dfe9ef;
+  border-bottom: 1px solid #dfe9ef;
+}
+
+.admin-booking-product {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 0.85rem;
+  background: #fff;
+  border: 1px solid #dfe9ef;
+  border-radius: 0.75rem;
+}
+
+.admin-booking-product strong {
+  display: block;
+}
+
+.admin-product-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  color: #1768a8;
+  background: #eaf5fb;
+  border-radius: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+
+@media (max-width: 991.98px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .admin-sidebar {
+    position: static;
+    min-height: 0;
+  }
+}

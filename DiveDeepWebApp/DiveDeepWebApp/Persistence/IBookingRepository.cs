@@ -8,6 +8,7 @@ namespace DiveDeepWebApp.Persistence
         void Delete(int bookingId);
         void Update(Booking booking);
 
+        List<Booking> GetAll(); 
         Booking? GetById(int bookingId);
         List<Booking> GetAllByUserId(string userId);
 

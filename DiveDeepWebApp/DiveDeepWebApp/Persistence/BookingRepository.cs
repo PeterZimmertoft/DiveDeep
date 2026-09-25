@@ -26,7 +26,7 @@ namespace DiveDeepWebApp.Persistence
                 .Include(b => b.BookingProducts)
                 .ThenInclude(bp => bp.Product)
                 .ThenInclude(p => p.Category)
-                .OrderByDescending(b => b.Id)
+                .OrderByDescending(b => b.StartDate)
                 .ToList();
                 
             return bookings;
@@ -82,6 +82,19 @@ namespace DiveDeepWebApp.Persistence
             return context.Bookings
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
+        }
+
+        public List<Booking> GetAll()
+        {
+            List<Booking> bookings = context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.BookingProducts)
+                .ThenInclude(bp => bp.Product)
+                .ThenInclude(p => p.Category)
+                .OrderByDescending(b => b.StartDate)
+                .ToList();
+                
+            return bookings;
         }
     }
 }

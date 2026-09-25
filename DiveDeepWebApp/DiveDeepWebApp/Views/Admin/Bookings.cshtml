@@ -1,0 +1,184 @@
+@model List<Booking>
+@{
+    ViewData["Title"] = "Bookinger - Adminpanel - Dive Deep";
+}
+
+<div class="admin-layout py-4">
+    <partial name="_AdminSidebar" />
+
+    <main class="min-width-0">
+        <div class="admin-page-header">
+            <h1 class="display-6 fw-bold mb-2">Bookinger</h1>
+        </div>
+
+        <section class="card border-0 shadow-sm admin-table-card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 admin-table admin-bookings-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Booking</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Kunde</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Lejet produkter</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Pris</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Fra</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Til</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary">Status</th>
+                            <th scope="col" class="px-3 px-md-4 py-3 fw-semibold text-secondary text-end">Handlinger</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (Booking booking in Model)
+                        {
+                            int count = booking.BookingProducts.Sum(bookingProduct => bookingProduct.Quantity);
+
+                            <tr>
+                                <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-nowrap">
+                                    #@booking.Id
+                                </th>
+
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    <span class="d-block mb-1">
+                                        @booking.User.Email
+                                    </span>
+                                </td>
+
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    <span class="d-block mb-1">
+                                        @count
+
+                                        @if (count == 1)
+                                        {
+                                            <text>produkt</text>
+                                        }
+                                        else
+                                        {
+                                            <text>produkter</text>
+                                        }
+                                    </span>
+                                </td>
+                                
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    <span class="fw-semibold text-primary text-nowrap">@booking.Price,- DKK</span>
+                                </td>
+
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    <span class="small text-nowrap">@Convert.ToDateTime(booking.StartDate).ToString("dd\\/MM\\/yyyy")</span>
+                                </td>
+
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    <span class="small text-nowrap">@Convert.ToDateTime(booking.EndDate).ToString("dd\\/MM\\/yyyy")</span>
+                                </td>
+
+                                <td class="px-3 px-md-4 py-4 text-nowrap">
+                                    @if (booking.StartDate > DateTime.Now)
+                                    {
+                                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2">Kommende</span>
+                                    }
+                                    else if (booking.StartDate < DateTime.Now && booking.EndDate > DateTime.Now)
+                                    {
+                                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">I gang</span>
+                                    }
+                                    else if (booking.EndDate < DateTime.Now)
+                                    {
+                                        <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2">Afsluttet</span>
+                                    }
+                                </td>
+
+                                <td class="px-3 px-md-4 py-4 text-end">
+                                    <div class="d-flex flex-wrap justify-content-end gap-2">
+                                        @if (booking.StartDate > DateTime.Now)
+                                        {
+                                            <a asp-controller="admin" asp-action="deletebooking" asp-route-bookingId="@booking.Id" onclick="return confirm('Er du sikker at du vil slette denne booking?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap" type="button">
+                                                Slet
+                                            </a>
+
+                                            <a asp-controller="admin" asp-action="editbooking" asp-route-bookingId="@booking.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap" type="button">
+                                                Ændre
+                                            </a>
+                                        }
+
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 text-nowrap" type="button" data-bs-toggle="collapse" data-bs-target="#booking-details-@booking.Id" aria-expanded="false" aria-controls="booking-details-@booking.Id">
+                                            Vis detaljer
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="8" class="border-0 p-0">
+                                    <div id="booking-details-@booking.Id" class="collapse">
+                                        <div class="bg-light border-top px-3 px-md-4 py-4">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                            <h2 class="h6 fw-bold mb-0">Udstyr i booking #@booking.Id</h2>
+                                            
+                                            <span class="small text-muted">
+                                                @count
+                                                stk. i alt
+                                            </span>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            @foreach (BookingProduct bookingProduct in booking.BookingProducts)
+                                            {
+                                                Product product = bookingProduct.Product;
+                                                byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
+
+                                                <div class="col-12 col-xl-4">
+                                                    <div class="d-flex align-items-start gap-3 bg-white rounded-3 border p-3 h-100">
+                                                        <div class="bg-light rounded-3 p-2 flex-shrink-0">
+                                                            <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" alt="@product.Name" width="56" height="56" class="object-fit-contain" />
+                                                        </div>
+                                                        
+                                                        <div class="flex-grow-1 min-width-0">
+                                                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                                                <div>
+                                                                    <span class="d-block small text-muted">@product.Brand</span>
+                                                                    <span class="d-block fw-semibold text-break">@product.Name</span>
+                                                                </div>
+                                                                
+                                                                <span class="small text-muted text-nowrap pt-1">@bookingProduct.Quantity stk.</span>
+                                                            </div>
+
+                                                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                                                @if (product is BCD bcd)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
+                                                                }
+                                                                else if (product is Suit suit)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
+                                                                    @if (suit.Thickness != "N/A")
+                                                                    {
+                                                                        <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Thickness</span>
+                                                                    }
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
+                                                                }
+                                                                else if (product is Fin fin)
+                                                                {
+                                                                    <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+}

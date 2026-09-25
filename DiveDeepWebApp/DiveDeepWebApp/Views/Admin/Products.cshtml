@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "Produkter - Admin";
+}
+
+<div class="admin-layout py-4">
+    <partial name="_AdminSidebar" />
+
+    <main class="min-width-0">
+        <div class="admin-page-header">
+            <div>
+                <h1 class="display-6 fw-bold mb-2">Kategorier og produkter</h1>
+                <p class="text-muted mb-0">Produkterne er samlet under deres kategorier.</p>
+            </div>
+        </div>
+
+        <section class="card border-0 shadow-sm admin-table-card">
+            <div class="card-body border-bottom">
+                <div class="row g-2">
+                    <div class="col-12 col-md">
+                        <input class="form-control" type="search" placeholder="Søg efter produkt..." aria-label="Søg efter produkt" data-table-search />
+                    </div>
+                    <div class="col-12 col-md-auto">
+                        <select class="form-select" aria-label="Vælg kategori" data-table-filter="category">
+                            <option value="">Alle kategorier</option>
+                            <option value="bcd">BCD</option>
+                            <option value="dragter">Dykkerdragter</option>
+                            <option value="finner">Finner</option>
+                            <option value="masker">Maske/Snorkel</option>
+                            <option value="regulatorer">Regulatorsæt</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 admin-table" data-admin-table>
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Produkt</th>
+                            <th scope="col">Kategori</th>
+                            <th scope="col">Pris pr. dag</th>
+                            <th scope="col">Antal</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="admin-category-row" data-category-heading="bcd">
+                            <th colspan="5" scope="rowgroup">BCD <span>1 produkt</span></th>
+                        </tr>
+                        <tr data-table-row data-search-value="aqua lung pro hd" data-category="bcd">
+                            <td><div class="admin-product-name"><span class="admin-product-mark">AL</span><div><strong>Aqua Lung Pro HD</strong><span class="table-subtext">Aqua Lung</span></div></div></td>
+                            <td>BCD</td><td>275 kr.</td><td>0</td><td><span class="badge bg-danger-subtle text-danger">Udsolgt</span></td>
+                        </tr>
+                        <tr class="admin-category-row" data-category-heading="dragter">
+                            <th colspan="5" scope="rowgroup">Dykkerdragter <span>1 produkt</span></th>
+                        </tr>
+                        <tr data-table-row data-search-value="mares flexa 5.4.3" data-category="dragter">
+                            <td><div class="admin-product-name"><span class="admin-product-mark">MF</span><div><strong>Mares Flexa 5.4.3</strong><span class="table-subtext">Mares</span></div></div></td>
+                            <td>Dykkerdragter</td><td>225 kr.</td><td>3</td><td><span class="badge bg-warning-subtle text-warning-emphasis">Få på lager</span></td>
+                        </tr>
+                        <tr class="admin-category-row" data-category-heading="finner">
+                            <th colspan="5" scope="rowgroup">Finner <span>1 produkt</span></th>
+                        </tr>
+                        <tr data-table-row data-search-value="scubapro seawing nova" data-category="finner">
+                            <td><div class="admin-product-name"><span class="admin-product-mark">SS</span><div><strong>Scubapro Seawing Nova</strong><span class="table-subtext">Scubapro</span></div></div></td>
+                            <td>Finner</td><td>95 kr.</td><td>2</td><td><span class="badge bg-warning-subtle text-warning-emphasis">Få på lager</span></td>
+                        </tr>
+                        <tr class="admin-category-row" data-category-heading="masker">
+                            <th colspan="5" scope="rowgroup">Maske/Snorkel <span>1 produkt</span></th>
+                        </tr>
+                        <tr data-table-row data-search-value="tusa freedom hd" data-category="masker">
+                            <td><div class="admin-product-name"><span class="admin-product-mark">TF</span><div><strong>TUSA Freedom HD</strong><span class="table-subtext">TUSA</span></div></div></td>
+                            <td>Maske/Snorkel</td><td>65 kr.</td><td>12</td><td><span class="badge bg-success-subtle text-success">På lager</span></td>
+                        </tr>
+                        <tr class="admin-category-row" data-category-heading="regulatorer">
+                            <th colspan="5" scope="rowgroup">Regulatorsæt <span>1 produkt</span></th>
+                        </tr>
+                        <tr data-table-row data-search-value="apeks xtx50" data-category="regulatorer">
+                            <td><div class="admin-product-name"><span class="admin-product-mark">AX</span><div><strong>Apeks XTX50</strong><span class="table-subtext">Apeks</span></div></div></td>
+                            <td>Regulatorsæt</td><td>185 kr.</td><td>8</td><td><span class="badge bg-success-subtle text-success">På lager</span></td>
+                        </tr>
+                        <tr class="d-none" data-empty-row><td colspan="5" class="text-center text-muted py-4">Ingen produkter fundet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+}

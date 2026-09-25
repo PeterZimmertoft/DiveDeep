@@ -16,7 +16,9 @@ namespace DiveDeepWebApp
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepContext>();
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DiveDeepContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

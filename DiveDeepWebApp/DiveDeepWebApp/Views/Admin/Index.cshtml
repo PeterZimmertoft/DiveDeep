@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Adminpanel - Dive Deep";
+}
+
+<div class="admin-layout py-4">
+    <partial name="_AdminSidebar" />
+
+    <main>
+        <div class="admin-page-header">
+            <h1 class="display-6 fw-bold mb-2">Adminpanel</h1>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <a asp-action="Products" class="admin-link-card">
+                    <div>
+                        <strong>Kategorier og produkter</strong>
+                        <span>Se produkter og lagerstatus under hver kategori</span>
+                    </div>
+                    <span class="admin-link-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <a asp-action="Bookings" class="admin-link-card">
+                    <div>
+                        <strong>Bookinger</strong>
+                        <span>Se kommende og tidligere bookinger</span>
+                    </div>
+                    <span class="admin-link-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
