@@ -110,11 +110,30 @@ namespace DiveDeepWebApp.Services
 
                 if (waveHeight == null)
                 {
-                    //modified = DateTime.UnixEpoch.AddSeconds(waveHeight.CurrentHeightAndTemp.Time);
-                    throw new Exception();
+                    return new WeatherViewModel
+                    {
+                        ErrorMessage = "Vi kan kun tjekke havforhold for kystbyer."
+                    };
                 }
-                DateTime modified = DateTime.UnixEpoch.AddSeconds(waveHeight.CurrentHeightAndTemp.Time);
+                DateTime modified = DateTime.UnixEpoch.AddSeconds(waveHeight.CurrentHeightAndTemp.Time).ToLocalTime();
 
+                var tempRecomendedThickness = "Anbefaling: ";
+                if (waveHeight.CurrentHeightAndTemp.SeaTemp >= 24)
+                {
+                    tempRecomendedThickness += "våddragt på 3mm";
+                }
+                else if(waveHeight.CurrentHeightAndTemp.SeaTemp >= 18 && waveHeight.CurrentHeightAndTemp.SeaTemp < 24)
+                {
+                    tempRecomendedThickness += "våddragt på 5mm";
+                }
+                else if (waveHeight.CurrentHeightAndTemp.SeaTemp >= 10 && waveHeight.CurrentHeightAndTemp.SeaTemp < 18)
+                {
+                    tempRecomendedThickness += "våddragt på 7mm";
+                }
+                else if (waveHeight.CurrentHeightAndTemp.SeaTemp < 10)
+                {
+                    tempRecomendedThickness += "tørdragt";
+                }
 
                 return new WeatherViewModel
                 {
@@ -125,6 +144,7 @@ namespace DiveDeepWebApp.Services
                     WindSpeed10m = currentWeather.CurrentWeather.WindSpeed10m,
                     Precipitation = currentWeather.CurrentWeather.Precipitation,
                     Thunder = thunder, //if thunder = true, there is thunder
+                    SuitRecommendedThickness = tempRecomendedThickness,
                     Modified = modified
                 };
             }

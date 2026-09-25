@@ -66,10 +66,13 @@
                     </div>
                 </div>
 
-                <div id="_Weather">
+                <div id="_Weather" class="col-12 col-md-auto text-md-center">
+                    <p class="text-uppercase small fw-semibold text-primary mb-1">Se hvordan vejrforholdene er i dag</p>
                     <form id="nameForm">
-                        <input type="text" name="name" id="nameInput" placeholder="Enter name" />
-                        <button type="submit">Send</button>
+                        <div class="hstack gap-3">
+                            <input class="form-control" type="text" name="name" id="nameInput" placeholder="Indtast bynavn" />
+                            <button class="btn btn-primary" type="submit">Søg</button>
+                        </div>
                     </form>
 
                     <div id="weatherResult"></div>

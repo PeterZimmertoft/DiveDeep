@@ -5,40 +5,39 @@
 }
 
 @model WeatherViewModel
-@{
-    var weatherVM = Model;
-}
+
 
 <div id="weatherResult" class="small text-muted mt-3">
-    @if (weatherVM != null && string.IsNullOrEmpty(weatherVM.ErrorMessage))
+    @if (Model != null && string.IsNullOrEmpty(Model.ErrorMessage))
     {
         <div class="p-2 border rounded bg-white">
-            <div><strong>@weatherVM.City, @weatherVM.Country</strong></div>
-            <div>Bølgehøjde: @weatherVM.WaveHeight m</div>
-            <div>Havtemperatur: @weatherVM.SeaTemp °C</div>
-            <div>Vindhastighed: @weatherVM.WindSpeed10m km/t</div>
-            <div>Nedbør: @weatherVM.Precipitation mm/t</div>
-            <div>Torden: @(weatherVM.Thunder ? "Ja" : "Nej")</div>
+            <div><strong>@Model.City, @Model.Country</strong></div>
+            <div>Bølgehøjde: @Model.WaveHeight m</div>
+            <div>Havtemperatur: @Model.SeaTemp °C</div>
+            <div>Vindhastighed: @Model.WindSpeed10m km/t</div>
+            <div>Nedbør: @Model.Precipitation mm/t</div>
+            <div>Torden: @(Model.Thunder ? "Ja" : "Nej")</div>
+            <div class="text-primary">@Model.SuitRecommendedThickness</div>
 
             @{
                 var reasons = new List<string>();
 
-                if (weatherVM.WaveHeight > 1.5)
+                if (Model.WaveHeight > 1.5)
                 {
                     reasons.Add("Bølgehøjden er over 1,5 meter, hvilket gør dykning utrygt.");
                 }
 
-                if (weatherVM.WindSpeed10m > 28.8) // 8 m/s
+                if (Model.WindSpeed10m > 28.8) // 8 m/s
                 {
                     reasons.Add("Vinden er kraftigere end 8 m/s, hvilket giver urolige og farlige forhold.");
                 }
 
-                if (weatherVM.Precipitation > 2)
+                if (Model.Precipitation > 2)
                 {
                     reasons.Add("Nedbøren overstiger 2 mm/t, hvilket reducerer sigtbarheden markant.");
                 }
 
-                if (weatherVM.Thunder)
+                if (Model.Thunder)
                 {
                     reasons.Add("Der er risiko for torden, hvilket gør dykning farligt.");
                 }
@@ -59,22 +58,22 @@
                         Ikke sikre forhold – undgå at dykke.
                     </div>
 
-                    <ul class="text-danger small ps-3">
+                    <div class="vstack">
                         @foreach (var reason in reasons)
                         {
-                            <li>@reason</li>
+                            <p class="text-danger">@reason</p>
                         }
-                    </ul>
+                    </div>
                 }
             </div>
 
             <div class="text-muted mt-1" style="font-size: 0.75rem;">
-                Opdateret: @weatherVM.Modified.ToString("dd.MM.yyyy HH:mm")
+                Opdateret: @Model.Modified.ToString("dd.MM.yyyy HH:mm")
             </div>
         </div>
     }
-    else if (weatherVM != null && !string.IsNullOrEmpty(weatherVM.ErrorMessage))
+    else if (Model != null && !string.IsNullOrEmpty(Model.ErrorMessage))
     {
-        <div class="text-danger">@weatherVM.ErrorMessage</div>
+        <p class="text-danger">@Model.ErrorMessage</p>
     }
 

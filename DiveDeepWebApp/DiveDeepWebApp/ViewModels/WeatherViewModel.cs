@@ -18,6 +18,8 @@ namespace DiveDeepWebApp.ViewModels
 
         public bool Thunder { get; set; } //if 95-99 or 17 or 29 = thunder, don't swim
 
+        public string SuitRecommendedThickness { get; set; }
+
         public DateTime Modified { get; set; }
         public string ErrorMessage { get; set; }
     }
