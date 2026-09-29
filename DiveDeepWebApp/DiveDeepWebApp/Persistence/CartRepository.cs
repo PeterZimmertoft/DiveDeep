@@ -74,5 +74,29 @@ namespace DiveDeepWebApp.Persistence
 
             context.SaveChanges();
         }
+
+        public void DeleteByProductId(int productId)
+        {
+            List<CartItem> cartItemsWithProductId = context.CartItems
+                .Where(x => x.ProductId == productId)
+                .ToList();
+
+            context.CartItems.RemoveRange(cartItemsWithProductId);
+            context.SaveChanges();
+        }
+
+        public void DeleteByProductId(List<int> productIds)
+        {
+            foreach (int productId in productIds)
+            {
+                List<CartItem> cartItemsWithProductId = context.CartItems
+                    .Where(x => x.ProductId == productId)
+                    .ToList();
+
+                context.CartItems.RemoveRange(cartItemsWithProductId);
+            }
+
+            context.SaveChanges();
+        }
     }
 }

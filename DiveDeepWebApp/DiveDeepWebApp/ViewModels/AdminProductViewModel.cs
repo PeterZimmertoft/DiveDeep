@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace DiveDeepWebApp.ViewModels
 {
-    public class ProductCreateViewModel 
+    public class AdminProductViewModel
     {
+        [ValidateNever]
+        public int ProductId { get; set; }
+
         [Required(ErrorMessage = "Mærket er påkrævet.")]
         public string Brand { get; set; } = string.Empty;
         

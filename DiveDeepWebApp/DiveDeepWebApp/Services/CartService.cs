@@ -85,5 +85,15 @@ namespace DiveDeepWebApp.Services
         {
             cartRepository.Delete(ids);
         }
+
+        public void DeleteByProductId(int productId)
+        {
+            cartRepository.DeleteByProductId(productId);
+        }
+
+        public void DeleteByProductId(List<int> productIds)
+        {
+            cartRepository.DeleteByProductId(productIds);
+        }
     }
 }

@@ -78,6 +78,9 @@ namespace DiveDeepWebApp
             app.MapControllerRoute(name: "admin-booking-edit", pattern: "admin/bookings/edit/{bookingId}", defaults: new { controller = "Admin", action = "EditBooking" });
             
             app.MapControllerRoute(name: "admin-product-create", pattern: "admin/products/create", defaults: new { controller = "Admin", action = "CreateProduct" });
+            app.MapControllerRoute(name: "admin-product-edit", pattern: "admin/products/edit/{productId}", defaults: new { controller = "Admin", action = "EditProduct" });
+            app.MapControllerRoute(name: "admin-product-delete", pattern: "admin/products/{productId}/delete", defaults: new { controller = "Admin", action = "DeleteProductVariant" });
+            app.MapControllerRoute(name: "admin-product-delete-variant", pattern: "admin/products/variants/{productId}/delete", defaults: new { controller = "Admin", action = "DeleteProductVariant" });
 
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}").WithStaticAssets();
 

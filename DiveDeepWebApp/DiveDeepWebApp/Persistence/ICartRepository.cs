@@ -12,5 +12,7 @@ namespace DiveDeepWebApp.Persistence
         void Update(CartItem cartItem);
         void Delete(int id);
         void Delete(List<int> id);
+        void DeleteByProductId(int productId);
+        void DeleteByProductId(List<int> productIds);
     }
 }

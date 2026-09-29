@@ -156,7 +156,6 @@ namespace DiveDeepWebApp.Controllers
             string? userId = userManager.GetUserId(User);
             if (userId == null) return RedirectToAction("Home", "Index");
 
-            Console.WriteLine(cartItem.Id);
             cartService.Delete(cartItem.Id);
             return RedirectToAction(nameof(Index));
         }

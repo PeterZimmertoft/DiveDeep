@@ -8,5 +8,8 @@ namespace DiveDeepWebApp.Persistence
         Product? GetById(int productId);
         List<Product> GetAllByName(string name);
         void Create(Product product);
+        void Update(Product product);
+        void Delete(int productId);
+        void Delete(List<int> productIds);
     }
 }

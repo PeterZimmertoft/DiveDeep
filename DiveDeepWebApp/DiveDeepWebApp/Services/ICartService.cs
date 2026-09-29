@@ -13,5 +13,7 @@ namespace DiveDeepWebApp.Services
         void Update(CartItem cartItem);
         void Delete(int id);
         void Delete(List<int> ids);
+        void DeleteByProductId(int productId);
+        void DeleteByProductId(List<int> productIds);
     }
 }
