@@ -1,6 +1,7 @@
 ﻿using DiveDeepWebApp.Data;
 using DiveDeepWebApp.Models;
 using DiveDeepWebApp.Persistence;
+using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace DiveDeepWebApp.Controllers
             this.bookingRepo = bookingRepo;
             this.userManager = userManager;
         }
+
         public IActionResult Index()
         {
             string? userId = userManager.GetUserId(User);
@@ -25,6 +27,57 @@ namespace DiveDeepWebApp.Controllers
 
             List<Booking> bookings = bookingRepo.GetAllByUserId(userId);
             return View(bookings);
+        }
+
+        public IActionResult Delete(int bookingId)
+        {
+            bookingRepo.Delete(bookingId);
+            return RedirectToAction(nameof(Index)); 
+        }
+
+        public IActionResult Edit(int bookingId)
+        {
+            Booking? booking = bookingRepo.GetById(bookingId);
+            if (booking == null) return View();
+
+            BookingEditViewModel bookingVM = new BookingEditViewModel(booking);
+            return View(bookingVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(BookingEditViewModel bookingVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(bookingVM);
+            }
+
+            DateTime startDate = (DateTime)bookingVM.StartDate!;
+            DateTime endDate = (DateTime)bookingVM.EndDate!;
+
+            if (DateTime.Today > startDate)
+            {
+                ModelState.AddModelError(nameof(BookingEditViewModel.ErrorMessage), "Startdatoen må ikke være i fortiden.");
+                return View(bookingVM);
+            }
+
+            if (startDate > endDate)
+            {
+                ModelState.AddModelError(nameof(BookingEditViewModel.ErrorMessage), "Startdatoen må ikke være efter slutdatoen.");
+                return View(bookingVM);
+            }
+
+            try
+            {
+                bookingRepo.Update(bookingVM);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(nameof(BookingEditViewModel.ErrorMessage), "Denne booking er blevet ændret af en anden");
+                return View(bookingVM);
+            }
+            
+            return RedirectToAction(nameof(Index));
         }
     }
 }

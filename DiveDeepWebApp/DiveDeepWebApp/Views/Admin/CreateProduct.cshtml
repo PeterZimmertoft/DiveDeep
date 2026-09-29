@@ -1,0 +1,41 @@
+@model AdminProductViewModel
+@{
+    ViewData["Title"] = "Opret produkt - Adminpanel - Dive Deep";
+}
+
+<partial name="_Product" model="@Model" />
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script>
+        (() => {
+            const categorySelect = document.getElementById("product-category");
+            const placeholder = document.getElementById("product-properties-placeholder");
+            const propertyGroups = document.querySelectorAll("[data-category-id]");
+
+            const updateProductProperties = () => {
+                const selectedCategoryId = categorySelect.value;
+                const hasMatchingProperties = Array.from(propertyGroups).some(group =>
+                    group.dataset.categoryId === selectedCategoryId
+                );
+
+                placeholder.classList.toggle("d-none", hasMatchingProperties);
+
+                propertyGroups.forEach(group => {
+                    const isActive = group.dataset.categoryId === selectedCategoryId;
+                    group.classList.toggle("d-none", !isActive);
+
+                    group.querySelectorAll("input, select, textarea").forEach(field => {
+                        field.disabled = !isActive;
+                    });
+                });
+            };
+
+            categorySelect.addEventListener("change", updateProductProperties);
+            updateProductProperties();
+        })();
+    </script>
+}

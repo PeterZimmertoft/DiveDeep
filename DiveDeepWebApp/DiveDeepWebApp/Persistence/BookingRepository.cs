@@ -26,7 +26,7 @@ namespace DiveDeepWebApp.Persistence
                 .Include(b => b.BookingProducts)
                 .ThenInclude(bp => bp.Product)
                 .ThenInclude(p => p.Category)
-                .OrderByDescending(b => b.Id)
+                .OrderByDescending(b => b.StartDate)
                 .ToList();
                 
             return bookings;
@@ -56,6 +56,49 @@ namespace DiveDeepWebApp.Persistence
             }
 
             return true;
+        }
+
+        public void Delete(int bookingId)
+        {
+            Booking? bookingToDelete = context.Bookings.Find(bookingId);
+            if (bookingToDelete == null) return;
+
+            context.Bookings.Remove(bookingToDelete);
+            context.SaveChanges();
+        }
+
+        public void Update(Booking booking)
+        {
+            Booking? bookingToUpdate = context.Bookings.Find(booking.Id);
+            if (bookingToUpdate == null) return;
+
+            context.Entry(bookingToUpdate)
+                .Property(b => b.RowVersion)
+                .OriginalValue = booking.RowVersion;
+
+            bookingToUpdate.StartDate = booking.StartDate;
+            bookingToUpdate.EndDate = booking.EndDate;
+            
+            context.SaveChanges();
+        }
+        public Booking? GetById(int id) 
+        {
+            return context.Bookings
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+        }
+
+        public List<Booking> GetAll()
+        {
+            List<Booking> bookings = context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.BookingProducts)
+                .ThenInclude(bp => bp.Product)
+                .ThenInclude(p => p.Category)
+                .OrderByDescending(b => b.StartDate)
+                .ToList();
+                
+            return bookings;
         }
     }
 }

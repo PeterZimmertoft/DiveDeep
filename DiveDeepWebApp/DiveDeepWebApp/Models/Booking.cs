@@ -20,15 +20,21 @@ namespace DiveDeepWebApp.Models
         [Required]
         public double Price { get; set; }
 
+        [ValidateNever]
         [Required]
         public List<BookingProduct> BookingProducts { get; set; }
 
         [Required]
+        [ValidateNever]
         [Display(Name = "User")]
         public string UserId { get; set; }
 
         [ValidateNever]
         [BindNever]
         public ApplicationUser User { get; set; }
+
+        [ValidateNever]
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

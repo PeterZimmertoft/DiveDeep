@@ -7,6 +7,13 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark fw-semibold px-2" asp-controller="admin" asp-action="index">Adminpanel</a>
+            </li>
+        }
+
         <li class="nav-item">
             <a class="nav-link text-dark fw-semibold px-2" asp-controller="bookings" asp-action="index">Mine bookinger</a>
         </li>

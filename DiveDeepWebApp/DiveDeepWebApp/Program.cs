@@ -17,7 +17,9 @@ namespace DiveDeepWebApp
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DiveDeepContext>();
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DiveDeepContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -87,25 +89,20 @@ namespace DiveDeepWebApp
             app.MapStaticAssets();
             app.MapRazorPages();
 
-            app.MapControllerRoute(
-                name: "package",
-                pattern: "package/{packageId}",
-                defaults: new { controller = "Packages", action = "Package" });
+           
+            app.MapControllerRoute(name: "package", pattern: "package/{packageId}", defaults: new { controller = "Packages", action = "Package" });
+            app.MapControllerRoute(name: "category", pattern: "products/{categoryId}", defaults: new { controller = "Products", action = "Products" });
+            app.MapControllerRoute(name: "product", pattern: "products/{categoryId}/{productId}", defaults: new { controller = "Products", action = "Product" });
 
-            app.MapControllerRoute(
-                name: "product",
-                pattern: "products/{categoryId}/{productId}",
-                defaults: new { controller = "Products", action = "Product" });
+            app.MapControllerRoute(name: "booking-edit", pattern: "bookings/edit/{bookingId}", defaults: new { controller = "Bookings", action = "Edit" });
+            app.MapControllerRoute(name: "admin-booking-edit", pattern: "admin/bookings/edit/{bookingId}", defaults: new { controller = "Admin", action = "EditBooking" });
+            
+            app.MapControllerRoute(name: "admin-product-create", pattern: "admin/products/create", defaults: new { controller = "Admin", action = "CreateProduct" });
+            app.MapControllerRoute(name: "admin-product-edit", pattern: "admin/products/edit/{productId}", defaults: new { controller = "Admin", action = "EditProduct" });
+            app.MapControllerRoute(name: "admin-product-delete", pattern: "admin/products/{productId}/delete", defaults: new { controller = "Admin", action = "DeleteProductVariant" });
+            app.MapControllerRoute(name: "admin-product-delete-variant", pattern: "admin/products/variants/{productId}/delete", defaults: new { controller = "Admin", action = "DeleteProductVariant" });
 
-            app.MapControllerRoute(
-                name: "category",
-                pattern: "products/{categoryId}",
-                defaults: new { controller = "Products", action = "Products" });
-
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+            app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}").WithStaticAssets();
 
             app.Run();
         }

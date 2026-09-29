@@ -75,7 +75,7 @@
                         <div class="row g-3">
                             <div class="col-12 col-sm-6 col-lg-12 col-xl-6">
                                 <label for="cart-start-date" class="form-label small fw-semibold">Fra</label>
-                                <input id="cart-start-date" asp-for="StartDate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" />
+                                <input id="cart-start-date" asp-for="StartDate" type="date" min="@(DateTime.Today.AddDays(1).ToString("yyyy-MM-dd"))" class="form-control rounded-3 p-3" />
                                 <span class="d-block text-danger mt-1" asp-validation-for="StartDate"></span>
                             </div>
                         
@@ -129,12 +129,15 @@
         const pricePerDay = Number(totalElement.dataset.pricePerDay);
 
         function updateEndDateMinimum() {
-            const minimumDate = startInput.value || startInput.min;
+            const inputDate = startInput.value || startInput.min;
+            const minimumDate = new Date(`${inputDate}T00:00:00Z`);
+            minimumDate.setUTCDate(minimumDate.getUTCDate() + 1);
 
-            endInput.min = minimumDate;
+            const minimumDateValue = minimumDate.toISOString().slice(0, 10);
 
-            if (endInput.value && endInput.value < minimumDate) {
-                endInput.value = minimumDate;
+            endInput.min = minimumDateValue;
+            if (endInput.value && endInput.value < minimumDateValue) {
+                endInput.value = minimumDateValue;
             }
         }
 
