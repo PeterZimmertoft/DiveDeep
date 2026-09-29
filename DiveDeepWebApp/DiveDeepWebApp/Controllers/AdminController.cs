@@ -194,20 +194,20 @@ namespace DiveDeepWebApp.Controllers
                 return View(adminProductVm);
             }
 
-            product.Id = product.Id;
-            product.Description = adminProductVm.Description ?? string.Empty;
+            newProduct.Id = product.Id;
+            newProduct.Description = adminProductVm.Description ?? string.Empty;
             if (adminProductVm.Image != null && adminProductVm.Image.Length > 0)
             {
                 await using MemoryStream memoryStream = new MemoryStream();
                 await adminProductVm.Image.CopyToAsync(memoryStream);
-                product.Image = memoryStream.ToArray();
+                newProduct.Image = memoryStream.ToArray();
             }
             else
             {
-                product.Image = product.Image;
+                newProduct.Image = product.Image;
             }
 
-            productService.Update(product);
+            productService.Update(newProduct);
             return RedirectToAction(nameof(Products));
         }
 

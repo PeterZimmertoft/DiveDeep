@@ -12,7 +12,11 @@
         </div>
 
         <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="@ViewBag.Action">
-            <input type="number" class="visually-hidden" id="product-id" asp-for="ProductId" />
+            @if (ViewBag.Action == "EditProduct")
+            {
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="CategoryId" />
+            }
 
             <div class="row g-4">
                 <div class="col-12 col-xl-8">
