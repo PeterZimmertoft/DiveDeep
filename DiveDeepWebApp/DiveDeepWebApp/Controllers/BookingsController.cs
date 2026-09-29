@@ -67,7 +67,16 @@ namespace DiveDeepWebApp.Controllers
                 return View(bookingVM);
             }
 
-            bookingRepo.Update(bookingVM);
+            try
+            {
+                bookingRepo.Update(bookingVM);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(nameof(BookingEditViewModel.ErrorMessage), "Denne booking er blevet ændret af en anden");
+                return View(bookingVM);
+            }
+            
             return RedirectToAction(nameof(Index));
         }
     }
