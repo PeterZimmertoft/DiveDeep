@@ -72,6 +72,10 @@ namespace DiveDeepWebApp.Persistence
             Booking? bookingToUpdate = context.Bookings.Find(booking.Id);
             if (bookingToUpdate == null) return;
 
+            context.Entry(bookingToUpdate)
+                .Property(b => b.RowVersion)
+                .OriginalValue = booking.RowVersion;
+
             bookingToUpdate.StartDate = booking.StartDate;
             bookingToUpdate.EndDate = booking.EndDate;
             

@@ -20,6 +20,7 @@ namespace DiveDeepWebApp.ViewModels
             BookingProducts = booking.BookingProducts;
             UserId = booking.UserId;
             User = booking.User;
+            RowVersion = booking.RowVersion;
         }
     }
 }
