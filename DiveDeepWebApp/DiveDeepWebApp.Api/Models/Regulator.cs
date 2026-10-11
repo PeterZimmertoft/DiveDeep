@@ -1,0 +1,25 @@
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DiveDeepWebApp.Api.Models
+{
+    public class Regulator : Product
+    {
+        public override string Name
+        {
+            get => $"{FirstStage} / {SecondStage}";
+            set;
+        }
+
+        [Required]
+        public string FirstStage { get; set; } = string.Empty;
+        
+        [Required]
+        public string SecondStage { get; set; } = string.Empty;
+
+        [Required] 
+        public string Octopus {  get; set; } = string.Empty;
+    }
+}

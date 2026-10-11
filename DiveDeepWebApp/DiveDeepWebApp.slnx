@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DiveDeepWebApp.Api/DiveDeepWebApp.Api.csproj" Id="077b567a-35ac-407f-a004-c5bb8e7be89b" />
   <Project Path="DiveDeepWebApp.Tests/DiveDeepWebApp.Tests.csproj" Id="3491f810-7887-416a-8222-04817170be3f" />
   <Project Path="DiveDeepWebApp/DiveDeepWebApp.csproj" />
 </Solution>

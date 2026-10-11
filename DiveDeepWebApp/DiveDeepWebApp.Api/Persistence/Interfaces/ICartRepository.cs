@@ -1,0 +1,18 @@
+﻿using DiveDeepWebApp.Api.Models;
+
+namespace DiveDeepWebApp.Api.Persistence.Interfaces
+{
+    public interface ICartRepository
+    {
+        List<CartItem> GetAllByUserId(string userId);
+        CartItem? GetById(int id);
+        
+        void Create(CartItem cartItem);
+        void Create(List<CartItem> cartItems);
+        void Update(CartItem cartItem);
+        void Delete(int id);
+        void Delete(List<int> id);
+        void DeleteByProductId(int productId);
+        void DeleteByProductId(List<int> productIds);
+    }
+}
