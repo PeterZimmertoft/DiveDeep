@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DiveDeepWebApp.Api.DTOs
 {
-    public class BCDVariantDTO : ProductVariantDTO
+    public class BcdDTO : ProductVariantDTO
     {
-
+        public string Size { get; set; }
     }
 }
