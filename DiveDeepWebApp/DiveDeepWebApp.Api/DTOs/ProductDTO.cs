@@ -19,7 +19,7 @@ namespace DiveDeepWebApp.Api.DTOs
 
         //public int Quantity { get; set; } = 5;
 
-        public List<ProductVariantDTO> VariantDTOs { get; set; }
+        public List<ProductVariantDTO> Variants { get; set; }
 
 
         //[Required(ErrorMessage = "Der skal vælges en størrelse!")]

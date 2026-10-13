@@ -57,7 +57,7 @@ namespace DiveDeepWebApp.Api.Services
             Product? product = productRepository.GetById(productId);
             if (product == null) return new ProductDTO
             {
-                VariantDTOs = new List<ProductVariantDTO>()
+                Variants = new List<ProductVariantDTO>()
             };
 
             List<Product> products = productRepository.GetAllByName(product.Name);
@@ -79,7 +79,7 @@ namespace DiveDeepWebApp.Api.Services
                     Price = product.Price,
                     Description = product.Description,
                     Image = product.Image.Length > 0 ? product.Image : products.First().Category.Image,
-                    VariantDTOs = productVariantDTOs
+                    Variants = productVariantDTOs
             };
         }
 

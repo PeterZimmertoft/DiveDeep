@@ -12,7 +12,7 @@ namespace DiveDeepWebApp.Api.DTOs
 
         public string Description { get; set; }
 
-        public List<ProductDTO> packageProductDTOs { get; set; }
+        public List<ProductDTO> Products { get; set; }
         
     }
 }

@@ -38,11 +38,11 @@ namespace DiveDeepWebApp.Api.Services
                 packageDTO.Name = package.Name;
                 packageDTO.Description = package.Description;
                 packageDTO.Image = package.Image;
-                packageDTO.packageProductDTOs = new List<ProductDTO>();
+                packageDTO.Products = new List<ProductDTO>();
 
                 foreach (PackageProduct packageProduct in package.PackageProducts)
                 {
-                    packageDTO.packageProductDTOs.Add(new ProductDTO
+                    packageDTO.Products.Add(new ProductDTO
                     {
                         Brand = packageProduct.Product.Brand,
                         ProductName = packageProduct.Product.Name,

@@ -54,7 +54,7 @@ namespace DiveDeepWebApp.Api.Controllers
             List<List<Product>> productsWithVariants = new List<List<Product>>();
 
             packageDTO.Image = package.Image;
-            packageDTO.packageProductDTOs.ForEach(productDTO =>
+            packageDTO.Products.ForEach(productDTO =>
             {
                 List<Product> variants = productService.GetAllByName(productDTO.ProductName);
                 productsWithVariants.Add(variants);
@@ -63,9 +63,9 @@ namespace DiveDeepWebApp.Api.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             List<CartItem> cartItems = new List<CartItem>();
-            for (int index = 0; index < packageDTO.packageProductDTOs.Count; index++)
+            for (int index = 0; index < packageDTO.Products.Count; index++)
             {
-                ProductDTO packageProductDTO = packageDTO.packageProductDTOs[index];
+                ProductDTO packageProductDTO = packageDTO.Products[index];
                 Product? variant = productsWithVariants[index].Find(p => p.MatchesOptions(packageProductDTO.Size, packageProductDTO.Thickness, packageProductDTO.Gender));
                     
 
