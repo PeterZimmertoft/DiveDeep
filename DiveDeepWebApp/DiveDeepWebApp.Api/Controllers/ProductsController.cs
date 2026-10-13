@@ -1,5 +1,6 @@
 ﻿using DiveDeepWebApp.Api.Data;
 using DiveDeepWebApp.Api.DTOs;
+using DiveDeepWebApp.Api.Helpers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services.Interfaces;
@@ -88,55 +89,45 @@ namespace DiveDeepWebApp.Api.Controllers
             return Ok(productDTO);
         }
 
-        //[Authorize]
-        //[HttpPost("post")]
-        //public IActionResult Product([FromBody] ProductDTO productDTO)
-        //{
-        //    string? userId = userManager.GetUserId(User);
-        //    if (userId == null) return Unauthorized(productDTO);
+        [Authorize]
+        [HttpPost("post")]
+        public IActionResult Product([FromBody] ProductDTO productDTO)
+        {
+            string? userId = userManager.GetUserId(User);
+            if (userId == null) return Unauthorized();
 
-        //    List<Product> variants = productService.GetAllByName(productDTO.ProductName);
-        //    productDTO.Variants = variants;
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(productDTO);
-        //    }
-
-        //    Product? variant = variants.Find(p => p.MatchesOptions(productDTO.Size, productDTO.Thickness, productDTO.Gender));
-        //    if (variants.Count == 1 && variant == null)
-        //    {
-        //        variant = variants.First();
-        //    }
-
-        //    if (variant == null)
-        //    {
-        //        return NotFound(productDTO);
-        //    }
-
-        //    cartService.Create(new CartItem
-        //    {
-        //        UserId = userId,
-        //        ProductId = variant.Id,
-        //        Quantity = 1
-        //    });
+            List<Product> variants = productService.GetAllByName(productDTO.ProductName);
+            productDTO.VariantDTOs = variants
+                .Select(p => new ProductVariantDTO
+                {
+                    Id = p.Id,
+                    Size = ConvertProductToProductVariantDTO.Size(p),
+                    Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
+                    Gender = ConvertProductToProductVariantDTO.Gender(p)
+                })
+                .ToList();
 
 
-        //    return Ok();
-        //}
+            Product? variant = variants.Find(p => p.MatchesOptions(productDTO.Size, productDTO.Thickness, productDTO.Gender));
+            if (variants.Count == 1 && variant == null)
+            {
+                variant = variants.First();
+            }
+
+            if (variant == null)
+            {
+                return NotFound(productDTO);
+            }
+
+            cartService.Create(new CartItem
+            {
+                UserId = userId,
+                ProductId = variant.Id,
+                Quantity = 1
+            });
 
 
-
-    //TempData["Message"] = "Du har tilføjet dette produkt til din kurv.";
-
-    //return RedirectToAction(
-    //    nameof(Product),
-    //    new
-    //    {
-    //        categoryId = variant.CategoryId,
-    //        productId = variant.Id
-    //    }
-    //);
-
-}
+            return Ok();
+        }
+    }
 }

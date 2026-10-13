@@ -22,16 +22,13 @@ namespace DiveDeepWebApp.Api.DTOs
         public List<ProductVariantDTO> VariantDTOs { get; set; }
 
 
-
-
-
         //[Required(ErrorMessage = "Der skal vælges en størrelse!")]
-        //public string? Size { get; set; }
+        public string? Size { get; set; }
 
         //[Required(ErrorMessage = "Der skal vælges en tykkelse!")]
-        //public string? Thickness { get; set; }
+        public string? Thickness { get; set; }
 
         //[Required(ErrorMessage = "Der skal vælges et køn!")]
-        //public string? Gender { get; set; }
+        public string? Gender { get; set; }
     }
 }

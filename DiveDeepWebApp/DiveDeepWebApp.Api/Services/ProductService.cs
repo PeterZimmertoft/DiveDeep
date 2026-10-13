@@ -1,4 +1,5 @@
 ﻿using DiveDeepWebApp.Api.DTOs;
+using DiveDeepWebApp.Api.Helpers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services.Interfaces;
@@ -64,11 +65,9 @@ namespace DiveDeepWebApp.Api.Services
                 .Select(p => new ProductVariantDTO
                 {
                     Id = p.Id,
-                    Size = p is Suit suitSize ? suitSize.Size : 
-                            p is BCD bcd ? bcd.Size : 
-                            p is Fin fin ? fin.Size : null,
-                    Thicikness = p is Suit suitThickness ? suitThickness.Thickness : null,
-                    Gender = p is Suit suitGender ? suitGender.Gender : null
+                    Size = ConvertProductToProductVariantDTO.Size(p),
+                    Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
+                    Gender = ConvertProductToProductVariantDTO.Gender(p)
 
                 })
                 .ToList();
