@@ -14,9 +14,9 @@ namespace DiveDeepWebApp.Api.Services
             this.cartRepository = cartRepository;
         }
 
-        public CartDTO GetCartDTO(string userId)
+        public async Task<CartDTO> GetCartDTOAsync(string userId)
         {
-            List<CartItem> rawCartItems = cartRepository.GetAllByUserId(userId);
+            List<CartItem> rawCartItems = await cartRepository.GetAllByUserIdAsync(userId);
             List<CartItemDTO> cartItems = rawCartItems
                 .Where(x => x.PackageId == null)
                 .Select(x => new CartItemDTO
@@ -57,44 +57,44 @@ namespace DiveDeepWebApp.Api.Services
             };
         }
 
-        public CartItem? GetById(int id)
+        public async Task<CartItem?> GetByIdAsync(int id)
         {
-            return cartRepository.GetById(id);
+            return await cartRepository.GetByIdAsync(id);
         }
 
-        public void Create(CartItem cartItem)
+        public async Task CreateAsync(CartItem cartItem)
         {
-            cartRepository.Create(cartItem);
+            await cartRepository.CreateAsync(cartItem);
         }
 
-        public void Create(List<CartItem> cartItems)
+        public async Task CreateAsync(List<CartItem> cartItems)
         {
-            cartRepository.Create(cartItems);
+            await cartRepository.CreateAsync(cartItems);
         }
 
-        public void Update(CartItem cartItem)
+        public async Task UpdateAsync(CartItem cartItem)
         {
-            cartRepository.Update(cartItem);
+            await cartRepository.UpdateAsync(cartItem);
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            cartRepository.Delete(id);
+            await cartRepository.DeleteAsync(id);
         }
 
-        public void Delete(List<int> ids)
+        public async Task DeleteAsync(List<int> ids)
         {
-            cartRepository.Delete(ids);
+            await cartRepository.DeleteAsync(ids);
         }
 
-        public void DeleteByProductId(int productId)
+        public async Task DeleteByProductIdAsync(int productId)
         {
-            cartRepository.DeleteByProductId(productId);
+            await cartRepository.DeleteByProductIdAsync(productId);
         }
 
-        public void DeleteByProductId(List<int> productIds)
+        public async Task DeleteByProductIdAsync(List<int> productIds)
         {
-            cartRepository.DeleteByProductId(productIds);
+            await cartRepository.DeleteByProductIdAsync(productIds);
         }
     }
 }

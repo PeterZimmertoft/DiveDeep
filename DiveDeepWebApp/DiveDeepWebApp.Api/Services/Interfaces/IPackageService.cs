@@ -5,9 +5,9 @@ namespace DiveDeepWebApp.Api.Services.Interfaces
 {
     public interface IPackageService
     {
-        public List<Package> GetAll();
-        public Package? GetById(int packageId);
-        public PackageDTO GetPackageDTO(int packageId);
+        Task<List<Package>> GetAllAsync();
+        Task<Package?> GetByIdAsync(int packageId);
+        Task<PackageDTO> GetPackageDTOAsync(int packageId);
     }
 }
 

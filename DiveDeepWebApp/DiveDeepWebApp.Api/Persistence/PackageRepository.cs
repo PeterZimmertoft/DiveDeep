@@ -14,23 +14,23 @@ namespace DiveDeepWebApp.Api.Persistence
             this.context = context;
         }
 
-        public List<Package> GetAll()
+        public async Task<List<Package>> GetAllAsync()
         {
-            return context.Packages
+            return await context.Packages
                 .AsNoTracking()
                 .Include(p => p.PackageProducts)
                 .ThenInclude(pp => pp.Product)
-                .ToList();
+                .ToListAsync();
         }
 
-        public Package? GetById(int packageId)
+        public async Task<Package?> GetByIdAsync(int packageId)
         {
-            Package? package = context.Packages
+            Package? package = await context.Packages
                 .Where(p => p.Id == packageId)
                 .AsNoTracking()
                 .Include(p => p.PackageProducts)
                 .ThenInclude(pp => pp.Product)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return package;
         }

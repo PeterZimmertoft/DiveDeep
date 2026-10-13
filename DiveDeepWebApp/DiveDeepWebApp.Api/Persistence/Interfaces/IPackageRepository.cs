@@ -4,8 +4,8 @@ namespace DiveDeepWebApp.Api.Persistence.Interfaces
 {
     public interface IPackageRepository
     {
-        public List<Package> GetAll();
+        Task<List<Package>> GetAllAsync();
 
-        public Package? GetById(int packageId);
+        Task<Package?> GetByIdAsync(int packageId);
     }
 }

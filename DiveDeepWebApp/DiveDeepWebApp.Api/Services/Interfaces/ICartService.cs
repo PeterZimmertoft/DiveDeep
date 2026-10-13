@@ -5,15 +5,15 @@ namespace DiveDeepWebApp.Api.Services.Interfaces
 {
     public interface ICartService
     {
-        CartDTO GetCartDTO(string userId);
-        CartItem? GetById(int id);
+        Task<CartDTO> GetCartDTOAsync(string userId);
+        Task<CartItem?> GetByIdAsync(int id);
 
-        void Create(CartItem cartItem);
-        void Create(List<CartItem> cartItems);
-        void Update(CartItem cartItem);
-        void Delete(int id);
-        void Delete(List<int> ids);
-        void DeleteByProductId(int productId);
-        void DeleteByProductId(List<int> productIds);
+        Task CreateAsync(CartItem cartItem);
+        Task CreateAsync(List<CartItem> cartItems);
+        Task UpdateAsync(CartItem cartItem);
+        Task DeleteAsync(int id);
+        Task DeleteAsync(List<int> ids);
+        Task DeleteByProductIdAsync(int productId);
+        Task DeleteByProductIdAsync(List<int> productIds);
     }
 }

@@ -29,19 +29,23 @@ namespace DiveDeepWebApp.Api.Controllers
         }
 
         [HttpGet("product/{productId}")]
-        public IActionResult Product(int productId)
+        public async Task<IActionResult> Product(int productId)
         {
-            ProductDTO productDTO = new ProductDTO();
             try
             {
-                productDTO = productService.GetProductDTO(productId);
+                ProductDTO? productDTO = await productService.GetProductDTOAsync(productId);
+
+                if (productDTO == null)
+                {
+                    return NotFound(productId);
+                }
+
+                return Ok(productDTO);
             }
             catch
             {
                 return BadRequest(productId);
             }
-
-            return Ok(productDTO);
         }
 
         // [Authorize]

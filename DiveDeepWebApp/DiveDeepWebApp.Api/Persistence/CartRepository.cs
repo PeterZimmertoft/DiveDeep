@@ -14,90 +14,90 @@ namespace DiveDeepWebApp.Api.Persistence
             this.context = context;
         }
 
-        public List<CartItem> GetAllByUserId(string userId)
+        public async Task<List<CartItem>> GetAllByUserIdAsync(string userId)
         {
-            return context.CartItems
+            return await context.CartItems
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Product)
                 .Include(x => x.Product!.Category)
                 .Include(x => x.Package)
                 .Include(x => x.Package!.PackageProducts)
-                .ToList();
+                .ToListAsync();
         }
 
-        public CartItem? GetById(int id)
+        public async Task<CartItem?> GetByIdAsync(int id)
         {
-            return context.CartItems
+            return await context.CartItems
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public void Create(CartItem cartItem)
+        public async Task CreateAsync(CartItem cartItem)
         {
             context.CartItems.Add(cartItem);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Create(List<CartItem> cartItems)
+        public async Task CreateAsync(List<CartItem> cartItems)
         {
             context.CartItems.AddRange(cartItems);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(CartItem cartItem)
+        public async Task UpdateAsync(CartItem cartItem)
         {
-            CartItem? cartItemToUpdate = context.CartItems.Find(cartItem.Id);
+            CartItem? cartItemToUpdate = await context.CartItems.FindAsync(cartItem.Id);
             if (cartItemToUpdate == null) return;
 
             cartItemToUpdate.Quantity = cartItem.Quantity;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            CartItem? cartItemToDelete = context.CartItems.Find(id);
+            CartItem? cartItemToDelete = await context.CartItems.FindAsync(id);
             if (cartItemToDelete == null) return;
 
             context.CartItems.Remove(cartItemToDelete);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(List<int> ids)
+        public async Task DeleteAsync(List<int> ids)
         {
             foreach (int id in ids)
             {
-                CartItem? cartItemToDelete = context.CartItems.Find(id);
+                CartItem? cartItemToDelete = await context.CartItems.FindAsync(id);
                 if (cartItemToDelete == null) continue;
 
                 context.CartItems.Remove(cartItemToDelete);
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void DeleteByProductId(int productId)
+        public async Task DeleteByProductIdAsync(int productId)
         {
-            List<CartItem> cartItemsWithProductId = context.CartItems
+            List<CartItem> cartItemsWithProductId = await context.CartItems
                 .Where(x => x.ProductId == productId)
-                .ToList();
+                .ToListAsync();
 
             context.CartItems.RemoveRange(cartItemsWithProductId);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void DeleteByProductId(List<int> productIds)
+        public async Task DeleteByProductIdAsync(List<int> productIds)
         {
             foreach (int productId in productIds)
             {
-                List<CartItem> cartItemsWithProductId = context.CartItems
+                List<CartItem> cartItemsWithProductId = await context.CartItems
                     .Where(x => x.ProductId == productId)
-                    .ToList();
+                    .ToListAsync();
 
                 context.CartItems.RemoveRange(cartItemsWithProductId);
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
