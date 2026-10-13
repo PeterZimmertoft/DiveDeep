@@ -2,6 +2,7 @@
 {
     public class FinDTO : ProductVariantDTO
     {
-        public string Size { get; set; }
+        public string Model { get; set; } = string.Empty;
+        public string Size { get; set; } = string.Empty;
     }
 }

@@ -4,6 +4,8 @@ namespace DiveDeepWebApp.Api.DTOs.Variants
 {
     public class SuitDTO : ProductVariantDTO
     {
+        public string Model { get; set; } = string.Empty;
+
         public string Size { get; set; } = string.Empty;
 
         public string Type { get; set; } = string.Empty;
