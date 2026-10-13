@@ -15,92 +15,64 @@ namespace DiveDeepWebApp.Api.Services
             this.productRepository = productRepository;
         }
 
-        public List<Product> GetAllByName(string name)
+        public async Task<List<Product>> GetAllByNameAsync(string name)
         {
-            return productRepository.GetAllByName(name);
+            return await productRepository.GetAllByNameAsync(name);
         }
 
-        public Product? GetById(int productId)
+        public async Task<Product?> GetByIdAsync(int productId)
         {
-            return productRepository.GetById(productId);
+            return await productRepository.GetByIdAsync(productId);
         }
 
-        public CategoryProductsDTO GetByCategoryId(int categoryId)
+        public async Task<ProductDTO?> GetProductDTOAsync(int productId)
         {
-            List<Product> products = productRepository.GetByCategoryId(categoryId);
+            return null;
 
-            string category = products.FirstOrDefault()?.Category?.Name ?? "Produkter";
-            List<CategoryProductDTO> categoryProductDTOList = products
-                .GroupBy(p => p.Name)
-                .Select(g => g.First())
-                .Select(p => new CategoryProductDTO
-                {
-                    Brand = p.Brand,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Image = p.Image,
-                    SuitType = p is Suit suit ? suit.Type : null
-
-                })
-                .ToList();
-
-            return new CategoryProductsDTO
-            {
-                CategoryName = category,
-                CategoryProductDTOs = categoryProductDTOList
-            };
+            // Product? product = await productRepository.GetByIdAsync(productId);
+            // if (product == null) return;
+            //
+            // List<Product> products = await productRepository.GetAllByNameAsync(product.Name);
+            // List<ProductVariantDTO> productVariantDTOs = products
+            //     .Select(p => new ProductVariantDTO
+            //     {
+            //         Id = p.Id,
+            //         Size = ConvertProductToProductVariantDTO.Size(p),
+            //         Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
+            //         Gender = ConvertProductToProductVariantDTO.Gender(p)
+            //
+            //     })
+            //     .ToList();
+            //
+            //     return new ProductDTO
+            //     {
+            //         Brand = product.Brand,
+            //         Name = product.Name,
+            //         Price = product.Price,
+            //         Description = product.Description,
+            //         Image = product.Image.Length > 0 ? product.Image : products.First().Category.Image,
+            //         Variants = productVariantDTOs
+            // };
         }
 
-
-        public ProductDTO GetProductDTO(int productId)
+        public async Task CreateAsync(Product product)
         {
-            Product? product = productRepository.GetById(productId);
-            if (product == null) return new ProductDTO
-            {
-                Variants = new List<ProductVariantDTO>()
-            };
-
-            List<Product> products = productRepository.GetAllByName(product.Name);
-            List<ProductVariantDTO> productVariantDTOs = products
-                .Select(p => new ProductVariantDTO
-                {
-                    Id = p.Id,
-                    Size = ConvertProductToProductVariantDTO.Size(p),
-                    Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
-                    Gender = ConvertProductToProductVariantDTO.Gender(p)
-
-                })
-                .ToList();
-
-                return new ProductDTO
-                {
-                    Brand = product.Brand,
-                    ProductName = product.Name,
-                    Price = product.Price,
-                    Description = product.Description,
-                    Image = product.Image.Length > 0 ? product.Image : products.First().Category.Image,
-                    Variants = productVariantDTOs
-            };
+            await productRepository.CreateAsync(product);
         }
 
-        public void Create(Product product)
+        public async Task UpdateAsync(Product product)
         {
-            productRepository.Create(product);
+            await productRepository.UpdateAsync(product);
         }
 
-        public void Update(Product product)
+        public async Task DeleteAsync(int productId)
         {
-            productRepository.Update(product);
+            await productRepository.DeleteAsync(productId);
         }
 
-        public void Delete(int productId)
+        public async Task DeleteAsync(List<int> productIds)
         {
-            productRepository.Delete(productId);
-        }
-
-        public void Delete(List<int> productIds)
-        {
-            productRepository.Delete(productIds);
+            await productRepository.DeleteAsync(productIds);
         }
     }
 }

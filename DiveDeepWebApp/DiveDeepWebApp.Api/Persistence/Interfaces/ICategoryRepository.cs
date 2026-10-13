@@ -4,6 +4,7 @@ namespace DiveDeepWebApp.Api.Persistence.Interfaces
 {
     public interface ICategoryRepository
     {
-        List<Category> GetAll();
+        Task<List<Category>> GetAllAsync();
+        Task<Category?> GetByIdAsync(int id);
     }
 }

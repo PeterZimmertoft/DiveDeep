@@ -4,12 +4,11 @@ namespace DiveDeepWebApp.Api.Persistence.Interfaces
 {
     public interface IProductRepository
     {
-        List<Product> GetByCategoryId(int categoryId);
-        Product? GetById(int productId);
-        List<Product> GetAllByName(string name);
-        void Create(Product product);
-        void Update(Product product);
-        void Delete(int productId);
-        void Delete(List<int> productIds);
+        Task<Product?> GetByIdAsync(int productId);
+        Task<List<Product>> GetAllByNameAsync(string name);
+        Task CreateAsync(Product product);
+        Task UpdateAsync(Product product);
+        Task DeleteAsync(int productId);
+        Task DeleteAsync(List<int> productIds);
     }
 }

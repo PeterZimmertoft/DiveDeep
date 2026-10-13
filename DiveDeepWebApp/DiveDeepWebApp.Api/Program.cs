@@ -73,9 +73,9 @@ namespace DiveDeepWebApp.Api
 
 
             builder.Services.AddScoped<IWeatherService, WeatherService>();
-            builder.Services.AddScoped<IProductService, ProductService>();
+            // builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICartService, CartService>();
-            builder.Services.AddScoped<IPackageService, PackageService>();
+            // builder.Services.AddScoped<IPackageService, PackageService>();
 
 
             var app = builder.Build();

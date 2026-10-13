@@ -8,11 +8,5 @@ namespace DiveDeepWebApp.Api.DTOs
     public class ProductVariantDTO
     {
         public int Id { get; set; }
-
-        public string? Size { get; set; }
-        public string? Thicikness { get; set; }
-        public string? Gender { get; set; }
-
-
     }
 }

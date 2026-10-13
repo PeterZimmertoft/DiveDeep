@@ -16,61 +16,16 @@ namespace DiveDeepWebApp.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    
+
     public class ProductsController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ICategoryRepository categoryRepository;
         private readonly IProductService productService;
-        private readonly ICartService cartService;
 
-        public ProductsController(UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IProductService productService, ICartService cartService)
+        public ProductsController(UserManager<ApplicationUser> userManager, IProductService productService, ICartService cartService)
         {
             this.userManager = userManager;
-            this.categoryRepository = categoryRepository;
             this.productService = productService;
-            this.cartService = cartService;
-        }
-        
-        [HttpGet("categories")]
-        public IActionResult GetAllCategories()
-        {
-            List<Category> categories = new List<Category>();
-            List<CategoryDTO> categoryDTOs;
-            try
-            {
-                categories = categoryRepository.GetAll();
-
-                categoryDTOs = categories
-                    .Select(c => new CategoryDTO
-                    {
-                        Id = c.Id,
-                        Name = c.Name,
-                        Description = c.Description,
-                        Image = c.Image
-                    })
-                    .ToList();
-
-
-            }
-            catch { return BadRequest(); }
-
-            return Ok(categoryDTOs);
-        }
-
-        [HttpGet("category/{categoryId}")]
-        public IActionResult Products(int categoryId)
-        {
-            CategoryProductsDTO categoryProductsDTO;
-            try
-            {
-                categoryProductsDTO = productService.GetByCategoryId(categoryId);
-
-
-            }
-            catch { return NotFound("Category was not found"); }
-
-            return Ok(categoryProductsDTO);
         }
 
         [HttpGet("product/{productId}")]
@@ -89,45 +44,45 @@ namespace DiveDeepWebApp.Api.Controllers
             return Ok(productDTO);
         }
 
-        [Authorize]
-        [HttpPost("post")]
-        public IActionResult Product([FromBody] ProductDTO productDTO)
-        {
-            string? userId = userManager.GetUserId(User);
-            if (userId == null) return Unauthorized();
-
-            List<Product> variants = productService.GetAllByName(productDTO.ProductName);
-            productDTO.VariantDTOs = variants
-                .Select(p => new ProductVariantDTO
-                {
-                    Id = p.Id,
-                    Size = ConvertProductToProductVariantDTO.Size(p),
-                    Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
-                    Gender = ConvertProductToProductVariantDTO.Gender(p)
-                })
-                .ToList();
-
-
-            Product? variant = variants.Find(p => p.MatchesOptions(productDTO.Size, productDTO.Thickness, productDTO.Gender));
-            if (variants.Count == 1 && variant == null)
-            {
-                variant = variants.First();
-            }
-
-            if (variant == null)
-            {
-                return NotFound(productDTO);
-            }
-
-            cartService.Create(new CartItem
-            {
-                UserId = userId,
-                ProductId = variant.Id,
-                Quantity = 1
-            });
-
-
-            return Ok();
-        }
+        // [Authorize]
+        // [HttpPost("post")]
+        // public IActionResult Product([FromBody] ProductDTO productDTO)
+        // {
+        //     string? userId = userManager.GetUserId(User);
+        //     if (userId == null) return Unauthorized();
+        //
+        //     List<Product> variants = productService.GetAllByName(productDTO.ProductName);
+        //     productDTO.VariantDTOs = variants
+        //         .Select(p => new ProductVariantDTO
+        //         {
+        //             Id = p.Id,
+        //             Size = ConvertProductToProductVariantDTO.Size(p),
+        //             Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
+        //             Gender = ConvertProductToProductVariantDTO.Gender(p)
+        //         })
+        //         .ToList();
+        //
+        //
+        //     Product? variant = variants.Find(p => p.MatchesOptions(productDTO.Size, productDTO.Thickness, productDTO.Gender));
+        //     if (variants.Count == 1 && variant == null)
+        //     {
+        //         variant = variants.First();
+        //     }
+        //
+        //     if (variant == null)
+        //     {
+        //         return NotFound(productDTO);
+        //     }
+        //
+        //     cartService.Create(new CartItem
+        //     {
+        //         UserId = userId,
+        //         ProductId = variant.Id,
+        //         Quantity = 1
+        //     });
+        //
+        //
+        //     return Ok();
+        // }
     }
 }

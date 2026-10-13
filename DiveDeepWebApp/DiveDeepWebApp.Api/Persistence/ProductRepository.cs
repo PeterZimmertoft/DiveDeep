@@ -14,41 +14,32 @@ namespace DiveDeepWebApp.Api.Persistence
             this.context = context;
         }
 
-        public List<Product> GetByCategoryId(int categoryId)
+        public async Task<Product?> GetByIdAsync(int productId)
         {
-            return context.Products
-                .AsNoTracking()
-                .Where(x => x.CategoryId == categoryId)
-                .Include(x => x.Category)
-                .ToList();
-        }
-
-        public Product? GetById(int productId)
-        {
-            return context.Products
+            return await context.Products
                 .AsNoTracking()
                 .Where(p => p.Id == productId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public List<Product> GetAllByName(string name)
+        public async Task<List<Product>> GetAllByNameAsync(string name)
         {
-            return context.Products
+            return await context.Products
                 .AsNoTracking()
                 .Where(p => p.Name == name)
                 .Include(p => p.Category)
-                .ToList();
+                .ToListAsync();
         }
 
-        public void Create(Product product)
+        public async Task CreateAsync(Product product)
         {
-            context.Products.Add(product);
-            context.SaveChanges();
+            await context.Products.AddAsync(product);
+            await context.SaveChangesAsync();
         }
 
-        public void Update(Product product)
+        public async Task UpdateAsync(Product product)
         {
-            Product? productToUpdate = context.Products.Find(product.Id);
+            Product? productToUpdate = await context.Products.FindAsync(product.Id);
             if (productToUpdate == null) return;
 
             productToUpdate.Brand = product.Brand;
@@ -90,29 +81,29 @@ namespace DiveDeepWebApp.Api.Persistence
                 finToUpdate.Size = fin.Size;
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int productId)
+        public async Task DeleteAsync(int productId)
         {
-            Product? productToDelete = context.Products.Find(productId);
+            Product? productToDelete = await context.Products.FindAsync(productId);
             if (productToDelete == null) return;
 
             context.Products.Remove(productToDelete);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(List<int> productIds)
+        public async Task DeleteAsync(List<int> productIds)
         {
             foreach (int productId in productIds)
             {
-                Product? productToDelete = context.Products.Find(productId);
+                Product? productToDelete = await context.Products.FindAsync(productId);
                 if (productToDelete == null) continue;
 
                 context.Products.Remove(productToDelete);
             }
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
