@@ -30,6 +30,8 @@ namespace DiveDeepWebApp.Api.Persistence
         {
             return await context.CartItems
                 .Where(x => x.Id == id)
+                .Include(x => x.Package)
+                    .ThenInclude(x => x!.PackageProducts)
                 .FirstOrDefaultAsync();
         }
 

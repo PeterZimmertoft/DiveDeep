@@ -1,4 +1,5 @@
 ﻿using DiveDeepWebApp.Api.DTOs;
+using DiveDeepWebApp.Api.Mappers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services.Interfaces;
@@ -14,14 +15,28 @@ namespace DiveDeepWebApp.Api.Services
             this.cartRepository = cartRepository;
         }
 
-        public async Task<CartDTO> GetCartDTOAsync(string userId)
+        public async Task<List<CartItemDTO>> GetAllByUserIdAsync(string userId)
         {
             List<CartItem> rawCartItems = await cartRepository.GetAllByUserIdAsync(userId);
             List<CartItemDTO> cartItems = rawCartItems
                 .Where(x => x.PackageId == null)
-                .Select(x => new CartItemDTO
+                .Select(x =>
                 {
-                    Products = new List<CartItem> { x },
+                    ProductDTO productDTO = x.Product.ToDTO();
+                    productDTO.Variants = new List<ProductVariantDTO>()
+                    {
+                        x.Product.ToVariantDTO()
+                    };
+
+                    return new CartItemDTO()
+                    {
+                        Id = x.Id,
+                        Quantity = x.Quantity,
+                        Products = new List<ProductDTO>()
+                        {
+                            productDTO
+                        }
+                    };
                 })
                 .ToList();
 
@@ -43,58 +58,89 @@ namespace DiveDeepWebApp.Api.Services
 
                 foreach (CartItem[] items in packageItems)
                 {
+                    PackageDTO packageDTO = package.ToDTO();
+
+                    double price = items.Sum(x => x.Product!.Price);
+                    packageDTO.Price = price;
+                    packageDTO.DiscountedPrice = price * 0.8;
+
                     cartItems.Add(new CartItemDTO
                     {
-                        Package = package,
-                        Products = items.ToList()
+                        Id = items.First().Id,
+                        Quantity = 1,
+                        Package = packageDTO,
+                        Products = items
+                            .Select(x =>
+                            {
+                                ProductDTO productDTO = x.Product.ToDTO();
+                                productDTO.Variants = new List<ProductVariantDTO>()
+                                {
+                                    x.Product.ToVariantDTO()
+                                };
+
+                                return productDTO;
+                            })
+                            .ToList()
                     });
                 }
             }
 
-            return new CartDTO
+            return cartItems;
+        }
+
+        public async Task CreateAsync(string userId, CreateCartItemDTO cartItemDTO)
+        {
+            List<CartItem> cartItems = new List<CartItem>();
+            foreach (var productId in cartItemDTO.ProductIds)
             {
-                Items = cartItems
-            };
-        }
+                CartItem cartItem = new CartItem
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    PackageId = cartItemDTO.PackageId,
+                    Quantity = 1
+                };
 
-        public async Task<CartItem?> GetByIdAsync(int id)
-        {
-            return await cartRepository.GetByIdAsync(id);
-        }
+                cartItems.Add(cartItem);
+            }
 
-        public async Task CreateAsync(CartItem cartItem)
-        {
-            await cartRepository.CreateAsync(cartItem);
-        }
-
-        public async Task CreateAsync(List<CartItem> cartItems)
-        {
             await cartRepository.CreateAsync(cartItems);
         }
 
-        public async Task UpdateAsync(CartItem cartItem)
+        public async Task UpdateAsync(int cartItemId, UpdateCartItemDTO cartItemDTO)
         {
+            CartItem? cartItem = await cartRepository.GetByIdAsync(cartItemId);
+            if (cartItem == null)
+            {
+                throw new Exception("Cart item not found");
+            }
+
+            cartItem.Quantity = cartItemDTO.Quantity;
             await cartRepository.UpdateAsync(cartItem);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int cartItemId)
         {
-            await cartRepository.DeleteAsync(id);
-        }
+            CartItem? cartItem = await cartRepository.GetByIdAsync(cartItemId);
+            if (cartItem == null)
+            {
+                throw new Exception("Cart item not found");
+            }
 
-        public async Task DeleteAsync(List<int> ids)
-        {
+            List<int> ids = new List<int>()
+            {
+                cartItem.Id
+            };
+
+            if (cartItem.Package != null)
+            {
+                for (int i = 1; i < cartItem.Package.PackageProducts.Count; i++)
+                {
+                    ids.Add(cartItem.Id + i);
+                }
+            }
+
             await cartRepository.DeleteAsync(ids);
-        }
-
-        public async Task DeleteByProductIdAsync(int productId)
-        {
-            await cartRepository.DeleteByProductIdAsync(productId);
-        }
-
-        public async Task DeleteByProductIdAsync(List<int> productIds)
-        {
-            await cartRepository.DeleteByProductIdAsync(productIds);
         }
     }
 }

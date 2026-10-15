@@ -19,26 +19,20 @@ namespace DiveDeepWebApp.Api.Controllers
 
     public class ProductsController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IProductService productService;
 
-        public ProductsController(UserManager<ApplicationUser> userManager, IProductService productService, ICartService cartService)
+        public ProductsController(IProductService productService)
         {
-            this.userManager = userManager;
             this.productService = productService;
         }
 
-        [HttpGet("product/{productId}")]
-        public async Task<IActionResult> Product(int productId)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetByIdAsync(int productId)
         {
             try
             {
                 ProductDTO? productDTO = await productService.GetProductDTOAsync(productId);
-
-                if (productDTO == null)
-                {
-                    return NotFound(productId);
-                }
+                if (productDTO == null) return NotFound();
 
                 return Ok(productDTO);
             }
@@ -47,46 +41,5 @@ namespace DiveDeepWebApp.Api.Controllers
                 return BadRequest(productId);
             }
         }
-
-        // [Authorize]
-        // [HttpPost("post")]
-        // public IActionResult Product([FromBody] ProductDTO productDTO)
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return Unauthorized();
-        //
-        //     List<Product> variants = productService.GetAllByName(productDTO.ProductName);
-        //     productDTO.VariantDTOs = variants
-        //         .Select(p => new ProductVariantDTO
-        //         {
-        //             Id = p.Id,
-        //             Size = ConvertProductToProductVariantDTO.Size(p),
-        //             Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
-        //             Gender = ConvertProductToProductVariantDTO.Gender(p)
-        //         })
-        //         .ToList();
-        //
-        //
-        //     Product? variant = variants.Find(p => p.MatchesOptions(productDTO.Size, productDTO.Thickness, productDTO.Gender));
-        //     if (variants.Count == 1 && variant == null)
-        //     {
-        //         variant = variants.First();
-        //     }
-        //
-        //     if (variant == null)
-        //     {
-        //         return NotFound(productDTO);
-        //     }
-        //
-        //     cartService.Create(new CartItem
-        //     {
-        //         UserId = userId,
-        //         ProductId = variant.Id,
-        //         Quantity = 1
-        //     });
-        //
-        //
-        //     return Ok();
-        // }
     }
 }

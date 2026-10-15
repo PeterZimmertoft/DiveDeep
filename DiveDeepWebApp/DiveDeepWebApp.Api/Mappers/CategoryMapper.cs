@@ -13,7 +13,10 @@ namespace DiveDeepWebApp.Api.Mappers
                 Name = category.Name,
                 Description = category.Description,
                 Image = category.Image,
-                Products = category.Products != null ? category.Products.Select(p => p.ToDTO()).ToList() : null
+                Products = category.Products?
+                    .Select(p => p.ToDTO())
+                    .ToList()
+                           ?? null
             };
         }
     }

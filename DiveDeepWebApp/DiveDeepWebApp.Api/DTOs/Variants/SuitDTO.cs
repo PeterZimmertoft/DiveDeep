@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DiveDeepWebApp.Api.DTOs.Variants
+﻿namespace DiveDeepWebApp.Api.DTOs.Variants
 {
     public class SuitDTO : ProductVariantDTO
     {

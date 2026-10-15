@@ -21,12 +21,11 @@ namespace DiveDeepWebApp.Api
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
 
-            builder.Services.AddIdentityCore<ApplicationUser>()
+            builder.Services
+                .AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DiveDeepContext>()
-                .AddApiEndpoints();
+                .AddEntityFrameworkStores<DiveDeepContext>();
 
-            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
             builder.Services.AddAuthorization();
 
             //builder.Services.AddCors(options =>
@@ -43,11 +42,8 @@ namespace DiveDeepWebApp.Api
             //    });
             //});
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             builder.Services.AddHttpClient("Geocode", (client) =>
@@ -66,17 +62,17 @@ namespace DiveDeepWebApp.Api
             });
 
             
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
-
-            builder.Services.AddScoped<IWeatherService, WeatherService>();
-            // builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IPackageService, PackageService>();
             builder.Services.AddScoped<ICartService, CartService>();
-            // builder.Services.AddScoped<IPackageService, PackageService>();
-
+            builder.Services.AddScoped<IWeatherService, WeatherService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
             var app = builder.Build();
 
@@ -89,18 +85,11 @@ namespace DiveDeepWebApp.Api
 
             app.UseHttpsRedirection();
 
-            //app.UseRouting();
-            //app.UseCors("SecurePolicy");
-            app.MapIdentityApi<ApplicationUser>();
             app.UseAuthentication();
             app.UseAuthorization();
 
-
+            app.MapIdentityApi<ApplicationUser>();
             app.MapControllers();
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers().RequireCors("SecurePolicy");
-            //});
 
             app.Run();
         }

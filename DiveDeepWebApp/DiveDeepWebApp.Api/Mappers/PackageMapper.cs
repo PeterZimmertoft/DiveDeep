@@ -14,9 +14,12 @@ namespace DiveDeepWebApp.Api.Mappers
                 Name = package.Name,
                 Image = package.Image,
                 Description = package.Description,
-                Products = package.PackageProducts
-                    .Select(p => p.Product.ToDTO())
-                    .ToList()
+                Products = package.PackageProducts?.First()?.Product != null
+                    ? package.PackageProducts?
+                           .Select(p => p.Product.ToDTO())
+                           .ToList()
+                                ?? null
+                    : null
             };
         }
     }

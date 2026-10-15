@@ -14,10 +14,17 @@ namespace DiveDeepWebApp.Api.Persistence
             this.context = context;
         }
 
-        public async Task CreateAsync(Booking booking)
+        public async Task<List<Booking>> GetAllAsync()
         {
-            context.Bookings.Add(booking);
-            await context.SaveChangesAsync();
+            List<Booking> bookings = await context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.BookingProducts)
+                .ThenInclude(bp => bp.Product)
+                .ThenInclude(p => p.Category)
+                .OrderByDescending(b => b.StartDate)
+                .ToListAsync();
+
+            return bookings;
         }
 
         public async Task<List<Booking>> GetAllByUserIdAsync(string userId)
@@ -31,6 +38,13 @@ namespace DiveDeepWebApp.Api.Persistence
                 .ToListAsync();
 
             return bookings;
+        }
+
+        public async Task<Booking?> GetByIdAsync(int id)
+        {
+            return await context.Bookings
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> IsBookingAvailableAsync(int productId, int quantity, DateTime startDate, DateTime endDate)
@@ -59,12 +73,9 @@ namespace DiveDeepWebApp.Api.Persistence
             return true;
         }
 
-        public async Task DeleteAsync(int bookingId)
+        public async Task CreateAsync(Booking booking)
         {
-            Booking? bookingToDelete = await context.Bookings.FindAsync(bookingId);
-            if (bookingToDelete == null) return;
-
-            context.Bookings.Remove(bookingToDelete);
+            context.Bookings.Add(booking);
             await context.SaveChangesAsync();
         }
 
@@ -82,24 +93,14 @@ namespace DiveDeepWebApp.Api.Persistence
 
             await context.SaveChangesAsync();
         }
-        public async Task<Booking?> GetByIdAsync(int id)
-        {
-            return await context.Bookings
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-        }
 
-        public async Task<List<Booking>> GetAllAsync()
+        public async Task DeleteAsync(int bookingId)
         {
-            List<Booking> bookings = await context.Bookings
-                .Include(b => b.User)
-                .Include(b => b.BookingProducts)
-                .ThenInclude(bp => bp.Product)
-                .ThenInclude(p => p.Category)
-                .OrderByDescending(b => b.StartDate)
-                .ToListAsync();
+            Booking? bookingToDelete = await context.Bookings.FindAsync(bookingId);
+            if (bookingToDelete == null) return;
 
-            return bookings;
+            context.Bookings.Remove(bookingToDelete);
+            await context.SaveChangesAsync();
         }
     }
 }

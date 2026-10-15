@@ -21,12 +21,10 @@ namespace DiveDeepWebApp.Api.Controllers
 
     public class CategoriesController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly ICategoryRepository categoryRepository;
 
         public CategoriesController(UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository)
         {
-            this.userManager = userManager;
             this.categoryRepository = categoryRepository;
         }
 
@@ -53,11 +51,7 @@ namespace DiveDeepWebApp.Api.Controllers
         {
             try
             {
-                Console.WriteLine(categoryId);
                 Category? category = await categoryRepository.GetByIdAsync(categoryId);
-                Console.Write(category);
-                Console.WriteLine(category == null);
-                Console.WriteLine(category?.Name ?? "not found");
                 if (category == null) return NotFound();
 
                 CategoryDTO categoryDTO = category.ToDTO();

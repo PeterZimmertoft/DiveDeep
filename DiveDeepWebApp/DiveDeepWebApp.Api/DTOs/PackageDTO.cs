@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
-namespace DiveDeepWebApp.Api.DTOs
+﻿namespace DiveDeepWebApp.Api.DTOs
 {
     public class PackageDTO
     {
@@ -10,6 +8,6 @@ namespace DiveDeepWebApp.Api.DTOs
         public string Description { get; set; }
         public double Price { get; set; }
         public double DiscountedPrice { get; set; }
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductDTO>? Products { get; set; }
     }
 }

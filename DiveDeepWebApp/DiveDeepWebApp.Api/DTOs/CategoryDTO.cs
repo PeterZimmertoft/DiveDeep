@@ -1,7 +1,4 @@
-﻿using DiveDeepWebApp.Api.Models;
-using System.ComponentModel.DataAnnotations;
-
-namespace DiveDeepWebApp.Api.DTOs
+﻿namespace DiveDeepWebApp.Api.DTOs
 {
     public class CategoryDTO
     {

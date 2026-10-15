@@ -1,70 +1,61 @@
-﻿// using DiveDeepWebApp.Api.DTOs;
-// using DiveDeepWebApp.Api.Helpers;
-// using DiveDeepWebApp.Api.Models;
-// using DiveDeepWebApp.Api.Persistence.Interfaces;
-// using DiveDeepWebApp.Api.Services.Interfaces;
-//
-// namespace DiveDeepWebApp.Api.Services
-// {
-//     public class PackageService : IPackageService
-//     {
-//         private readonly IProductRepository productRepository;
-//         private readonly IPackageRepository packageRepository;
-//
-//         public PackageService(IPackageRepository packageRepository, IProductRepository productRepository)
-//         {
-//             this.packageRepository = packageRepository;
-//             this.productRepository = productRepository;
-//         }
-//
-//         public List<Package> GetAll()
-//         {
-//             return packageRepository.GetAll();
-//         }
-//
-//         public Package? GetById(int packageId)
-//         {
-//             return packageRepository.GetById(packageId);
-//         }
-//
-//         public PackageDTO GetPackageDTO(int packageId)
-//         {
-//             PackageDTO packageDTO = new PackageDTO();
-//
-//             Package? package = packageRepository.GetById(packageId);
-//             if (package != null)
-//             {
-//                 packageDTO.Id = package.Id;
-//                 packageDTO.Name = package.Name;
-//                 packageDTO.Description = package.Description;
-//                 packageDTO.Image = package.Image;
-//                 packageDTO.Products = new List<ProductDTO>();
-//
-//                 foreach (PackageProduct packageProduct in package.PackageProducts)
-//                 {
-//                     packageDTO.Products.Add(new ProductDTO
-//                     {
-//                         Brand = packageProduct.Product.Brand,
-//                         ProductName = packageProduct.Product.Name,
-//                         Price = packageProduct.Product.Price,
-//                         Description = packageProduct.Product.Description,
-//                         Image = packageProduct.Product.Image,
-//                         VariantDTOs = productRepository.GetAllByName(packageProduct.Product.Name)
-//                                     .Select(p => new ProductVariantDTO
-//                                     {
-//                                         Id = p.Id,
-//                                         Size = ConvertProductToProductVariantDTO.Size(p),
-//                                         Thicikness = ConvertProductToProductVariantDTO.Thickness(p),
-//                                         Gender = ConvertProductToProductVariantDTO.Gender(p)
-//                                     })
-//                                     .ToList()
-//                     });
-//                 }
-//             }
-//             else
-//                 throw new Exception();
-//
-//             return packageDTO;
-//         }
-//     }
-// }
+﻿using DiveDeepWebApp.Api.DTOs;
+using DiveDeepWebApp.Api.Mappers;
+using DiveDeepWebApp.Api.Models;
+using DiveDeepWebApp.Api.Persistence.Interfaces;
+using DiveDeepWebApp.Api.Services.Interfaces;
+
+namespace DiveDeepWebApp.Api.Services
+{
+    public class PackageService : IPackageService
+    {
+        private readonly IPackageRepository packageRepository;
+        private readonly IProductRepository productRepository;
+
+        public PackageService(IPackageRepository packageRepository, IProductRepository productRepository)
+        {
+            this.packageRepository = packageRepository;
+            this.productRepository = productRepository;
+        }
+
+        public async Task<List<PackageDTO>> GetAllAsync()
+        {
+            List<Package> packages = await packageRepository.GetAllAsync();
+            List<PackageDTO> packageDTOs = packages
+                .Select(p => p.ToDTO())
+                .ToList();
+
+            foreach (PackageDTO packageDTO in packageDTOs)
+            {
+                double price = packageDTO.Products.Sum(p => p.Price);
+
+                packageDTO.Price = price;
+                packageDTO.DiscountedPrice = price * 0.8;
+            }
+
+            return packageDTOs;
+        }
+
+        public async Task<PackageDTO?> GetByIdAsync(int packageId)
+        {
+            Package package = await packageRepository.GetByIdAsync(packageId);
+            if (package == null) return null;
+
+            PackageDTO packageDTO = package.ToDTO();
+            foreach (ProductDTO product in packageDTO.Products)
+            {
+                List<Product> productsByName = await productRepository.GetAllByNameAsync(product.Name);
+                List<ProductVariantDTO> variants = productsByName
+                    .Select(p => p.ToVariantDTO())
+                    .ToList();
+
+                product.Variants = variants;
+            }
+
+            double price = packageDTO.Products.Sum(p => p.Price);
+            packageDTO.Price = price;
+            packageDTO.DiscountedPrice = price * 0.8;
+
+            return packageDTO;
+        }
+    }
+}

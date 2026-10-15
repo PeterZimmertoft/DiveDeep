@@ -5,10 +5,9 @@ namespace DiveDeepWebApp.Api.DTOs
 {
     public class CartItemDTO
     {
-        public List<CartItem> Products { get; set; }
-        public Package? Package { get; set; }
-
-        [ValidateNever]
-        public string? ErrorMessage { get; set; }
+        public int Id { get; set; }
+        public List<ProductDTO> Products { get; set; }
+        public PackageDTO? Package { get; set; }
+        public int Quantity { get; set; }
     }
 }

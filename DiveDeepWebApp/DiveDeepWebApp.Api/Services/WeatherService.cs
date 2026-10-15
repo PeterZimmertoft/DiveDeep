@@ -8,15 +8,15 @@ namespace DiveDeepWebApp.Api.Service
 {
     public class WeatherService : IWeatherService
     {
-        private readonly IHttpClientFactory _factory;
+        private readonly IHttpClientFactory httpClientFactory;
 
         public WeatherService(IHttpClientFactory httpClientFactory)
         {
-            _factory = httpClientFactory;
+            this.httpClientFactory = httpClientFactory;
         }
         public async Task<GeocodeResponse> GetGeocodeByNameAsync(string name)
         {
-            using HttpClient client = _factory.CreateClient("Geocode");
+            using HttpClient client = httpClientFactory.CreateClient("Geocode");
 
             HttpResponseMessage response = await client.GetAsync($"search?name={name}&count=1");
 
@@ -43,7 +43,7 @@ namespace DiveDeepWebApp.Api.Service
             string latitude = result.Latitude.ToString(CultureInfo.InvariantCulture);
             string longitude = result.Longitude.ToString(CultureInfo.InvariantCulture);
 
-            using HttpClient client = _factory.CreateClient("Weather");
+            using HttpClient client = httpClientFactory.CreateClient("Weather");
 
             HttpResponseMessage response = await client.GetAsync($"forecast?latitude={latitude}&longitude={longitude}&current=wind_speed_10m,precipitation,weather_code&timeformat=unixtime");
 
@@ -69,7 +69,7 @@ namespace DiveDeepWebApp.Api.Service
             string latitude = result.Latitude.ToString(CultureInfo.InvariantCulture);
             string longitude = result.Longitude.ToString(CultureInfo.InvariantCulture);
 
-            using HttpClient client = _factory.CreateClient("Wave");
+            using HttpClient client = httpClientFactory.CreateClient("Wave");
 
             HttpResponseMessage response = await client.GetAsync($"marine?latitude={latitude}&longitude={longitude}&current=wave_height,sea_surface_temperature&forecast_days=1&timeformat=unixtime");
 

@@ -8,6 +8,7 @@ namespace DiveDeepWebApp.Api.Services.Interfaces
         Task<Product?> GetByIdAsync(int productId);
         Task<ProductDTO?> GetProductDTOAsync(int productId);
         Task<List<Product>> GetAllByNameAsync(string name);
+
         Task CreateAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int productId);

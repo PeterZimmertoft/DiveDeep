@@ -1,24 +1,24 @@
-﻿using DiveDeepWebApp.Api.Services.Interfaces;
+﻿using DiveDeepWebApp.Api.DTOs;
+using DiveDeepWebApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiveDeepWebApp.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WeatherController : Controller
+    public class WeatherController : ControllerBase
     {
-        private readonly IWeatherService _weatherService;
+        private readonly IWeatherService weatherService;
 
         public WeatherController(IWeatherService weatherService)
         {
-            _weatherService = weatherService;
+            this.weatherService = weatherService;
         }
 
         [HttpGet("{city}")]
-        public async Task<IActionResult> WeatherPartial(string city)
+        public async Task<IActionResult> GetAsync(string city)
         {
-
-            var weatherDTO = await _weatherService.GetWeatherDTO(city);
+            WeatherDTO weatherDTO = await weatherService.GetWeatherDTO(city);
             return Ok(weatherDTO);
         }
     }
