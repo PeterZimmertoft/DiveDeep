@@ -4,7 +4,6 @@ using DiveDeepWebApp.Api.Mappers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 
 namespace DiveDeepWebApp.Api.Services
 {

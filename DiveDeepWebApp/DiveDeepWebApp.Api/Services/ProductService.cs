@@ -1,5 +1,4 @@
 ﻿using DiveDeepWebApp.Api.DTOs;
-using DiveDeepWebApp.Api.Helpers;
 using DiveDeepWebApp.Api.Mappers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;

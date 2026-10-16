@@ -1,7 +1,4 @@
-﻿using DiveDeepWebApp.Api.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
-namespace DiveDeepWebApp.Api.DTOs
+﻿namespace DiveDeepWebApp.Api.DTOs
 {
     public class CartItemDTO
     {

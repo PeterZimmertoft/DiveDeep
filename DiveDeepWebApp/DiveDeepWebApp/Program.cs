@@ -1,9 +1,4 @@
 using DiveDeepWebApp.Data;
-using DiveDeepWebApp.Persistence;
-using DiveDeepWebApp.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using DiveDeepWebApp.ViewModels;
 
 namespace DiveDeepWebApp
 {
@@ -12,65 +7,36 @@ namespace DiveDeepWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<DiveDeepContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-            });
+            // builder.Services.AddDbContext<DiveDeepContext>(options =>
+            // {
+            //     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            // });
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DiveDeepContext>();
+            // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //     .AddRoles<IdentityRole>()
+            //     .AddEntityFrameworkStores<DiveDeepContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            builder.Services.AddHttpClient("Geocode", (client) =>
-            {
-                client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
-            });
-
-            builder.Services.AddHttpClient("Wave", (client) =>
-            {
-                client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
-            }
-            );
-
-            builder.Services.AddHttpClient("Weather", (client) =>
-            {
-                client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
-            }
-);
-
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<IPackageRepository, PackageRepository>();
-            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-            builder.Services.AddScoped<ICartRepository, CartRepository>();
-
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IPackageService, PackageService>();
-            builder.Services.AddScoped<ICartService, CartService>();
-
-            builder.Services.AddScoped<IWeatherService, WeatherService>();
+            //
+            // builder.Services.AddHttpClient("Geocode", (client) =>
+            // {
+            //     client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
+            // });
+            //
+            // builder.Services.AddHttpClient("Wave", (client) =>
+            // {
+            //     client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
+            // }
+            // );
+            //
+            // builder.Services.AddHttpClient("Weather", (client) =>
+            // {
+            //     client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
+            // }
+// );
 
             var app = builder.Build();
-
-            app.Lifetime.ApplicationStarted.Register(() =>
-            {
-                _ = Task.Run(async () =>
-                {
-                    try
-                    {
-                        using IServiceScope scope = app.Services.CreateScope();
-                        DiveDeepContext context = scope.ServiceProvider.GetRequiredService<DiveDeepContext>();
-                        await ImageSeeder.SeedAsync(context);
-                    }
-                    catch (Exception ex)
-                    {
-                        app.Logger.LogError(ex, "Image seeding failed.");
-                    }
-                });
-            });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -87,7 +53,7 @@ namespace DiveDeepWebApp
             app.UseAuthorization();
 
             app.MapStaticAssets();
-            app.MapRazorPages();
+            // app.MapRazorPages();
 
            
             app.MapControllerRoute(name: "package", pattern: "package/{packageId}", defaults: new { controller = "Packages", action = "Package" });

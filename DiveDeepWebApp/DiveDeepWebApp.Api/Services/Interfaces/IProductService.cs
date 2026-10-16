@@ -1,5 +1,4 @@
 ﻿using DiveDeepWebApp.Api.DTOs;
-using DiveDeepWebApp.Api.Models;
 
 namespace DiveDeepWebApp.Api.Services.Interfaces
 {

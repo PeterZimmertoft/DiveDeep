@@ -1,24 +1,15 @@
 using DiveDeepWebApp.ViewModels;
 using DiveDeepWebApp.Models;
-using DiveDeepWebApp.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using DiveDeepWebApp.Services;
 
 namespace DiveDeepWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPackageService packageService;
-
-        public HomeController(IPackageService packageService)
-        {
-            this.packageService = packageService;
-        }
-
         public IActionResult Index()
         {
-            List<Package> packages = packageService.GetAll();
+            List<Package> packages = new List<Package>();
             return View(packages);
         }
 

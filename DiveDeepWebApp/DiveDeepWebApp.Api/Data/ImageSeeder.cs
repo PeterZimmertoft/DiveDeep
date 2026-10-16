@@ -28,7 +28,7 @@ namespace DiveDeepWebApp.Api.Data
                 if (package == null) continue;
                 if (package.Image != null && package.Image.Length > 0) continue;
                 
-                package.Image = File.ReadAllBytes($"./wwwroot/packages/{imagePath}");
+                package.Image = File.ReadAllBytes($"./assets/packages/{imagePath}");
             }
 
             foreach ((int categoryId, string imagePath) in CategoryImagePaths)
@@ -37,7 +37,7 @@ namespace DiveDeepWebApp.Api.Data
                 if (category == null) continue;
                 if (category.Image != null && category.Image.Length > 0) continue;
 
-                category.Image = File.ReadAllBytes($"./wwwroot/categories/{imagePath}");
+                category.Image = File.ReadAllBytes($"./assets/categories/{imagePath}");
             }
 
             context.SaveChanges();

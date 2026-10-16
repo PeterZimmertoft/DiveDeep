@@ -1,7 +1,6 @@
 using DiveDeepWebApp.Api.Data;
 using DiveDeepWebApp.Api.Persistence;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
-using DiveDeepWebApp.Api.Service;
 using DiveDeepWebApp.Api.Services;
 using DiveDeepWebApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -75,6 +74,23 @@ namespace DiveDeepWebApp.Api
             builder.Services.AddScoped<IBookingService, BookingService>();
 
             var app = builder.Build();
+
+            app.Lifetime.ApplicationStarted.Register(() =>
+            {
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        using IServiceScope scope = app.Services.CreateScope();
+                        DiveDeepContext context = scope.ServiceProvider.GetRequiredService<DiveDeepContext>();
+                        await ImageSeeder.SeedAsync(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        app.Logger.LogError(ex, "Image seeding failed.");
+                    }
+                });
+            });
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

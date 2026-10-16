@@ -1,10 +1,5 @@
-﻿using DiveDeepWebApp.Api.Data;
-using DiveDeepWebApp.Api.DTOs;
-using DiveDeepWebApp.Api.Helpers;
-using DiveDeepWebApp.Api.Models;
+﻿using DiveDeepWebApp.Api.DTOs;
 using DiveDeepWebApp.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiveDeepWebApp.Api.Controllers

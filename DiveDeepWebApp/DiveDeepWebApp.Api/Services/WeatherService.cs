@@ -1,10 +1,9 @@
 ﻿using DiveDeepWebApp.Api.Models;
-using DiveDeepWebApp.Api.Services;
 using System.Globalization;
 using DiveDeepWebApp.Api.Services.Interfaces;
 using DiveDeepWebApp.Api.DTOs;
 
-namespace DiveDeepWebApp.Api.Service
+namespace DiveDeepWebApp.Api.Services
 {
     public class WeatherService : IWeatherService
     {
@@ -14,6 +13,7 @@ namespace DiveDeepWebApp.Api.Service
         {
             this.httpClientFactory = httpClientFactory;
         }
+
         public async Task<GeocodeResponse> GetGeocodeByNameAsync(string name)
         {
             using HttpClient client = httpClientFactory.CreateClient("Geocode");
