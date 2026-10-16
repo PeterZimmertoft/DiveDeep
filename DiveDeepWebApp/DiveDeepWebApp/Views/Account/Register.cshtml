@@ -4,17 +4,14 @@
     ViewData.ModelState.TryGetValue(string.Empty, out var modelErrors);
 }
 
-<section class="py-4 py-lg-5" aria-labelledby="register-title">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <div class="card border-0 rounded-4 shadow-sm bg-white">
-                <div class="card-body p-4 p-md-5">
-                    <div class="text-center mb-4">
-                        <h1 id="register-title" class="h2 fw-bold mb-2">Opret konto</h1>
-                        <p class="text-muted mb-0">Opret en konto hos Dive Deep.</p>
-                    </div>
+<section class="identity-page py-4 py-lg-5" aria-labelledby="register-title">
+    <div class="identity-simple bg-white mx-auto p-4 p-md-5">
+        <div class="identity-form-heading text-center">
+            <h1 id="register-title" class="fw-bold">Opret konto</h1>
+            <p class="text-muted mb-0">Opret en konto hos Dive Deep.</p>
+        </div>
 
-                    <form id="registerForm" method="post">
+        <form id="registerForm" method="post">
                         <div class="mb-3">
                             <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
                             <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="din@email.dk" />
@@ -39,16 +36,13 @@
                             <p class="text-danger small mb-3" role="alert">@modelErrors.Errors[0].ErrorMessage</p>
                         }
 
-                        <button id="registerSubmit" type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-semibold">Opret konto</button>
+                        <button id="registerSubmit" type="submit" class="btn btn-primary w-100">Opret konto</button>
 
-                        <p class="text-center text-muted small border-top pt-3 mt-4 mb-0">
+                        <p class="identity-form-links text-muted mb-0">
                             Har du allerede en konto?
                             <a asp-controller="Account" asp-action="Login" class="fw-semibold text-decoration-none">Log ind</a>
                         </p>
-                    </form>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </section>
 
