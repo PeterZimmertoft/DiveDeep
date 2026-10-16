@@ -1,41 +1,56 @@
-﻿@model RegisterViewModel
+@model RegisterViewModel
 @{
-    ViewData["Title"] = "Opret konto";
+    ViewData["Title"] = "Opret konto - Dive Deep";
+    ViewData.ModelState.TryGetValue(string.Empty, out var modelErrors);
 }
 
-<div class="identity-form-heading text-center">
-    <h1>@ViewData["Title"]</h1>
-    <p class="text-muted mb-0">Opret en konto hos Dive Deep.</p>
-</div>
+<section class="py-4 py-lg-5" aria-labelledby="register-title">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card border-0 rounded-4 shadow-sm bg-white">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h1 id="register-title" class="h2 fw-bold mb-2">Opret konto</h1>
+                        <p class="text-muted mb-0">Opret en konto hos Dive Deep.</p>
+                    </div>
 
-<div class="row">
-    <div class="col-12">
-        <form id="registerForm" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <form id="registerForm" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
+                            <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="din@email.dk" />
+                            <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+                        </div>
 
-            <div class="mb-3">
-                <label asp-for="@Model.Email" class="form-label">E-mail</label>
-                <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label fw-semibold">Adgangskode</label>
+                            <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                            <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+                            <div class="form-text">Adgangskoden skal være på mindst 6 tegn.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label fw-semibold">Bekræft adgangskode</label>
+                            <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        @if (modelErrors?.Errors.Count > 0)
+                        {
+                            <p class="text-danger small mb-3" role="alert">@modelErrors.Errors[0].ErrorMessage</p>
+                        }
+
+                        <button id="registerSubmit" type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-semibold">Opret konto</button>
+
+                        <p class="text-center text-muted small border-top pt-3 mt-4 mb-0">
+                            Har du allerede en konto?
+                            <a asp-controller="Account" asp-action="Login" class="fw-semibold text-decoration-none">Log ind</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label asp-for="@Model.Password" class="form-label">Adgangskode</label>
-                <input asp-for="@Model.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="@Model.ConfirmPassword" class="form-label">Bekræft adgangskode</label>
-                <input asp-for="@Model.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Opret konto</button>
-            <p class="identity-form-links mb-0">Har du allerede en konto? <a asp-page="./Login">Log ind</a></p>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

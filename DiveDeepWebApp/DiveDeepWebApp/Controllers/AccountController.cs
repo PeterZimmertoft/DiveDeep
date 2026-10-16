@@ -41,7 +41,7 @@ namespace DiveDeepWebApp.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                    ModelState.AddModelError(string.Empty, "Forkort email eller adgangskode.");
                     return View(model);
                 }
 
@@ -57,7 +57,7 @@ namespace DiveDeepWebApp.Controllers
             }
             catch
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later.");
+                ModelState.AddModelError(string.Empty, "Der opstod en fejl. Prøv igen senere.");
                 return View(model);
             }
         }
@@ -94,7 +94,7 @@ namespace DiveDeepWebApp.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    ModelState.AddModelError(string.Empty, "The account could not be created.");
+                    ModelState.AddModelError(string.Empty, "Kunne ikke oprette kontoen.");
                     return View(model);
                 }
 
@@ -110,7 +110,7 @@ namespace DiveDeepWebApp.Controllers
             }
             catch
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later.");
+                ModelState.AddModelError(string.Empty, "Der opstod en fejl. Prøv igen senere.");
                 return View(model);
             }
         }

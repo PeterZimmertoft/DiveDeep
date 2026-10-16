@@ -1,35 +1,49 @@
-﻿@model LoginViewModel
+@model LoginViewModel
 @{
-    ViewData["Title"] = "Log ind";
+    ViewData["Title"] = "Log ind - Dive Deep";
+    ViewData.ModelState.TryGetValue(string.Empty, out var modelErrors);
 }
 
-<div class="identity-form-heading text-center">
-    <h1>@ViewData["Title"]</h1>
-    <p class="text-muted mb-0">Velkommen tilbage. Log ind på din konto.</p>
-</div>
+<section class="py-4 py-lg-5" aria-labelledby="login-title">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card border-0 rounded-4 shadow-sm bg-white">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h1 id="login-title" class="h2 fw-bold mb-2">Log ind</h1>
+                        <p class="text-muted mb-0">Log ind for at se dine bookinger.</p>
+                    </div>
 
-<div class="row">
-    <div class="col-12">
-        <section>
-            <form id="account" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="mb-3">
-                    <label asp-for="@Model.Email" class="form-label">E-mail</label>
-                    <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    <form id="account" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
+                            <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="din@email.dk" />
+                            <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label fw-semibold">Adgangskode</label>
+                            <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                            <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+                        </div>
+
+                        @if (modelErrors?.Errors.Count > 0)
+                        {
+                            <p class="text-danger small mb-3" role="alert">@modelErrors.Errors[0].ErrorMessage</p>
+                        }
+
+                        <button id="login-submit" type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-semibold">Log ind</button>
+
+                        <p class="text-center text-muted small border-top pt-3 mt-4 mb-0">
+                            Har du ikke en konto?
+                            <a asp-controller="Account" asp-action="Register" class="fw-semibold text-decoration-none">Opret konto</a>
+                        </p>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="@Model.Password" class="form-label">Adgangskode</label>
-                    <input asp-for="@Model.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log ind</button>
-                </div>
-            </form>
-        </section>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
