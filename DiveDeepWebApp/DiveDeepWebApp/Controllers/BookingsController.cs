@@ -8,12 +8,12 @@ namespace DiveDeepWebApp.Controllers
     [Authorize]
     public class BookingsController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public BookingsController(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
+        // private readonly UserManager<ApplicationUser> userManager;
+        //
+        // public BookingsController(UserManager<ApplicationUser> userManager)
+        // {
+        //     this.userManager = userManager;
+        // }
 
         // public IActionResult Index()
         // {

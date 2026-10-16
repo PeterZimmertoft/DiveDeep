@@ -1,4 +1,7 @@
-using DiveDeepWebApp.Data;
+using DiveDeepWebApp.Handlers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 
 namespace DiveDeepWebApp
 {
@@ -7,34 +10,54 @@ namespace DiveDeepWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // builder.Services.AddDbContext<DiveDeepContext>(options =>
-            // {
-            //     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-            // });
 
-            // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddRoles<IdentityRole>()
-            //     .AddEntityFrameworkStores<DiveDeepContext>();
 
-            // Add services to the container.
+            string sharedKeysPath = Path.GetFullPath(
+                Path.Combine(builder.Environment.ContentRootPath, "..", ".shared-keys"));
+
+            builder.Services
+                .AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(sharedKeysPath))
+                .SetApplicationName("DiveDeep");
+
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme =
+                        IdentityConstants.ApplicationScheme;
+
+                    options.DefaultChallengeScheme =
+                        IdentityConstants.ApplicationScheme;
+                })
+                .AddCookie(IdentityConstants.ApplicationScheme, options =>
+                {
+                    options.Cookie.Name = ".DiveDeep.Identity";
+                    options.Cookie.Path = "/";
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.SameSite = SameSiteMode.Lax;
+
+                    options.LoginPath = "/account/login";
+                    options.AccessDeniedPath = "/account/access-denied";
+                });
+
+            builder.Services.AddAuthorization();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddTransient<IdentityCookieHandler>();
+
+            builder.Services
+                .AddHttpClient("DiveDeepApi", client =>
+                {
+                    client.BaseAddress = new Uri(
+                        builder.Configuration["Api:BaseUrl"]!);
+                })
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                    UseCookies = false
+                })
+                .AddHttpMessageHandler<IdentityCookieHandler>();
+
             builder.Services.AddControllersWithViews();
-            //
-            // builder.Services.AddHttpClient("Geocode", (client) =>
-            // {
-            //     client.BaseAddress = new Uri("https://geocoding-api.open-meteo.com/v1/");
-            // });
-            //
-            // builder.Services.AddHttpClient("Wave", (client) =>
-            // {
-            //     client.BaseAddress = new Uri("https://marine-api.open-meteo.com/v1/");
-            // }
-            // );
-            //
-            // builder.Services.AddHttpClient("Weather", (client) =>
-            // {
-            //     client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
-            // }
-// );
 
             var app = builder.Build();
 
@@ -55,7 +78,6 @@ namespace DiveDeepWebApp
             app.MapStaticAssets();
             // app.MapRazorPages();
 
-           
             app.MapControllerRoute(name: "package", pattern: "package/{packageId}", defaults: new { controller = "Packages", action = "Package" });
             app.MapControllerRoute(name: "category", pattern: "products/{categoryId}", defaults: new { controller = "Products", action = "Products" });
             app.MapControllerRoute(name: "product", pattern: "products/{categoryId}/{productId}", defaults: new { controller = "Products", action = "Product" });

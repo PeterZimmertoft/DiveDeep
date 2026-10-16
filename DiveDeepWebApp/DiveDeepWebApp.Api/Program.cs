@@ -3,6 +3,7 @@ using DiveDeepWebApp.Api.Persistence;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services;
 using DiveDeepWebApp.Api.Services.Interfaces;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -20,10 +21,27 @@ namespace DiveDeepWebApp.Api
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
 
+            string sharedKeysPath = Path.GetFullPath(
+                Path.Combine(builder.Environment.ContentRootPath, "..", ".shared-keys"));
+
+            builder.Services
+                .AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(sharedKeysPath))
+                .SetApplicationName("DiveDeep");
+
             builder.Services
                 .AddIdentityApiEndpoints<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DiveDeepContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = ".DiveDeep.Identity";
+                options.Cookie.Path = "/";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+            });
 
             builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();

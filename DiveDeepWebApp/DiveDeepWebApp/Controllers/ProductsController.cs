@@ -9,12 +9,12 @@ namespace DiveDeepWebApp.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public ProductsController(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
+        // private readonly UserManager<ApplicationUser> userManager;
+        //
+        // public ProductsController(UserManager<ApplicationUser> userManager)
+        // {
+        //     this.userManager = userManager;
+        // }
 
         // public IActionResult Index()
         // {

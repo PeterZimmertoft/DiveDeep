@@ -1,0 +1,36 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Log ind";
+}
+
+<div class="identity-form-heading text-center">
+    <h1>@ViewData["Title"]</h1>
+    <p class="text-muted mb-0">Velkommen tilbage. Log ind på din konto.</p>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <section>
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="mb-3">
+                    <label asp-for="@Model.Email" class="form-label">E-mail</label>
+                    <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.Password" class="form-label">Adgangskode</label>
+                    <input asp-for="@Model.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log ind</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

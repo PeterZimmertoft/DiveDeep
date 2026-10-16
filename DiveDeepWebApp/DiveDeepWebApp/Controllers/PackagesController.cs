@@ -6,12 +6,12 @@ namespace DiveDeepWebApp.Controllers
 {
     public class PackagesController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public PackagesController(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
+        // private readonly UserManager<ApplicationUser> userManager;
+        //
+        // public PackagesController(UserManager<ApplicationUser> userManager)
+        // {
+        //     this.userManager = userManager;
+        // }
 
         // public IActionResult Package(int packageId)
         // {

@@ -8,12 +8,12 @@ namespace DiveDeepWebApp.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public CartController(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
+        // private readonly UserManager<ApplicationUser> userManager;
+        //
+        // public CartController(UserManager<ApplicationUser> userManager)
+        // {
+        //     this.userManager = userManager;
+        // }
 
         // public IActionResult Index()
         // {
