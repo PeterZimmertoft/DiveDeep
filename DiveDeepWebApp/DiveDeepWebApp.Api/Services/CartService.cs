@@ -15,7 +15,12 @@ namespace DiveDeepWebApp.Api.Services
             this.cartRepository = cartRepository;
         }
 
-        public async Task<List<CartItemDTO>> GetAllByUserIdAsync(string userId)
+        public async Task<List<CartItem>> GetAllByUserIdAsync(string userId)
+        {
+            return await cartRepository.GetAllByUserIdAsync(userId);
+        }
+
+        public async Task<List<CartItemDTO>> GetAllDTOsByUserIdAsync(string userId)
         {
             List<CartItem> rawCartItems = await cartRepository.GetAllByUserIdAsync(userId);
             List<CartItemDTO> cartItems = rawCartItems
@@ -142,5 +147,16 @@ namespace DiveDeepWebApp.Api.Services
 
             await cartRepository.DeleteAsync(ids);
         }
+
+        public async Task DeleteAsync(List<int> cartItemIds)
+        {
+            await cartRepository.DeleteAsync(cartItemIds);
+        }
+
+        public async Task DeleteByProductIdAsync(int productId)
+        {
+            await cartRepository.DeleteByProductIdAsync(productId);
+        }
     }
 }
+

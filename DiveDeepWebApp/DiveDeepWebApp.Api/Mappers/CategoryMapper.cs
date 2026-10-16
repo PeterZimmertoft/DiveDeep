@@ -5,7 +5,7 @@ namespace DiveDeepWebApp.Api.Mappers
 {
     public static class CategoryMapper
     {
-        public static CategoryDTO ToDTO(this Category category)
+        public static CategoryDTO ToDTO(this Category category, bool mapProducts = true)
         {
             return new CategoryDTO()
             {
@@ -13,10 +13,12 @@ namespace DiveDeepWebApp.Api.Mappers
                 Name = category.Name,
                 Description = category.Description,
                 Image = category.Image,
-                Products = category.Products?
-                    .Select(p => p.ToDTO())
-                    .ToList()
-                           ?? null
+                Products = mapProducts
+                    ? category.Products?
+                           .Select(p => p.ToDTO())
+                           .ToList()
+                              ?? null
+                    : null
             };
         }
     }

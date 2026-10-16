@@ -26,12 +26,26 @@ namespace DiveDeepWebApp.Api.Controllers
             this.productService = productService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                List<ProductDTO> productDTOs = await productService.GetAllAsync();
+                return Ok(productDTOs);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetByIdAsync(int productId)
         {
             try
             {
-                ProductDTO? productDTO = await productService.GetProductDTOAsync(productId);
+                ProductDTO? productDTO = await productService.GetByIdAsync(productId);
                 if (productDTO == null) return NotFound();
 
                 return Ok(productDTO);
@@ -39,6 +53,54 @@ namespace DiveDeepWebApp.Api.Controllers
             catch
             {
                 return BadRequest(productId);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductDTO productDTO)
+        {
+            try
+            {
+                await productService.CreateAsync(productDTO);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPatch("{productId}")]
+        public async Task<IActionResult> UpdateProductAsync(int productId, [FromBody] UpdateProductDTO productDTO)
+        {
+            try
+            {
+                await productService.UpdateAsync(productId, productDTO);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProductAsync(int productId)
+        {
+            try
+            {
+                await productService.DeleteAsync(productId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
             }
         }
     }

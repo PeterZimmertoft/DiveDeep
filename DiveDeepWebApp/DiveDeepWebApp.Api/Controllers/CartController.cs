@@ -29,7 +29,7 @@ namespace DiveDeepWebApp.Api.Controllers
                 string? userId = userManager.GetUserId(User);
                 if (userId == null) return BadRequest();
 
-                List<CartItemDTO> cartItems = await cartService.GetAllByUserIdAsync(userId);
+                List<CartItemDTO> cartItems = await cartService.GetAllDTOsByUserIdAsync(userId);
                 return Ok(cartItems);
             }
             catch

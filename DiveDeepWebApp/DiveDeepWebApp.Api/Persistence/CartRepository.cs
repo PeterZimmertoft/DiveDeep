@@ -23,6 +23,7 @@ namespace DiveDeepWebApp.Api.Persistence
                 .Include(x => x.Product!.Category)
                 .Include(x => x.Package)
                 .Include(x => x.Package!.PackageProducts)
+                    .ThenInclude(x => x.Product)
                 .ToListAsync();
         }
 
@@ -85,20 +86,6 @@ namespace DiveDeepWebApp.Api.Persistence
                 .ToListAsync();
 
             context.CartItems.RemoveRange(cartItemsWithProductId);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task DeleteByProductIdAsync(List<int> productIds)
-        {
-            foreach (int productId in productIds)
-            {
-                List<CartItem> cartItemsWithProductId = await context.CartItems
-                    .Where(x => x.ProductId == productId)
-                    .ToListAsync();
-
-                context.CartItems.RemoveRange(cartItemsWithProductId);
-            }
-
             await context.SaveChangesAsync();
         }
     }

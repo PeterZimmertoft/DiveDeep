@@ -5,13 +5,11 @@ namespace DiveDeepWebApp.Api.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<Product?> GetByIdAsync(int productId);
-        Task<ProductDTO?> GetProductDTOAsync(int productId);
-        Task<List<Product>> GetAllByNameAsync(string name);
+        Task<List<ProductDTO>> GetAllAsync();
+        Task<ProductDTO?> GetByIdAsync(int productId);
 
-        Task CreateAsync(Product product);
-        Task UpdateAsync(Product product);
+        Task CreateAsync(CreateProductDTO productDTO);
+        Task UpdateAsync(int productId, UpdateProductDTO productDTO);
         Task DeleteAsync(int productId);
-        Task DeleteAsync(List<int> productIds);
     }
 }

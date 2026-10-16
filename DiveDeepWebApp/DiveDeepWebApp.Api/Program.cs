@@ -26,6 +26,7 @@ namespace DiveDeepWebApp.Api
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DiveDeepContext>();
 
+            builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
 
             //builder.Services.AddCors(options =>
@@ -61,7 +62,6 @@ namespace DiveDeepWebApp.Api
                 client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
             });
 
-            
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IPackageRepository, PackageRepository>();

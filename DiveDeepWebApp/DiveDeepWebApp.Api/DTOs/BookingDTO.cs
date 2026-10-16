@@ -7,5 +7,6 @@
         public DateTime EndDate { get; set; }
         public double Price { get; set; }
         public List<ProductDTO> Products { get; set; }
+        public string BookedBy { get; set; }
     }
 }

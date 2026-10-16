@@ -3,12 +3,13 @@ using DiveDeepWebApp.Api.DTOs.Variants;
 
 namespace DiveDeepWebApp.Api.DTOs
 {
-    [JsonDerivedType(typeof(BcdDTO))]
-    [JsonDerivedType(typeof(SuitDTO))]
-    [JsonDerivedType(typeof(RegulatorDTO))]
-    [JsonDerivedType(typeof(TankDTO))]
-    [JsonDerivedType(typeof(MaskDTO))]
-    [JsonDerivedType(typeof(FinDTO))]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "categoryId")]
+    [JsonDerivedType(typeof(BcdDTO), 1)]
+    [JsonDerivedType(typeof(SuitDTO), 2)]
+    [JsonDerivedType(typeof(TankDTO), 3)]
+    [JsonDerivedType(typeof(RegulatorDTO), 4)]
+    [JsonDerivedType(typeof(MaskDTO), 5)]
+    [JsonDerivedType(typeof(FinDTO), 6)]
     public class ProductVariantDTO
     {
         public int Id { get; set; }

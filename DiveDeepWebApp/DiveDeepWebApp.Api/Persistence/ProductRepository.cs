@@ -14,11 +14,20 @@ namespace DiveDeepWebApp.Api.Persistence
             this.context = context;
         }
 
+        public async Task<List<Product>> GetAllAsync()
+        {
+            return await context.Products
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .ToListAsync();
+        }
+
         public async Task<Product?> GetByIdAsync(int productId)
         {
             return await context.Products
                 .AsNoTracking()
                 .Where(p => p.Id == productId)
+                .Include(p => p.Category)
                 .FirstOrDefaultAsync();
         }
 
@@ -90,19 +99,6 @@ namespace DiveDeepWebApp.Api.Persistence
             if (productToDelete == null) return;
 
             context.Products.Remove(productToDelete);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(List<int> productIds)
-        {
-            foreach (int productId in productIds)
-            {
-                Product? productToDelete = await context.Products.FindAsync(productId);
-                if (productToDelete == null) continue;
-
-                context.Products.Remove(productToDelete);
-            }
-
             await context.SaveChangesAsync();
         }
     }

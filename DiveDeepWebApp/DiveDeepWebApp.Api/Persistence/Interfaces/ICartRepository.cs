@@ -13,6 +13,5 @@ namespace DiveDeepWebApp.Api.Persistence.Interfaces
         Task DeleteAsync(int id);
         Task DeleteAsync(List<int> id);
         Task DeleteByProductIdAsync(int productId);
-        Task DeleteByProductIdAsync(List<int> productIds);
     }
 }
