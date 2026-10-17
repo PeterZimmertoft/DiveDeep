@@ -30,6 +30,7 @@ namespace DiveDeepWebApp.Api.Persistence
                 .AsNoTracking()
                 .Include(p => p.PackageProducts)
                 .ThenInclude(pp => pp.Product)
+                .ThenInclude(p => p.Category)
                 .FirstOrDefaultAsync();
 
             return package;

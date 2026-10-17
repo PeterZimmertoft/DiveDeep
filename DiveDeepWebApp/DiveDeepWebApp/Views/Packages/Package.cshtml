@@ -1,15 +1,14 @@
 @model PackageViewModel
 @{
+    PackageViewModel package = Model;
     ViewData["Title"] = $"{Model.Name} - Dive Deep";
-    var message = TempData["Message"];
 
-    double price = Model.packageProductsVM.Sum(x => x.Variants.First().Price);
-    double discountedPrice = price * 0.80;
+    var message = TempData["Message"];
 }
 
 <section class="py-4 py-lg-5">
-    <form class="mx-auto" style="max-width: 1200px;" method="post" asp-controller="packages" asp-action="package" asp-route-packageId="@Model.Id">
-        <a class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold mb-3" asp-controller="Home" asp-action="Index">
+    <form class="mx-auto" style="max-width: 1200px;" method="post" asp-controller="packages" asp-action="package" asp-route-packageId="@package.Id">
+        <a class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold mb-3" asp-controller="home" asp-action="index">
             <span aria-hidden="true">&larr;</span>
             Tilbage til pakker
         </a>
@@ -18,20 +17,20 @@
             <div class="row g-0 align-items-stretch">
                 <div class="col-12 col-md-5">
                     <div class="h-100 bg-light d-flex align-items-center justify-content-center p-4 p-lg-5" style="min-height: 320px;">
-                        @if (Model.Image?.Length > 0)
+                        @if (package.Image?.Length > 0)
                         {
-                            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Image)" class="img-fluid w-100 h-100" style="max-height: 340px; object-fit: contain;" alt="@Model.Name">
+                            <img src="data:image/png;base64,@Convert.ToBase64String(package.Image)" class="img-fluid w-100 h-100" style="max-height: 340px; object-fit: contain;" alt="@package.Name">
                         }
                     </div>
                 </div>
 
                 <div class="col-12 col-md-7">
                     <div class="card-body d-flex flex-column justify-content-center h-100 p-4 p-lg-5">
-                        <h1 class="h2 fw-bold mb-3">@Model.Name</h1>
+                        <h1 class="h2 fw-bold mb-3">@package.Name</h1>
 
-                        @if (!string.IsNullOrWhiteSpace(Model.Description))
+                        @if (!string.IsNullOrWhiteSpace(package.Description))
                         {
-                            <p class="text-muted lh-lg mb-4">@Model.Description</p>
+                            <p class="text-muted lh-lg mb-4">@package.Description</p>
                         }
 
                         @if (message != null)
@@ -45,11 +44,11 @@
                         else
                         {
                             <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 pt-3">
-                                <span class="badge rounded-pill bg-primary px-3 py-2">@Model.packageProductsVM.Count produkter</span>
+                                <span class="badge rounded-pill bg-primary px-3 py-2">@Model.Products?.Count produkter</span>
 
                                 <div class="text-sm-end">
-                                    <span class="d-block small text-muted text-decoration-line-through">@price,- DKK</span>
-                                    <span class="d-block h4 fw-bold text-primary mb-1">@discountedPrice,- DKK</span>
+                                    <span class="d-block small text-muted text-decoration-line-through">@package.Price,- DKK</span>
+                                    <span class="d-block h4 fw-bold text-primary mb-1">@package.DiscountedPrice,- DKK</span>
                                     <span class="d-block small text-muted">pr. dag</span>
                                 </div>
                             </div>
@@ -57,10 +56,6 @@
                     </div>
                 </div>
             </div>
-
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
-            <input type="hidden" asp-for="Name" value="@Model.Name" />
-            <input type="hidden" asp-for="Description" value="@Model.Description" />
         </article>
 
         @if (message == null)
@@ -71,29 +66,30 @@
             </div>
 
             <div class="row g-4 mb-4">
-                @for (int productIndex = 0; productIndex < Model.packageProductsVM.Count; productIndex++)
+                @for (int productIndex = 0; productIndex < package.Products?.Count; productIndex++)
                 {
                     <div class="col-12 col-md-6 col-xl-4">
                         @{
-                            ProductViewModel packageProduct = Model.packageProductsVM[productIndex];
-                            Product product = packageProduct.Variants.First();
-                            string? partialName = product switch
+                            List<ProductViewModel> products = package.Products;
+                            ProductViewModel product = package.Products[productIndex];
+                            ProductVariantViewModel variant = product.Variants!.First();
+                            string? partialName = variant switch
                             {
-                                BCD => "_BCD",
-                                Suit => "_Suit",
-                                Tank => "_Tank",
-                                Regulator => "_Regulator",
-                                Mask => "_Mask",
-                                Fin => "_Fin",
+                                BCDViewModel => "_BCD",
+                                SuitViewModel => "_Suit",
+                                TankViewModel => "_Tank",
+                                RegulatorViewModel => "_Regulator",
+                                MaskViewModel => "_Mask",
+                                FinViewModel => "_Fin",
                                 _ => null
                             };
 
-                            byte[] productImage = product.Image?.Length > 0 ? product.Image : product.Category.Image;
+                            byte[] image = product.Image?.Length > 0 ? product.Image : product.Category!.Image;
                         }
 
                         <article class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
                             <div class="bg-light d-flex align-items-center justify-content-center p-4" style="height: 210px;">
-                                <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid w-100 h-100" style="object-fit: contain;" alt="@product.Name">
+                                <img src="data:image/png;base64,@Convert.ToBase64String(image)" class="img-fluid w-100 h-100" style="object-fit: contain;" alt="@product.Name">
                             </div>
 
                             <div class="card-body d-flex flex-column p-4">
@@ -106,12 +102,10 @@
                                     <p class="small text-muted mb-0">@product.Description</p>
                                 }
 
-                                <input type="hidden" name="packageProductsVM[@productIndex].ProductName" value="@packageProduct.ProductName" />
-
                                 @if (partialName != null)
                                 {
                                     <div class="border-top mt-4 pt-4">
-                                        <partial name="@partialName" for="@Model.packageProductsVM[productIndex]" />
+                                        <partial name="@partialName" for="@products[productIndex]" />
                                     </div>
                                 }
                             </div>
@@ -124,8 +118,8 @@
                 <div class="row g-3">
                     <div class="col-12 col-md-auto d-flex align-items-center">
                         <div>
-                            <span class="d-block small text-muted text-decoration-line-through">@price,- DKK</span>
-                            <span class="h5 fw-bold text-primary mb-0">@discountedPrice,- DKK <span class="small fw-normal text-muted">pr. dag</span></span>
+                            <span class="d-block small text-muted text-decoration-line-through">@package.Price,- DKK</span>
+                            <span class="h5 fw-bold text-primary mb-0">@package.DiscountedPrice,- DKK <span class="small fw-normal text-muted">pr. dag</span></span>
                         </div>
                     </div>
                     <div class="col-12 col-md-auto ms-md-auto">

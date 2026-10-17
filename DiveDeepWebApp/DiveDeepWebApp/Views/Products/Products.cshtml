@@ -1,41 +1,30 @@
-﻿@model ProductsViewModel
+﻿@model CategoryViewModel
 @{
-    ViewData["Title"] = $"{Model.CategoryName} - Dive Deep";
+    CategoryViewModel category = Model;
+    ViewData["Title"] = $"{category.Name} - Dive Deep";
 }
 
 <section class="py-4">
     <h1 class="h2 mb-1 mb-4">Vælg dit produkt</h1>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 pb-5">
-        @foreach (string productName in Model.ProductsByName.Keys)
+        @foreach (ProductViewModel product in category.Products)
         {
-            List<Product> products = Model.ProductsByName.GetValueOrDefault(productName, new List<Product>());
-            Product product = products.First();
+            byte[] image = product.Image.Length > 0 ? product.Image : category.Image;
+            // ProductVariantViewModel variant = product.Variants.First();
 
-            byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
-
-            <a class="col text-decoration-none text-dark" asp-controller="products" asp-action="product" asp-route-categoryId="@product.CategoryId" asp-route-productId="@product.Id">
+            <a class="col text-decoration-none text-dark" asp-controller="products" asp-action="product" asp-route-categoryId="@category.Id" asp-route-productId="@product.Id">
                 <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
                     <div class="bg-light position-relative d-flex align-items-center justify-content-center p-4" style="height: 210px;">
                         <span class="badge rounded-pill bg-primary text-white position-absolute top-0 end-0 m-3 px-3 py-2 d-flex align-items-baseline gap-2">
                             <span>@product.Price,- DKK</span>
                         </span>
-                        <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" class="img-fluid h-100 w-100" style="object-fit: contain;" alt="@product.Brand">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(image)" class="img-fluid h-100 w-100" style="object-fit: contain;" alt="@product.Brand">
                     </div>
 
                     <div class="card-body d-flex flex-column p-4">
                         <p class="text-uppercase text-muted small fw-semibold mb-1">@product.Brand</p>
-                        <h2 class="h5 mb-0">@productName</h2>
-
-                        @if (product is Suit suit)
-                        {
-                            <div class="small mt-3">
-                                <div class="d-flex justify-content-between pt-2">
-                                    <span class="text-muted">Type</span>
-                                    <span>@suit.Type</span>
-                                </div>
-                            </div>
-                        }
+                        <h2 class="h5 mb-0">@product.Name</h2>
                     </div>
                 </div>
             </a>

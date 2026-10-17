@@ -7,10 +7,26 @@ namespace DiveDeepWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IHttpClientFactory httpClientFactory;
+
+        public HomeController(IHttpClientFactory httpClientFactory)
         {
-            List<Package> packages = new List<Package>();
-            return View(packages);
+            this.httpClientFactory = httpClientFactory;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
+
+            try
+            {
+                List<PackageViewModel> packages = await client.GetFromJsonAsync<List<PackageViewModel>>("api/packages");
+                return View(packages);
+            }
+            catch
+            {
+                return View(new List<PackageViewModel>());
+            }
         }
 
         public IActionResult Privacy()

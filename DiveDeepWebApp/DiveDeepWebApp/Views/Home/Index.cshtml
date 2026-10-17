@@ -1,8 +1,6 @@
-@model List<Package>
+@model List<PackageViewModel>
 @{
     ViewData["Title"] = "Dive Deep";
-
-    
 }
 
 <section class="py-4 py-lg-5">
@@ -10,16 +8,13 @@
         <h1 class="mb-4 mb-lg-5 h2 fw-bold text-center">Alt du behøver samlet i én pakke - spar 20%!</h1>
 
         <div class="row g-4 justify-content-center pb-5">
-            @foreach (Package package in Model)
+            @foreach (PackageViewModel package in Model)
             {
-                double price = package.PackageProducts.Sum(x => x.Product.Price);
-                double discountedPrice = price * 0.80;
-
                 <article class="col-12 col-md-6">
                     <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden">
                         <div class="bg-light position-relative d-flex align-items-center justify-content-center p-4" style="height: 210px;">
                             <span class="badge rounded-pill bg-primary position-absolute top-0 end-0 m-3 px-3 py-2">
-                                @package.PackageProducts.Count produkter
+                                @package.Products?.Count produkter
                             </span>
 
                             <img src="data:image/png;base64,@Convert.ToBase64String(package.Image)" class="img-fluid h-100 w-100" style="object-fit: contain;" alt="@package.Name">
@@ -30,8 +25,8 @@
 
                             <div class="d-flex justify-content-between align-items-center gap-3 mb-4">
                                 <div>
-                                    <span class="d-block small text-muted text-decoration-line-through">@price,- DKK</span>
-                                    <span class="d-block h5 fw-bold text-primary mb-0">@discountedPrice,- DKK</span>
+                                    <span class="d-block small text-muted text-decoration-line-through">@package.Price,- DKK</span>
+                                    <span class="d-block h5 fw-bold text-primary mb-0">@package.DiscountedPrice,- DKK</span>
                                     <span class="d-block small text-muted">pr. dag</span>
                                 </div>
                                 <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2">Spar 20%</span>
