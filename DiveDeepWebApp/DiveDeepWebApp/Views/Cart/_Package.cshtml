@@ -1,10 +1,8 @@
 @model CartItemViewModel
 @{
-    Package package = Model.Package!;
-    List<CartItem> products = Model.Products;
-
-    double price = products.Sum(item => item.Product!.Price); 
-    double discountedPrice = price * 0.80;
+    CartItemViewModel cartItem = Model;
+    PackageViewModel package = cartItem.Package;
+    List<ProductViewModel> products = cartItem.Products;
 }
 
 <li class="list-group-item border-light p-3 p-md-4">
@@ -24,21 +22,14 @@
                 </div>
 
                 <div class="text-md-end flex-shrink-0">
-                    <span class="d-block small text-muted text-decoration-line-through mb-1 text-nowrap">@price,- DKK</span>
-                    <span class="d-block h5 fw-bold text-primary mb-1 text-nowrap">@discountedPrice,- DKK</span>
+                    <span class="d-block small text-muted text-decoration-line-through mb-1 text-nowrap">@package.Price,- DKK</span>
+                    <span class="d-block h5 fw-bold text-primary mb-1 text-nowrap">@package.DiscountedPrice,- DKK</span>
                     <span class="small text-muted">pr. dag</span>
                 </div>
             </div>
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2">
-                <span class="small text-danger mt-3 mb-0" asp-validation-for="ErrorMessage"></span>
-
-                <form asp-controller="cart" asp-action="RemovePackage" method="post">
-                    @for (int i = 0; i < products.Count; i++)
-                    {
-                        <input type="hidden" name="Products[@i].Id" value="@products[i].Id" />
-                    }
-
+                <form asp-controller="cart" asp-action="remove" method="post" asp-route-cartItemId="@cartItem.Id">
                     <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3" aria-label="Fjern @package.Name fra kurven">Fjern</button>
                 </form>
             </div>
@@ -49,9 +40,9 @@
         <h4 class="small fw-semibold text-muted mb-3">Produkter i pakken</h4>
 
         <ul class="list-unstyled mb-0">
-            @foreach (CartItem item in products)
+            @foreach (ProductViewModel product in products)
             {
-                <partial name="_PackageProduct" model="@item" />        
+                <partial name="_PackageProduct" model="@product" />
             }
         </ul>
     </div>

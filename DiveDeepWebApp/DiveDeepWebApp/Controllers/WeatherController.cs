@@ -12,6 +12,7 @@ namespace DiveDeepWebApp.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> WeatherPartial(string name)
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");

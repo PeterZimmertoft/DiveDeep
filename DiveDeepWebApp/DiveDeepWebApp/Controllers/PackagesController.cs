@@ -1,4 +1,3 @@
-using DiveDeepWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +13,7 @@ namespace DiveDeepWebApp.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Package(int packageId)
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");

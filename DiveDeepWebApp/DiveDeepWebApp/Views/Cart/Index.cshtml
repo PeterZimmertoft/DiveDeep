@@ -1,19 +1,21 @@
 @model CartViewModel
 @{
     ViewData["Title"] = "Min kurv - Dive Deep";
-    int totalItems = Model.Items.Sum(x => x.Products.Sum(b => b.Quantity));
 
-    double totalPricePerDay = Model.Items.Sum(item =>
+    CartViewModel cart = Model;
+    List<CartItemViewModel> cartItems = cart.Items;
+
+    int totalItems = cartItems.Sum(x => x.Quantity);
+    double totalPricePerDay = cartItems.Sum(cartItem =>
     {
-        if (item.Package != null)
+        if (cartItem.Package != null)
         {
-            double packagePrice = item.Products.Sum(product => product.Product!.Price);
-            return packagePrice * 0.80;
+            return cartItem.Package.DiscountedPrice;
         }
         else
         {
-            CartItem cartItem = item.Products.First();
-            return cartItem.Product!.Price * cartItem.Quantity;
+            ProductViewModel product = cartItem.Products.First();
+            return product.Price * cartItem.Quantity;
         }
     });
 }
@@ -35,13 +37,13 @@
                 <ul class="list-group list-group-flush">
                     @for (int i = 0; i < Model.Items.Count; i++)
                     {
-                        if (Model.Items[i].Package == null)
+                        if (cartItems[i].Package == null)
                         {
-                            <partial name="_Product" for="Items[i]" />
+                            <partial name="_Product" for="@cartItems[i]" />
                         }
                         else
                         {
-                            <partial name="_Package" for="Items[i]" />
+                            <partial name="_Package" for="@cartItems[i]" />
                         }
                     }
                 </ul>
@@ -68,7 +70,7 @@
                     </div>
                 </div>
 
-                <form method="post" asp-controller="Cart" asp-action="Index" class="card-body p-4">
+                <form method="post" asp-controller="cart" asp-action="index" class="card-body p-4">
                     <fieldset class="mb-0">
                         <legend class="h6 fw-semibold mb-0">Lejeperiode</legend>
 
@@ -81,12 +83,12 @@
                         
                             <div class="col-12 col-sm-6 col-lg-12 col-xl-6">
                                 <label for="cart-end-date" class="form-label small fw-semibold">Til</label>
-                                <input id="cart-end-date" asp-for="EndDate" type="date" min="@((Model.StartDate ?? DateTime.Today).ToString("yyyy-MM-dd"))" class="form-control rounded-3 p-3" />
+                                <input id="cart-end-date" asp-for="EndDate" type="date" min="@((cart.StartDate ?? DateTime.Today).ToString("yyyy-MM-dd"))" class="form-control rounded-3 p-3" />
                                 <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
                             </div>
                         </div>
                         
-                        <span class="d-block text-danger mt-2" asp-validation-for="ErrorMessage"></span>
+                        @* <span class="d-block text-danger mt-2" asp-validation-for="ErrorMessage"></span> *@
                     </fieldset>
 
                     <div class="border-top pt-4 mt-3">

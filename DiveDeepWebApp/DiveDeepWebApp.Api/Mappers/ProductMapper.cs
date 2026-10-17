@@ -16,6 +16,7 @@ namespace DiveDeepWebApp.Api.Mappers
                 Price = product.Price,
                 Description = product.Description,
                 Image = product.Image,
+                Quantity = product.Quantity,
                 Category = product.Category?.ToDTO(false) ?? null
             };
         }

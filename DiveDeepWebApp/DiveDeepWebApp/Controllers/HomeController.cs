@@ -1,5 +1,4 @@
 using DiveDeepWebApp.ViewModels;
-using DiveDeepWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,6 +13,7 @@ namespace DiveDeepWebApp.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
@@ -29,16 +29,19 @@ namespace DiveDeepWebApp.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult AboutUs()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
             return View();

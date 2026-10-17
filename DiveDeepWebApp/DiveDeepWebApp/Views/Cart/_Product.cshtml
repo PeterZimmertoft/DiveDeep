@@ -1,8 +1,9 @@
 @model CartItemViewModel
 @{
-    CartItem cartItem = Model.Products.First();
-    Product product = cartItem.Product!;
-    
+    CartItemViewModel cartItem = Model;
+    ProductViewModel product = cartItem.Products.First();
+    ProductVariantViewModel variant = product.Variants!.First();
+
     byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
     double price = product.Price * cartItem.Quantity;
 }
@@ -22,11 +23,11 @@
                     <h3 class="h5 fw-bold mb-2 text-break">@product.Name</h3>
 
                     <div class="d-flex flex-wrap gap-2">
-                        @if (product is BCD bcd)
+                        @if (variant is BCDViewModel bcd)
                         {
                             <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
                         }
-                        else if (product is Suit suit)
+                        else if (variant is SuitViewModel suit)
                         {
                             <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
                             @if (suit.Thickness != "N/A")
@@ -35,7 +36,7 @@
                             }
                             <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
                         }
-                        else if (product is Fin fin)
+                        else if (variant is FinViewModel fin)
                         {
                             <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
                         }
@@ -49,9 +50,7 @@
             </div>
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2">
-                <form class="cart-quantity-form d-flex align-items-center gap-2" asp-controller="cart" asp-action="UpdateQuantity" method="post">
-                    <input type="hidden" name="Id" value="@cartItem.Id" />
-                    
+                <form class="cart-quantity-form d-flex align-items-center gap-2" asp-controller="cart" asp-action="update" asp-route-cartItemId="@cartItem.Id" method="post">
                     <label for="quantity-@product.Id" class="small text-muted">Antal</label>
                     <select name="Quantity" id="quantity-@product.Id" class="form-select form-select-sm w-auto rounded-3">
                         @for (int quantity = 1; quantity <= product.Quantity; quantity++)
@@ -61,13 +60,10 @@
                     </select>
                 </form>
 
-                <form asp-controller="cart" asp-action="RemoveProduct" method="post">
-                    <input type="hidden" name="Id" value="@cartItem.Id" />
+                <form asp-controller="cart" asp-action="remove" method="post" asp-route-cartItemId="@cartItem.Id">
                     <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3" aria-label="Fjern @product.Name fra kurven">Fjern</button>
                 </form>
             </div>
-
-            <span class="small text-danger mt-3 mb-0" asp-validation-for="ErrorMessage"></span>
         </div>
     </div>
 </li>

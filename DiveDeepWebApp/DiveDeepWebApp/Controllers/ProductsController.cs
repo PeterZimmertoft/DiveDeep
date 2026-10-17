@@ -1,9 +1,6 @@
-﻿using DiveDeepWebApp.Data;
-using Microsoft.AspNetCore.Mvc;
-using DiveDeepWebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace DiveDeepWebApp.Controllers
 {
@@ -16,6 +13,7 @@ namespace DiveDeepWebApp.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
@@ -31,6 +29,7 @@ namespace DiveDeepWebApp.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Products(int categoryId)
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
@@ -45,7 +44,8 @@ namespace DiveDeepWebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        //
+
+        [HttpGet]
         public async Task<IActionResult> Product(int productId)
         {
             using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");

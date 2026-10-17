@@ -1,6 +1,5 @@
-﻿using DiveDeepWebApp.Data;
+﻿using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiveDeepWebApp.Controllers
@@ -8,21 +7,36 @@ namespace DiveDeepWebApp.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        // private readonly UserManager<ApplicationUser> userManager;
-        //
-        // public CartController(UserManager<ApplicationUser> userManager)
-        // {
-        //     this.userManager = userManager;
-        // }
+        private readonly IHttpClientFactory httpClientFactory;
 
-        // public IActionResult Index()
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return RedirectToAction("Home", "Index");
-        //
-        //     CartViewModel cart = cartService.GetCartViewModel(userId);
-        //     return View(cart);
-        // }
+        public CartController(IHttpClientFactory httpClientFactory)
+        {
+            this.httpClientFactory = httpClientFactory;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
+
+            try
+            {
+                List<CartItemViewModel> cartItems = await client.GetFromJsonAsync<List<CartItemViewModel>>("api/cart");
+                CartViewModel cart = new CartViewModel
+                {
+                    Items = cartItems,
+                    StartDate = null,
+                    EndDate = null
+                };
+
+                return View(cart);
+            }
+            catch
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
         //
         // [HttpPost]
         // public IActionResult Index(CartViewModel cartViewModel)
@@ -131,38 +145,45 @@ namespace DiveDeepWebApp.Controllers
         //
         //     return RedirectToAction(nameof(BookingsController.Index), "Bookings");
         // }
-        //
-        // [HttpPost]
-        // public IActionResult UpdateQuantity(CartItem cartItem)
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return RedirectToAction("Home", "Index");
-        //
-        //     cartService.Update(cartItem);
-        //     return RedirectToAction(nameof(Index));
-        // }
-        //
-        // [HttpPost]
-        // public IActionResult RemoveProduct(CartItem cartItem)
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return RedirectToAction("Home", "Index");
-        //
-        //     cartService.Delete(cartItem.Id);
-        //     return RedirectToAction(nameof(Index));
-        // }
-        //
-        // [HttpPost]
-        // public IActionResult RemovePackage(CartItemViewModel cartItem)
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return RedirectToAction("Home", "Index");
-        //
-        //     List<int> ids = cartItem.Products.Select(item => item.Id).ToList();
-        //     cartService.Delete(ids);
-        //
-        //     return RedirectToAction(nameof(Index));
-        // }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int cartItemId, CartItemViewModel cartItem)
+        {
+            using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
+
+            try
+            {
+                await client.PatchAsJsonAsync(
+                    $"api/cart/{cartItemId}",
+                    new
+                    {
+                        Quantity = cartItem.Quantity,
+                    }
+                );
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Remove(int cartItemId)
+        {
+            using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
+
+            try
+            {
+                 await client.DeleteAsync($"api/cart/{cartItemId}");
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
     }
 }
 
