@@ -1,7 +1,5 @@
-﻿using DiveDeepWebApp.Data;
-using DiveDeepWebApp.ViewModels;
+﻿using DiveDeepWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiveDeepWebApp.Controllers
