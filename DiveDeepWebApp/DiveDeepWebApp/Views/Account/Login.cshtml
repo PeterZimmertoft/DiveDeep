@@ -12,29 +12,32 @@
         </div>
 
         <form id="account" method="post">
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
-                            <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="din@email.dk" />
-                            <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
-                        </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
+                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="din@email.dk" />
+                <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label fw-semibold">Adgangskode</label>
-                            <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                            <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
-                        </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label fw-semibold">Adgangskode</label>
+                <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+            </div>
 
-                        @if (modelErrors?.Errors.Count > 0)
-                        {
-                            <p class="text-danger small mb-3" role="alert">@modelErrors.Errors[0].ErrorMessage</p>
-                        }
+            @if (modelErrors?.Errors.Count > 0)
+            {
+                <p class="text-danger small mb-3" role="alert">@modelErrors.Errors[0].ErrorMessage</p>
+            }
 
-                        <button id="login-submit" type="submit" class="btn btn-primary w-100">Log ind</button>
+            <button id="login-submit" type="submit" class="btn btn-primary w-100">Log ind</button>
 
-                        <p class="identity-form-links text-muted mb-0">
-                            Har du ikke en konto?
-                            <a asp-controller="Account" asp-action="Register" class="fw-semibold text-decoration-none">Opret konto</a>
-                        </p>
+            <p class="identity-form-links text-muted mb-0">
+                Har du ikke en konto?
+
+                <a asp-controller="account" asp-action="register" class="fw-semibold text-decoration-none">
+                    Opret konto
+                </a>
+            </p>
         </form>
     </div>
 </section>

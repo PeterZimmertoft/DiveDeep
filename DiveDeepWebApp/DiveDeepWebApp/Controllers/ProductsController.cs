@@ -99,7 +99,6 @@ namespace DiveDeepWebApp.Controllers
                     }
                 );
 
-                Console.WriteLine(response.IsSuccessStatusCode);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View(product);

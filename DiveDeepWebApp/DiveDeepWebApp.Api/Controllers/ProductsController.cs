@@ -56,9 +56,8 @@ namespace DiveDeepWebApp.Api.Controllers
                 await productService.CreateAsync(productDTO);
                 return Ok();
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
                 return BadRequest();
             }
         }
@@ -72,9 +71,8 @@ namespace DiveDeepWebApp.Api.Controllers
                 await productService.UpdateAsync(productId, productDTO);
                 return Ok();
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
                 return BadRequest();
             }
         }
@@ -88,9 +86,8 @@ namespace DiveDeepWebApp.Api.Controllers
                 await productService.DeleteAsync(productId);
                 return Ok();
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
                 return BadRequest();
             }
         }

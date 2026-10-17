@@ -43,8 +43,11 @@ namespace DiveDeepWebApp.Api.Persistence
         public async Task<Booking?> GetByIdAsync(int id)
         {
             return await context.Bookings
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+                .Include(b => b.User)
+                .Include(b => b.BookingProducts)
+                .ThenInclude(bp => bp.Product)
+                .ThenInclude(p => p.Category)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<bool> IsBookingAvailableAsync(int productId, int quantity, DateTime startDate, DateTime endDate)

@@ -71,8 +71,6 @@ namespace DiveDeepWebApp.Api.Services
             Product product = productDTO.ToModel();
             product.Id = productId;
 
-            Console.WriteLine($"Updating product with ID: {productId}");
-            Console.WriteLine($"Product details: Brand={product.Brand} Name={product.Name}, Description={product.Description}, Price={product.Price}, CategoryId={product.CategoryId}, Image={product.Image}");
             await productRepository.UpdateAsync(product);
         }
 

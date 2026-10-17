@@ -37,114 +37,60 @@ namespace DiveDeepWebApp.Controllers
             }
         }
 
-        //
-        // [HttpPost]
-        // public IActionResult Index(CartViewModel cartViewModel)
-        // {
-        //     string? userId = userManager.GetUserId(User);
-        //     if (userId == null) return RedirectToAction("Home", "Index");
-        //
-        //     CartViewModel cart = cartService.GetCartViewModel(userId);
-        //     cartViewModel.Items = cart.Items;
-        //
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return View(cartViewModel);
-        //     }
-        //
-        //     DateTime startDate = (DateTime)cartViewModel.StartDate!;
-        //     DateTime endDate = (DateTime)cartViewModel.EndDate!;
-        //
-        //     if (DateTime.Today > startDate)
-        //     {
-        //         ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), "Startdatoen må ikke være i fortiden.");
-        //         return View(cartViewModel);
-        //     }
-        //
-        //     if (startDate > endDate)
-        //     {
-        //         ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), "Startdatoen må ikke være efter slutdatoen.");
-        //         return View(cartViewModel);
-        //     }
-        //
-        //     for (int i = 0; i < cartViewModel.Items.Count; i++)
-        //     {
-        //         CartItemViewModel cartItem = cartViewModel.Items[i];
-        //         bool unavailable = cartItem.Products.Any(product => bookingRepository.IsBookingAvailable((int)product.ProductId!, product.Quantity, startDate, endDate) == false);
-        //         if (!unavailable) continue;
-        //
-        //         string errorMessage = cartItem.Package != null
-        //             ? "Denne pakke er ikke tilgængelig i den valgte periode."
-        //             : "Dette produkt er ikke tilgængeligt i den valgte periode.";
-        //
-        //         ModelState.AddModelError($"Items[{i}].ErrorMessage", errorMessage);
-        //     }
-        //
-        //     if (!ModelState.IsValid)
-        //     {
-        //         ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), "Et eller flere produkter i din kurv er ikke tilgængelige i den valgte periode.");
-        //         return View(cartViewModel);
-        //     }
-        //
-        //     List<CartItem> cartItems = cartViewModel.Items.SelectMany(item => item.Products).ToList();
-        //
-        //     //Kopi af cartItems til at få nulstillet kurven rigtigt.
-        //     List<CartItem> cartItemsForDeletion = cartItems.ToList();
-        //
-        //     // handtering af hvis 2 identiske produkter er i samme kurv, men det ikke fremgør af deres Quantity
-        //     // f.eks. det ene produkt er en del af en pakke, og det andet produkt er et enkelt ståede produkt
-        //     for (int i = 0; i < cartItems.Count - 1; i++)
-        //     {
-        //         for (int j = i + 1; j < cartItems.Count; j++)
-        //         {
-        //             if (cartItems[i].ProductId == cartItems[j].ProductId)
-        //             {
-        //                 cartItems[i].Quantity += 1;
-        //                 cartItems.RemoveAt(j);
-        //             }
-        //         }
-        //     }
-        //
-        //     List<BookingProduct> bookingProducts = cartItems
-        //         .Where(item => item.ProductId != null)
-        //         .Select(item => new BookingProduct
-        //         {
-        //             ProductId = (int)item.ProductId!,
-        //             Quantity = item.Quantity
-        //         })
-        //         .ToList();
-        //
-        //     int rentalDays = (endDate.Date - startDate.Date).Days + 1;
-        //     double totalPricePerDay = cartViewModel.Items.Sum(item =>
-        //     {
-        //         if (item.Package != null)
-        //         {
-        //             double packagePrice = item.Products.Sum(product => product.Product!.Price);
-        //             return packagePrice * 0.80;
-        //         }
-        //         else
-        //         {
-        //             CartItem cartItem = item.Products.First();
-        //             return cartItem.Product!.Price * cartItem.Quantity;
-        //         }
-        //     });
-        //
-        //     double totalPrice = totalPricePerDay * rentalDays;
-        //
-        //     Booking booking = new Booking
-        //     {
-        //         StartDate = startDate,
-        //         EndDate = endDate,
-        //         UserId = userId,
-        //         BookingProducts = bookingProducts,
-        //         Price = totalPrice
-        //     };
-        //
-        //     bookingRepository.Create(booking);
-        //     cartService.Delete(cartItemsForDeletion.Select(item => item.Id).ToList());
-        //
-        //     return RedirectToAction(nameof(BookingsController.Index), "Bookings");
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Index(CartViewModel cart)
+        {
+            using HttpClient client = httpClientFactory.CreateClient("DiveDeepApi");
+
+            try
+            {
+                List<CartItemViewModel> cartItems = await client.GetFromJsonAsync<List<CartItemViewModel>>("api/cart");
+                cart.Items = cartItems;
+
+                if (!ModelState.IsValid)
+                {
+                    return View(cart);
+                }
+
+                if (DateTime.Today > cart.StartDate)
+                {
+                    ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), "Startdatoen må ikke være i fortiden.");
+                    return View(cart);
+                }
+
+                if (cart.StartDate > cart.EndDate)
+                {
+                    ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), "Startdatoen må ikke være efter slutdatoen.");
+                    return View(cart);
+                }
+
+                using HttpResponseMessage response = await client.PostAsJsonAsync(
+                    "api/bookings",
+                    new
+                    {
+                        StartDate = cart.StartDate,
+                        EndDate = cart.EndDate
+                    }
+                );
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    ErrorMessageViewModel? errorMessage = await response.Content.ReadFromJsonAsync<ErrorMessageViewModel>();
+
+                    if (errorMessage != null && errorMessage.ErrorMessage != null)
+                    {
+                        ModelState.AddModelError(nameof(CartViewModel.ErrorMessage), errorMessage.ErrorMessage);
+                        return View(cart);
+                    }
+                }
+
+                return RedirectToAction(nameof(BookingsController.Index), "Bookings");
+            }
+            catch
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Update(int cartItemId, CartItemViewModel cartItem)
@@ -176,7 +122,7 @@ namespace DiveDeepWebApp.Controllers
 
             try
             {
-                 await client.DeleteAsync($"api/cart/{cartItemId}");
+                await client.DeleteAsync($"api/cart/{cartItemId}");
                 return RedirectToAction(nameof(Index));
             }
             catch

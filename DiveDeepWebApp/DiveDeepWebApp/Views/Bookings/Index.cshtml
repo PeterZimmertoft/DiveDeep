@@ -1,7 +1,8 @@
-@model List<Booking>
+@model List<BookingViewModel>
 
 @{
     ViewData["Title"] = "Mine bookinger - Dive Deep";
+    List<BookingViewModel> bookings = Model;
 }
 
 <section class="pt-4 pb-5" aria-labelledby="bookings-title">
@@ -30,9 +31,9 @@
                 </thead>
 
                 <tbody>
-                    @foreach (Booking booking in Model)
+                    @foreach (BookingViewModel booking in bookings)
                     {
-                        int count = booking.BookingProducts.Sum(bookingProduct => bookingProduct.Quantity);
+                        int count = booking.Products.Sum(bookingProduct => bookingProduct.Quantity);
 
                         <tr>
                             <th scope="row" class="px-3 px-md-4 py-4 fw-semibold text-secondary text-nowrap">
@@ -114,33 +115,33 @@
                                         </div>
 
                                         <div class="row g-3">
-                                            @foreach (BookingProduct bookingProduct in booking.BookingProducts)
+                                            @foreach (ProductViewModel product in booking.Products)
                                             {
-                                                Product product = bookingProduct.Product;
-                                                byte[] productImage = product.Image.Length > 0 ? product.Image : product.Category.Image;
+                                                ProductVariantViewModel variant = product.Variants!.First();
+                                                byte[] image = product.Image.Length > 0 ? product.Image : product.Category!.Image;
 
                                                 <div class="col-12 col-xl-4">
                                                     <div class="d-flex align-items-start gap-3 bg-white rounded-3 border p-3 h-100">
                                                         <div class="bg-light rounded-3 p-2 flex-shrink-0">
-                                                            <img src="data:image/png;base64,@Convert.ToBase64String(productImage)" alt="@product.Name" width="56" height="56" class="object-fit-contain" />
+                                                            <img src="data:image/png;base64,@Convert.ToBase64String(image)" alt="@product.Name" width="56" height="56" class="object-fit-contain" />
                                                         </div>
-                                                        
+
                                                         <div class="flex-grow-1 min-width-0">
                                                             <div class="d-flex justify-content-between align-items-start gap-3">
                                                                 <div>
                                                                     <span class="d-block small text-muted">@product.Brand</span>
                                                                     <span class="d-block fw-semibold text-break">@product.Name</span>
                                                                 </div>
-                                                                
-                                                                <span class="small text-muted text-nowrap pt-1">@bookingProduct.Quantity stk.</span>
+
+                                                                <span class="small text-muted text-nowrap pt-1">@product.Quantity stk.</span>
                                                             </div>
 
                                                             <div class="d-flex flex-wrap gap-2 mt-2">
-                                                                @if (product is BCD bcd)
+                                                                @if (variant is BCDViewModel bcd)
                                                                 {
                                                                     <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
                                                                 }
-                                                                else if (product is Suit suit)
+                                                                else if (variant is SuitViewModel suit)
                                                                 {
                                                                     <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
                                                                     @if (suit.Thickness != "N/A")
@@ -149,7 +150,7 @@
                                                                     }
                                                                     <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
                                                                 }
-                                                                else if (product is Fin fin)
+                                                                else if (variant is FinViewModel fin)
                                                                 {
                                                                     <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
                                                                 }

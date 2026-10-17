@@ -85,6 +85,7 @@ namespace DiveDeepWebApp
             app.MapControllerRoute(name: "cart", pattern: "cart", defaults: new { controller = "Cart", action = "Index" });
             app.MapControllerRoute(name: "cart-remove", pattern: "cart/remove/{cartItemId}", defaults: new { controller = "Cart", action = "Remove" });
 
+            app.MapControllerRoute(name: "bookings", pattern: "bookings", defaults: new { controller = "Bookings", action = "Index" });
             app.MapControllerRoute(name: "booking-edit", pattern: "bookings/edit/{bookingId}", defaults: new { controller = "Bookings", action = "Edit" });
             app.MapControllerRoute(name: "admin-booking-edit", pattern: "admin/bookings/edit/{bookingId}", defaults: new { controller = "Admin", action = "EditBooking" });
             

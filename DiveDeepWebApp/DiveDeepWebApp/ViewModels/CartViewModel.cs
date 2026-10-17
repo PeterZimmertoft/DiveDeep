@@ -1,9 +1,20 @@
-﻿namespace DiveDeepWebApp.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace DiveDeepWebApp.ViewModels
 {
     public class CartViewModel
     {
+        [ValidateNever]
         public List<CartItemViewModel> Items { get; set; }
+
+        [Required(ErrorMessage = "Der skal vælges en startdato.")]
         public DateTime? StartDate { get; set; }
+
+        [Required(ErrorMessage = "Der skal vælges en slutdato.")]
         public DateTime? EndDate { get; set; }
+
+        [ValidateNever]
+        public string? ErrorMessage { get; set; }
     }
 }

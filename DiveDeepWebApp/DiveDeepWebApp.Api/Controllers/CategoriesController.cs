@@ -49,9 +49,8 @@ namespace DiveDeepWebApp.Api.Controllers
                 CategoryDTO categoryDTO = category.ToDTO();
                 return Ok(categoryDTO);
             }
-            catch(Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
                 return BadRequest();
             }
         }

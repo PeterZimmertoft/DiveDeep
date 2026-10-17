@@ -13,10 +13,12 @@ namespace DiveDeepWebApp.Api.Mappers
                 StartDate = booking.StartDate,
                 EndDate = booking.EndDate,
                 Price = booking.Price,
+                RowVersion = booking.RowVersion,
                 Products = booking.BookingProducts
                     .Select(x =>
                     {
                         ProductDTO productDTO = x.Product.ToDTO();
+                        productDTO.Quantity = x.Quantity;
                         productDTO.Variants = new List<ProductVariantDTO>()
                         {
                             x.Product.ToVariantDTO()

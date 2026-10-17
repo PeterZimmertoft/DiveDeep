@@ -59,6 +59,25 @@ namespace DiveDeepWebApp.Api.Controllers
             }
         }
 
+        [HttpGet("{bookingId}")]
+        public async Task<IActionResult> GetByIdAsync(int bookingId)
+        {
+            try
+            {
+                string? userId = userManager.GetUserId(User);
+                if (userId == null) return BadRequest();
+
+                BookingDTO? booking = await bookingService.GetDTOByIdAsync(bookingId);
+                if (booking == null) return NotFound();
+
+                return Ok(booking);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateBookingAsync(int bookingId, [FromBody] CreateBookingDTO bookingDTO)
         {
@@ -81,7 +100,7 @@ namespace DiveDeepWebApp.Api.Controllers
         }
 
         [HttpPatch("{bookingId}")]
-        public async Task<IActionResult> UpdateBookingAsync(int bookingId, [FromBody] UpdateBookingDTO bookingDTO)
+        public async Task<IActionResult> UpdateAsync(int bookingId, [FromBody] UpdateBookingDTO bookingDTO)
         {
             try
             {

@@ -4,6 +4,7 @@ using DiveDeepWebApp.Api.Mappers;
 using DiveDeepWebApp.Api.Models;
 using DiveDeepWebApp.Api.Persistence.Interfaces;
 using DiveDeepWebApp.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiveDeepWebApp.Api.Services
 {
@@ -49,6 +50,17 @@ namespace DiveDeepWebApp.Api.Services
             return await bookingRepository.GetByIdAsync(id);
         }
 
+        public async Task<BookingDTO?> GetDTOByIdAsync(int id)
+        {
+            Booking? booking = await bookingRepository.GetByIdAsync(id);
+            if (booking == null) return null;
+
+            BookingDTO bookingDTO = booking.ToDTO();
+            bookingDTO.BookedBy = booking.User?.UserName;
+
+            return bookingDTO;
+        }
+
         public async Task CreateAsync(string userId, CreateBookingDTO bookingDTO)
         {
             if (bookingDTO.StartDate < DateTime.Today)
@@ -72,6 +84,10 @@ namespace DiveDeepWebApp.Api.Services
 
             if (bookingUnavailable)
                 throw new ErrorMessageException("En eller flere af de valgte produkter er ikke tilgængelige i den valgte periode.");
+
+            List<int> cartItemIds = cartItems
+                .Select(x => x.Id)
+                .ToList();
 
             // handtering af hvis 2 identiske produkter er i samme kurv, men det ikke fremgør af deres Quantity
             // f.eks. det ene produkt er en del af en pakke, og det andet produkt er et enkelt ståede produkt
@@ -121,10 +137,6 @@ namespace DiveDeepWebApp.Api.Services
                 Price = totalPrice
             };
 
-            List<int> cartItemIds = cartItems
-                .Select(x => x.Id)
-                .ToList();
-
             await bookingRepository.CreateAsync(booking);
             await cartService.DeleteAsync(cartItemIds);
         }
@@ -142,8 +154,16 @@ namespace DiveDeepWebApp.Api.Services
 
             booking.StartDate = bookingDTO.StartDate;
             booking.EndDate = bookingDTO.EndDate;
+            booking.RowVersion = bookingDTO.RowVersion;
 
-            await bookingRepository.UpdateAsync(booking);
+            try
+            {
+                await bookingRepository.UpdateAsync(booking);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new ErrorMessageException("Denne booking er blevet opdateret af en anden bruger. Venligst opdater siden og prøv igen.");
+            }
         }
 
         public async Task DeleteAsync(Booking booking)

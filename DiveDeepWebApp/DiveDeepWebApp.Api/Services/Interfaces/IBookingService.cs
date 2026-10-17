@@ -8,6 +8,7 @@ namespace DiveDeepWebApp.Api.Services.Interfaces
         Task<List<BookingDTO>> GetAllAsync();
         Task<List<BookingDTO>> GetAllByUserIdAsync(string userId);
         Task<Booking?> GetByIdAsync(int id);
+        Task<BookingDTO?> GetDTOByIdAsync(int id);
 
         Task CreateAsync(string userId, CreateBookingDTO bookingDTO);
         Task UpdateAsync(Booking booking, UpdateBookingDTO bookingDTO);
