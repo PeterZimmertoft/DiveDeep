@@ -1,17 +1,18 @@
-@model BookingEditViewModel
+@model EditBookingViewModel
 
 @{
     ViewData["Title"] = "Ændr booking - Dive Deep";
+    EditBookingViewModel booking = Model;
 }
 
 <section class="pt-4 pb-5" aria-labelledby="edit-booking-title">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>
             <h1 id="edit-booking-title" class="display-6 fw-bold mb-2">Ændr booking</h1>
-            <p class="text-muted mb-0">Opdater lejeperioden for booking #@Model.Id.</p>
+            <p class="text-muted mb-0">Opdater lejeperioden for booking #@booking.Id.</p>
         </div>
 
-        <a class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold align-self-start align-self-md-center" asp-controller="admin" asp-action="bookings">
+        <a class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold align-self-start align-self-md-center" asp-controller="admin" asp-action="bookings" asp-route-bookingId="@booking.Id">
             <span aria-hidden="true">&larr;</span> Tilbage til bookinger
         </a>
     </div>
@@ -27,13 +28,12 @@
                         </div>
 
                         <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2">
-                            Booking #@Model.Id
+                            Booking #@booking.Id
                         </span>
                     </div>
                 </div>
 
-                <form method="post" asp-controller="admin" asp-action="EditBooking" asp-route-bookingId="@Model.Id" class="card-body p-4 p-md-5">
-                    <input asp-for="Id" type="hidden" />
+                <form method="post" asp-controller="admin" asp-action="EditBooking" asp-route-bookingId="@booking.Id" class="card-body p-4 p-md-5">
                     <input asp-for="RowVersion" type="hidden" />
 
                     <fieldset>
@@ -48,7 +48,7 @@
 
                             <div class="col-12 col-sm-6">
                                 <label for="booking-end-date" class="form-label small fw-semibold">Til</label>
-                                <input id="booking-end-date" asp-for="EndDate" type="date" min="@Model.StartDate.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" required />
+                                <input id="booking-end-date" asp-for="EndDate" type="date" min="@booking.StartDate.ToString("yyyy-MM-dd")" class="form-control rounded-3 p-3" required />
                                        
                                 <span class="d-block text-danger mt-1" asp-validation-for="EndDate"></span>
                             </div>

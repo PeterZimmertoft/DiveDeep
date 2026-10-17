@@ -1,5 +1,4 @@
-﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model AdminProductViewModel
+﻿@model CreateUpdateProductViewModel
 
 <div class="admin-layout py-4">
     <partial name="_AdminSidebar" />
@@ -14,7 +13,7 @@
         <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="@ViewBag.Action">
             @if (ViewBag.Action == "EditProduct")
             {
-                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="CategoryId" />
             }
 

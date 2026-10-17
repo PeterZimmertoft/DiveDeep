@@ -1,8 +1,8 @@
-@model List<ProductsViewModel>
+@model List<CategoryViewModel>
 @{
     ViewData["Title"] = "Produkter - Adminpanel - Dive Deep";
+    List<CategoryViewModel> categories = Model;
 }
-
 
 <div class="admin-layout py-4">
     <partial name="_AdminSidebar" />
@@ -47,17 +47,17 @@
                             int categoryIndex = 0;
                         }
 
-                        @foreach (ProductsViewModel category in Model)
+                        @foreach (CategoryViewModel category in categories)
                         {
 
-                            <tr class="admin-category-row" data-category-heading="@category.CategoryName">
+                            <tr class="admin-category-row" data-category-heading="@category.Name">
                                 <th colspan="6" scope="rowgroup">
                                     <button type="button" class="admin-category-toggle" data-bs-toggle="collapse" data-bs-target="#category-products-@categoryIndex" aria-expanded="true" aria-controls="category-products-@categoryIndex">
                                         <span class="admin-category-label">
-                                            @category.CategoryName 
+                                            @category.Name
 
                                             <span class="admin-category-count">
-                                                @category.ProductsByName.Keys.Count() produkter
+                                                @category.Products.Count produkter
                                             </span>
                                         </span>
                                 
@@ -84,25 +84,23 @@
                                                     int productIndex = 0;
                                                 }
 
-                                                @foreach (string productName in category.ProductsByName.Keys)
+                                                @foreach (ProductViewModel product in category.Products)
                                                 {
-                                                    List<Product> products = category.ProductsByName[productName];
-                                                    Product product = products.First();
+                                                    int variants = product.Variants.Count;
 
                                                     string variantsCollapseId = $"product-variants-{categoryIndex}-{productIndex}";
-                                                    int variants = products.Count();
 
                                                     <tr>
                                                         <td class="px-3 px-md-4 py-4 text-nowrap">
                                                             <div>
-                                                                <strong>@productName</strong>
+                                                                <strong>@product.Name</strong>
                                                                 <span class="table-subtext">@product.Brand</span>
                                                             </div>
                                                         </td>
 
                                                         <td class="px-3 px-md-4 py-4 text-nowrap">
                                                             <span class="d-block mb-1">
-                                                                @category.CategoryName
+                                                                @category.Name
                                                             </span>
                                                         </td>
 
@@ -142,7 +140,7 @@
                                                                 else
                                                                 {
                                                                     <a asp-controller="Admin" asp-action="EditProduct" asp-route-productId="@product.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</a>
-                                                                    <a asp-controller="Admin" asp-action="DeleteProductVariant" asp-route-productId="@product.Id" onclick="return confirm('Er du sikker at du vil slette denne produkt variant?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</a>
+                                                                    <a asp-controller="Admin" asp-action="DeleteProductVariant" asp-route-variantId="@product.Id" onclick="return confirm('Er du sikker at du vil slette denne produkt variant?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</a>
                                                                 }
                                                             </div>
                                                         </td>
@@ -155,7 +153,7 @@
                                                                 <div id="@variantsCollapseId" class="collapse overflow-hidden">
                                                                     <div class="bg-light border-top px-3 px-md-4 py-4">
                                                                         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-                                                                            <h2 class="h6 fw-bold mb-0">Varianter af @productName</h2>
+                                                                            <h2 class="h6 fw-bold mb-0">Varianter af @product.Name</h2>
                                                                             <span class="small text-muted">@variants varianter</span>
                                                                         </div>
 
@@ -169,22 +167,22 @@
                                                                                         <th scope="col" class="px-3 px-md-4 fw-semibold text-secondary text-end">Handlinger</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                
+
                                                                                 <tbody>
                                                                                     @for (int index = 1; index <= variants; index++)
                                                                                     {
-                                                                                        Product variant = products[index - 1];
+                                                                                        ProductVariantViewModel variant = product.Variants[index - 1];
 
                                                                                         <tr>
-                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">Variant @index</td>
+                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">Variant @index (@variant.Id)</td>
 
                                                                                             <td class="px-3 px-md-4 text-nowrap">
                                                                                                 <div class="d-flex flex-wrap gap-2">
-                                                                                                    @if (variant is BCD bcd)
+                                                                                                    @if (variant is BCDViewModel bcd)
                                                                                                     {
                                                                                                         <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @bcd.Size</span>
                                                                                                     }
-                                                                                                    else if (variant is Suit suit)
+                                                                                                    else if (variant is SuitViewModel suit)
                                                                                                     {
                                                                                                         <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">@suit.Gender</span>
                                                                                                         @if (suit.Thickness != "N/A")
@@ -193,19 +191,19 @@
                                                                                                         }
                                                                                                         <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @suit.Size</span>
                                                                                                     }
-                                                                                                    else if (variant is Fin fin)
+                                                                                                    else if (variant is FinViewModel fin)
                                                                                                     {
                                                                                                         <span class="badge rounded-pill bg-light text-secondary fw-normal px-3 py-2">Størrelse @fin.Size</span>
                                                                                                     }
                                                                                                 </diV>
                                                                                             </td>
 
-                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">@variant.Quantity</td>
+                                                                                            <td class="px-3 px-md-4 fw-semibold text-nowrap">@product.Quantity</td>
 
                                                                                             <td class="px-3 py-3 text-end">
                                                                                                 <div class="d-flex flex-wrap justify-content-end gap-2">
-                                                                                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</button>
-                                                                                                    <a asp-controller="Admin" asp-action="DeleteProductVariant" asp-route-productId="@product.Id" onclick="return confirm('Er du sikker at du vil slette denne produkt variant?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</a>
+                                                                                                    <a asp-controller="Admin" asp-action="EditProduct" asp-route-productId="@variant.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-nowrap">Ændr</a>
+                                                                                                    <a asp-controller="Admin" asp-action="DeleteProductVariant" asp-route-variantId="@variant.Id" onclick="return confirm('Er du sikker at du vil slette denne produkt variant?')" class="btn btn-outline-danger btn-sm rounded-pill px-3 text-nowrap">Slet</a>
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>

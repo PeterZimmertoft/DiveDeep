@@ -50,17 +50,6 @@ namespace DiveDeepWebApp.Api.Services
             return await bookingRepository.GetByIdAsync(id);
         }
 
-        public async Task<BookingDTO?> GetDTOByIdAsync(int id)
-        {
-            Booking? booking = await bookingRepository.GetByIdAsync(id);
-            if (booking == null) return null;
-
-            BookingDTO bookingDTO = booking.ToDTO();
-            bookingDTO.BookedBy = booking.User?.UserName;
-
-            return bookingDTO;
-        }
-
         public async Task CreateAsync(string userId, CreateBookingDTO bookingDTO)
         {
             if (bookingDTO.StartDate < DateTime.Today)

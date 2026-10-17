@@ -67,10 +67,19 @@ namespace DiveDeepWebApp.Api.Controllers
                 string? userId = userManager.GetUserId(User);
                 if (userId == null) return BadRequest();
 
-                BookingDTO? booking = await bookingService.GetDTOByIdAsync(bookingId);
+                Booking? booking = await bookingService.GetByIdAsync(bookingId);
                 if (booking == null) return NotFound();
 
-                return Ok(booking);
+                if (booking.UserId != userId)
+                {
+                    if (!User.IsInRole("Admin"))
+                    {
+                        return Forbid();
+                    }
+                }
+
+                BookingDTO bookingDTO = booking.ToDTO();
+                return Ok(bookingDTO);
             }
             catch
             {
