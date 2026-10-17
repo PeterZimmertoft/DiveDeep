@@ -70,13 +70,13 @@ namespace DiveDeepWebApp.Controllers
             if (productViewModel.CategoryId == 0)
             {
                 ViewBag.Action = "CreateProduct";
-                ModelState.AddModelError(nameof(AdminProductViewModel.CategoryId), "Vælg venligst en kategori.");
+                ModelState.AddModelError(nameof(CreateUpdateProductViewModel.CategoryId), "Vælg venligst en kategori.");
                 return View(productViewModel);
             }
 
             if (productViewModel.Price < 0 || productViewModel.Quantity < 0)
             {
-                string propertyName = productViewModel.Price < 0 ? nameof(AdminProductViewModel.Price) : nameof(AdminProductViewModel.Quantity);
+                string propertyName = productViewModel.Price < 0 ? nameof(CreateUpdateProductViewModel.Price) : nameof(CreateUpdateProductViewModel.Quantity);
                 ModelState.AddModelError(propertyName, "Det kan ikke være negativ.");
             }
 
@@ -228,20 +228,20 @@ namespace DiveDeepWebApp.Controllers
                 if (productViewModel.CategoryId == 0)
                 {
                     ViewBag.Action = "CreateProduct";
-                    ModelState.AddModelError(nameof(AdminProductViewModel.CategoryId), "Vælg venligst en kategori.");
+                    ModelState.AddModelError(nameof(CreateUpdateProductViewModel.CategoryId), "Vælg venligst en kategori.");
                     return View(productViewModel);
                 }
 
                 if (productViewModel.CategoryId != product.Category?.Id)
                 {
                     ViewBag.Action = "EditProduct";
-                    ModelState.AddModelError(nameof(AdminProductViewModel.CategoryId), "Kategori må ikke ændres ved ændring.");
+                    ModelState.AddModelError(nameof(CreateUpdateProductViewModel.CategoryId), "Kategori må ikke ændres ved ændring.");
                     return View(productViewModel);
                 }
 
                 if (productViewModel.Price < 0 || productViewModel.Quantity < 0)
                 {
-                    string propertyName = productViewModel.Price < 0 ? nameof(AdminProductViewModel.Price) : nameof(AdminProductViewModel.Quantity);
+                    string propertyName = productViewModel.Price < 0 ? nameof(CreateUpdateProductViewModel.Price) : nameof(CreateUpdateProductViewModel.Quantity);
                     ModelState.AddModelError(propertyName, "Det kan ikke være negativ.");
                 }
 
