@@ -67,8 +67,4 @@
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DiveDeepWebApp.Api\DiveDeepWebApp.Api.csproj" />
-  </ItemGroup>
-
 </Project>
