@@ -429,3 +429,4 @@ FodyWeavers.xsd
 
 !**/assets/Packages/
 !**/assets/Packages/**
+/DiveDeepWebApp/.shared-keys
