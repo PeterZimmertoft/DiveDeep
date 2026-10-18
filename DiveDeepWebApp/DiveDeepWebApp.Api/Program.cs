@@ -46,20 +46,6 @@ namespace DiveDeepWebApp.Api
             builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
 
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("SecurePolicy", policy =>
-            //    {
-            //        policy.WithOrigins(
-            //            "https://localhost:7157"
-            //            )
-            //        .AllowCredentials()
-            //        //.AllowAnyMethod()
-            //        .WithMethods("GET", "POST", "PUT", "DELETE")
-            //        .WithHeaders("Content-Type", "Authorization");
-            //    });
-            //});
-
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
