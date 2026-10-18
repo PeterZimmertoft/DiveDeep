@@ -60,6 +60,12 @@ namespace DiveDeepWebApp.Api
             //    });
             //});
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    policyBuilder => policyBuilder.WithOrigins("https://localhost:7049", "https://localhost:7240"));
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApi();
@@ -118,6 +124,8 @@ namespace DiveDeepWebApp.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseAuthentication();
             app.UseAuthorization();
