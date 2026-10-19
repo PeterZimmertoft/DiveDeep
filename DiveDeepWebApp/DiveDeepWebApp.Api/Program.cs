@@ -49,7 +49,12 @@ namespace DiveDeepWebApp.Api
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    policyBuilder => policyBuilder.WithOrigins("https://localhost:7049", "https://localhost:7240"));
+                    policyBuilder => 
+                    {
+                        policyBuilder.WithOrigins("https://localhost:7049", "https://localhost:7240")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
             });
 
             builder.Services.AddControllers();
