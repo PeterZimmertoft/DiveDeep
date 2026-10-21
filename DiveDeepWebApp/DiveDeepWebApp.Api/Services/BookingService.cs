@@ -101,17 +101,25 @@ namespace DiveDeepWebApp.Api.Services
                 })
                 .ToList();
 
-            int rentalDays = (bookingDTO.EndDate.Date - bookingDTO.StartDate.Date).Days + 1;
+            int itemsInPackage = 0;
+            int rentalDays = (bookingDTO.EndDate.Date - bookingDTO.StartDate.Date).Days;
             double totalPricePerDay = cartItems.Sum(item =>
             {
-                if (item.Package != null)
+                if (item.Package != null && itemsInPackage == 0)
                 {
+                    itemsInPackage = item.Package.PackageProducts.Count -1;
+
                     double packagePrice = item.Package.PackageProducts.Sum(product => product.Product!.Price);
                     return packagePrice * 0.80;
                 }
-                else
+                else if(item.Package == null)
                 {
                     return item.Product!.Price * item.Quantity;
+                }
+                else 
+                {
+                    itemsInPackage -= 1;
+                    return 0;
                 }
             });
 

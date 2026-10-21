@@ -159,7 +159,7 @@
             }
 
             const days = Math.round((end - start) / 86400000) + 1;
-            const totalPrice = pricePerDay * days;
+            const totalPrice = pricePerDay * (days -1);
 
             totalElement.textContent = `${totalPrice},- DKK`;
             bookButton.disabled = false;
